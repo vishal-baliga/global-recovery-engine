@@ -38,7 +38,7 @@ The initial findings come from the read-only local Codex inspection pasted by Vi
 | ChatGPT GitHub connection | Account and private repository access verified |
 | Repository baseline | Project references and Codex guidance committed in `e6dcf64`; later setup findings are incremental documentation updates |
 | Clone on the Mac | Fetched origin successfully; clean working tree safely switched to `setup/devcontainer`, tracking `origin/setup/devcontainer` at `445db9a` before local setup fixes. Correct remote `vishal-baliga/global-recovery-engine`. |
-| Git | Host Git 2.50.1; authenticated fetch succeeded on the Mac. PostgreSQL setup commit `ea7cb38` is present on GitHub branch `setup/devcontainer`; the Temporal increment began from this clean, up-to-date baseline. PR #1 remains a draft. |
+| Git | Host Git 2.50.1; authenticated fetch succeeded on the Mac. Temporal setup commit `f099e27` is present on GitHub branch `setup/devcontainer`; the Azurite increment began from this clean, up-to-date baseline. PR #1 remains a draft. |
 | Apple Command Line Tools | Installed and selected; package version 26.6.0.0.1781586589 |
 | Homebrew | Installed and verified by user-provided terminal output: 6.0.22, prefix `/opt/homebrew`, `brew doctor` reports “Your system is ready to brew.” |
 | Docker | User output verifies Desktop 4.89.0 (238018), client/engine 29.7.2, client `darwin/arm64`, server `linux/arm64`, context `desktop-linux`; Compose 5.5.0. ARM64 `hello-world` image download and container execution succeeded; user supplied the complete “Hello from Docker!” output. |
@@ -48,7 +48,8 @@ The initial findings come from the read-only local Codex inspection pasted by Vi
 | Other CLIs | GitHub, PostgreSQL, Temporal, Azure, Terraform, and Dev Container CLIs not found on PATH; install only when their setup stage requires them |
 | Local PostgreSQL | PostgreSQL 18.6 Bookworm verified on native ARM64. Mac host startup/health and editor-container TCP connectivity passed. A committed synthetic row survived a normal PostgreSQL restart; probe cleanup passed. Private internal network and persistent named volume configured; lifecycle commands and resolved digest recorded in the environment guide. |
 | Local Temporal | Official CLI development-server image 1.8.3 pinned by digest; embedded Server 1.31.2 / UI 2.50.1 verified native ARM64 and non-root. Persistent SQLite volume, private SDK network, localhost-only UI (HTTP 200), and locked Python 3.14 SDK 1.32.0 probe passed. The same workflow/run completed after normal server and worker restarts. |
-| Azurite, provider fakes | Not yet established |
+| Local Azurite | Blob-only Azurite 3.36.0 verified native ARM64, pinned by digest, with internal network/no host ports and persistent named storage. Locked SDK 12.30.1 ran on Python 3.14.7/API 2025-11-05. Authenticated bytes/metadata, anonymous HTTP 403, same-blob restart persistence, and scoped cleanup all passed. |
+| Provider fakes | Not yet established |
 | Cloud and service accounts | Azure, Temporal Cloud, Clerk, runtime AI, and integration provisioning not verified; architecture selection alone does not provision them |
 | Product build/tests | No application scaffolding, dependency locks, CI pipeline, or executable product acceptance checks yet |
 
@@ -111,10 +112,35 @@ application workflow behavior. Recreated editor containers require host network
 attachment. The UI bridge allows server egress. Docker orchestration remains on
 the Mac, with no Docker CLI/socket added to the editor.
 
+## Completed Azurite Blob increment
+
+On September 6, 2026, Vishal ran Microsoft's official Azurite 3.36.0 image from
+the Mac, pinned by version and resolved digest. Native ARM64 execution, named
+volume `gre-azurite-blob-data`, internal network `gre-azurite`, and empty host port
+bindings were verified. Only Blob service runs. The official image uses root;
+the editor remains non-root. Emulator-only credentials are generated locally and
+ignored by Git.
+
+The locked Azure Blob SDK 12.30.1 probe ran in Python 3.14.7 with explicit API
+2025-11-05. It uploaded/downloaded a private synthetic blob with exact bytes and
+metadata and confirmed an unauthenticated GET returned HTTP 403. Following a
+normal Mac service restart, the same blob, metadata, ETag, and modified time
+survived; anonymous access was still rejected. Cleanup removed only the
+ownership-checked probe container and local payload/receipt, confirmed container
+removal, and found other container names/metadata unchanged. The emulator remains
+running. See [the environment guide](09-development-environment.md#local-azurite-blob-storage)
+for the digest, resource ID/hash, actual timestamps, and exact Mac lifecycle and
+editor attachment commands.
+
+This verifies local Blob behavior and normal-restart persistence, not Azure
+RBAC/managed identity/TLS, backup recovery, upgrades, production durability, or
+application storage adapters. Recreated editor containers require host attachment.
+The emulator's default root user remains a development-service limitation.
+
 ## Next environment increment
 
-Establish local Azurite, then application dependency compatibility/lockfiles and
-the remaining environment checks. These remain setup work, followed by backlog
-prioritization and document reconciliation. No application workflows, tables, or
-migrations were introduced; the workflow and schema probes are synthetic setup
-checks. Inspect Git status and preserve local changes before the next increment.
+Resolve application dependency compatibility/lockfiles and the remaining
+environment checks. Provider fakes remain unestablished. These remain setup work,
+followed by backlog prioritization and document reconciliation. No application
+features, cloud provisioning, or production integrations were added. Inspect Git
+status and preserve local changes before the next increment.

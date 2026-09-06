@@ -77,7 +77,7 @@ Build-resolved image references (recorded observations, not yet digest pins in t
 
 Vishal subsequently supplied the successful editor/agent verification: Codex executed in `/workspaces/global-recovery-engine` on Debian GNU/Linux 12 (bookworm), Linux `7.0.12-linuxkit`, `aarch64` / ARM64, as non-root `vscode` with UID/GID `1000`. The Docker marker and VS Code container server were present. The environment check exited 0 with `GRE development toolchain: PASS (linux/arm64)`, including all pinned versions, Python virtual environment/SSL/SQLite, pnpm execution, and workspace write checks. GitHub confirms the earlier check fix and build records in commit `c937128`; the report did not include the current local HEAD. See [the setup checkpoint](00-start-here.md) for the next increment.
 
-The PostgreSQL and Temporal increments and their verification are recorded below. Next establish local Azurite, application dependency compatibility/lockfiles, and the remaining environment checks needed for backlog planning. These remain setup work. The agreed sequence continues with prioritized backlog and document reconciliation before product feature development.
+The PostgreSQL, Temporal, and Azurite increments and their verification are recorded below. Next resolve application dependency compatibility/lockfiles and the remaining environment checks needed for backlog planning. These remain setup work. The agreed sequence continues with prioritized backlog and document reconciliation before product feature development.
 
 [VS Code Dev Containers guide](https://code.visualstudio.com/docs/devcontainers/containers) and the [Dev Container specification](https://github.com/devcontainers/spec/blob/main/docs/specs/devcontainerjson-reference.md) define the editor and lifecycle behavior used here.
 
@@ -396,5 +396,169 @@ attachment. The UI bridge permits outbound networking; the development service
 has no production authentication/TLS. Normal server and worker restart recovery
 passed, but backup/restore, data-volume loss, server upgrades, production
 operations, and application workflow/activity behavior were not tested. The
-Python lock is specific to this environment probe. Azurite and application
-compatibility/locks remain subsequent setup work.
+Python lock is specific to this environment probe. The Azurite increment is
+recorded below; application compatibility/locks remain subsequent setup work.
+
+## Local Azurite Blob Storage
+
+`.devcontainer/compose.azurite.yaml` runs Microsoft's official
+`mcr.microsoft.com/azure-storage/azurite:3.36.0` image, pinned to resolved manifest
+digest `sha256:76b8127d608fab8287a14a4bfeb9a5502cdcffb4bf1e86f09f324ebb0e70edba`,
+with `platform: linux/arm64`. The registry manifest lists native ARM64.
+The [versioned Azurite documentation](https://github.com/Azure/Azurite/blob/v3.36.0/README.md)
+and [Blob constants](https://github.com/Azure/Azurite/blob/v3.36.0/src/blob/utils/constants.ts)
+identify Blob API **2025-11-05**. The probe explicitly selects that version; API
+validation remains enabled (no `--skipApiVersionCheck` or loose mode).
+
+Only `azurite-blob` runs. Queue/Table services are not started. Named volume
+`gre-azurite-blob-data` mounts `/data` and stores both blob bytes and Azurite
+metadata. Normal stop/start/restart preserves the volume. Do not remove it or
+use `down --volumes` during routine lifecycle work.
+
+The internal network `gre-azurite` has **no host port bindings**. Editor clients
+use `http://gre-azurite:10000/gredev`. `--disableProductStyleUrl` makes Azurite read
+the account name from this URL path despite the Docker DNS hostname. The editor
+retains its original network for internet access. Telemetry is disabled. No
+browser UI, Mac/LAN listener, or VS Code port forwarding is configured.
+
+The Mac helper generates a random **emulator-only** Shared Key for account
+`gredev` in ignored `local-data/azurite/.env`, with restrictive creation
+permissions. Compose loads `AZURITE_ACCOUNTS` from this file, replacing Azurite's
+default well-known account; the SDK probe reads the same local key. No credential
+value is committed or printed by the helper. Keep this file with the local
+volume. Avoid sharing expanded Compose configuration or full container environment
+inspection, which can contain this local key. The private test container is
+explicitly created with no public access. This is HTTP emulator access, not
+Azure authentication, RBAC, managed identity, or TLS verification.
+
+### Mac lifecycle and editor attachment
+
+Run in **Mac Terminal**:
+
+```sh
+cd "/Users/diztort/GRE Development/global-recovery-engine"
+docker ps --format 'table {{.ID}}\t{{.Names}}\t{{.Image}}'
+# Replace GRE_CONTAINER_ID with the GRE editor container ID.
+bash .devcontainer/azurite-host.sh up GRE_CONTAINER_ID
+```
+
+`up` initializes credentials only if absent, waits for the Blob listener, verifies
+the supplied editor container mounts this checkout, and attaches it to the
+internal network. It reports image/version, native architecture, runtime user,
+actual host port bindings, persistent volume mount, and server-start receipt.
+The SDK probe separately verifies authenticated service readiness. The editor
+ID during initial setup is `9b0a594f1f29`; recreation changes the ID.
+
+```sh
+cd "/Users/diztort/GRE Development/global-recovery-engine"
+bash .devcontainer/azurite-host.sh status
+bash .devcontainer/azurite-host.sh stop
+bash .devcontainer/azurite-host.sh up
+bash .devcontainer/azurite-host.sh restart
+bash .devcontainer/azurite-host.sh attach GRE_CONTAINER_ID
+```
+
+Use these commands individually as needed. `stop` preserves the volume, network,
+and editor attachment; `up` starts the service again. `restart` performs a normal
+restart, waits for the listener, and refreshes the shared ignored start-time
+receipt. Recreated editor containers require `attach` with their new ID. Docker
+orchestration remains on the Mac; no CLI/socket is added to the editor.
+
+If startup fails, run on the **Mac**:
+
+```sh
+cd "/Users/diztort/GRE Development/global-recovery-engine"
+docker compose -f .devcontainer/compose.azurite.yaml logs --tail 100 azurite
+```
+
+### Locked Python Blob SDK probe
+
+`.devcontainer/check_azurite.py.lock` pins `azure-storage-blob==12.30.1` and all
+transitive dependencies in an isolated Python `>=3.14,<3.15` environment. This is
+an environment-check lock, not an application dependency lock. The SDK's
+[API version option](https://learn.microsoft.com/en-us/python/api/azure-storage-blob/azure.storage.blob.blobserviceclient)
+is fixed at `2025-11-05` for Azurite compatibility. The first run downloads
+packages; subsequent cached runs can use `--offline`.
+
+In the **development container**:
+
+```sh
+uv run --frozen --script .devcontainer/check_azurite.py connect
+uv run --frozen --script .devcontainer/check_azurite.py seed
+```
+
+`seed` creates exactly one UUID-named private container and `payload.bin`, using
+synthetic binary bytes and ownership/purpose/SHA-256 metadata. It downloads and
+compares the file bytes and metadata, checks the ETag/modified timestamp, and
+requires an unauthenticated GET of the same blob URL to fail with HTTP 403
+`AuthorizationFailure`. That request uses no Shared Key, SAS, cookies, or proxy.
+Expected data and the server-start receipt are stored under ignored
+`local-data/azurite/`; an existing probe receipt prevents accidental reseeding.
+
+Restart on the **Mac**:
+
+```sh
+cd "/Users/diztort/GRE Development/global-recovery-engine"
+bash .devcontainer/azurite-host.sh restart
+```
+
+Then in the **development container**:
+
+```sh
+uv run --frozen --offline --script .devcontainer/check_azurite.py verify
+uv run --frozen --offline --script .devcontainer/check_azurite.py cleanup
+```
+
+`verify` requires the same server container with a changed start time, then checks
+the same blob bytes, metadata, ETag, and modified time, plus anonymous-read
+rejection again. `cleanup` validates the exact UUID container name and ownership
+metadata and refuses unexpected blobs. It deletes only that recorded container,
+confirms its removal, and checks every other container name and metadata are
+unchanged. Finally it removes only the local probe receipt and payload file.
+Credentials and the server receipt remain for reuse. Cleanup never deletes the
+account, service volume, or resources selected by a broad prefix.
+
+### Azurite verification record
+
+Verified September 6, 2026 from clean `setup/devcontainer` at `f099e27` plus
+this increment. Origin was fetched and already up to date; no unrelated changes
+were present.
+
+- Vishal's Mac output confirms Azurite **3.36.0**, `linux/arm64`, native
+  `aarch64`, and resolved image digest
+  `mcr.microsoft.com/azure-storage/azurite@sha256:76b8127d608fab8287a14a4bfeb9a5502cdcffb4bf1e86f09f324ebb0e70edba`.
+  This matches the version/digest pin in Compose. The service uses Microsoft's
+  image default UID/GID **0 (root)**; the development container remains non-root.
+- Docker confirms `Internal=true`, `Host port bindings={}`, and
+  `Volume=gre-azurite-blob-data -> /data`. The image's exposed-port metadata lists
+  10000–10002; those are not host bindings, and the configured command starts
+  only the Blob service.
+- The locked SDK **12.30.1** ran successfully from CPython **3.14.7 ARM64** with
+  explicit API **2025-11-05**, without skipping API validation. All runtime probe
+  commands used the frozen lock and offline package access.
+- Authenticated upload/download passed for
+  `gre-probe-5a6f7b54-4dce-4850-96fc-ed04f90154d6/payload.bin`: **8,261 bytes**,
+  SHA-256 `06ad437115685800bd20fcc74e7a32f1a47096c541c2b0786e9bce7003749b15`.
+  Metadata matched exactly: `gre_probe` held the UUID, `purpose` was
+  `synthetic-environment-check`, and `sha256` held this hash. The container's
+  access policy was private. A GET of the same existing blob with no credentials
+  failed with **HTTP 403 AuthorizationFailure**.
+- Vishal normally restarted the same Docker container
+  `7288e81647ae8cb58fc0270737512f0158d5ee0f7cf1d0bdeda1aec234799896`.
+  Its start timestamp changed from `2026-09-06T23:30:18.765174506Z` to
+  `2026-09-06T23:33:41.49777321Z`. Afterward the agent verified the same blob bytes,
+  exact metadata, unchanged ETag and modified timestamp, and repeated HTTP 403
+  anonymous-read rejection. No blob was re-uploaded during verification.
+- Scoped cleanup passed: only the recorded UUID container was deleted after
+  ownership/content checks; its subsequent lookup returned not found. Other
+  container names/metadata were unchanged. The local payload and probe receipt
+  were removed; credentials, server receipt, and persistent service volume remain.
+- Host helper syntax, Python parsing/CLI, lockfile parsing, Git whitespace, and
+  credential/payload/receipt ignore checks passed. The service remains running.
+
+This increment covers Blob Storage only. The emulator does not establish Azure
+RBAC/managed identity, TLS, cloud networking, production durability, backups,
+service upgrades, or full Azure feature parity. Recreated editor containers need
+host network attachment. The official emulator image runs as root; non-root
+service hardening has not been established. Application storage adapters and
+cloud integration remain later work.
