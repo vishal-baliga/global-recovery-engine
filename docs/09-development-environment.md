@@ -1,6 +1,6 @@
 # Development environment — first container
 
-**Status:** Configuration prepared; JSON/Python syntax and version-pin consistency checked. The GRE image has not been built or run in this hosted workspace, which has no Docker engine. The first ARM64 build and runtime checks are the next task on Vishal's Mac.
+**Status:** First image build and offline ARM64 environment check passed on Vishal’s Mac on September 6, 2026. Microsoft Dev Containers 0.466.0 is installed. VS Code container reopen and Codex availability in that session remain pending.
 
 ## What this step establishes
 
@@ -13,7 +13,7 @@ The first container provides the project language toolchains and development uti
 | uv | 0.12.10, copied from Astral's published image | [uv Docker integration](https://docs.astral.sh/uv/guides/integration/docker/) |
 | pnpm | 11.10.0, explicit npm package version | [pnpm installation and compatibility](https://pnpm.io/installation) |
 
-pnpm's documentation still identifies version 11 as the default npm release line. The 11.10.0 pin retains that installation model; evaluate a major upgrade separately. The registry install and all binary combinations still need validation in the first build. These pins are an initial setup selection, not a claim that application dependencies have been resolved.
+pnpm's documentation still identifies version 11 as the default npm release line. The 11.10.0 pin retains that installation model; evaluate a major upgrade separately. The registry install and pinned binary combination passed the first ARM64 build and environment check. These pins are an initial setup selection, not a claim that application dependencies have been resolved.
 
 Image tags and OS package repositories can change. Exact tool versions improve consistency; immutable image digests and application lockfiles remain follow-up setup work after a successful build. Do not describe this image as bit-for-bit reproducible yet. Docker selects the native image architecture; the image definitions list ARM64 support for the selected Python and Node tags.
 
@@ -43,7 +43,7 @@ Codex on the Mac can build and test the image through Docker before the UI recon
 
 ```sh
 docker build --file .devcontainer/Dockerfile --tag gre-dev:local .devcontainer
-docker run --rm \
+docker run --rm --network none \
   --mount "type=bind,source=$(pwd),target=/workspaces/global-recovery-engine" \
   --workdir /workspaces/global-recovery-engine \
   gre-dev:local \
@@ -58,7 +58,24 @@ If a build or check fails, keep the first relevant error and diagnose it on this
 
 Verified on the Mac before this step: Homebrew 6.0.22 at `/opt/homebrew`; Docker Desktop 4.89.0, engine/client 29.7.2; Compose 5.5.0; a successful ARM64 `hello-world` download and execution. The prior VS Code privacy dialog's final choice was not reported.
 
-Pending: actual GRE image build; check-script success on ARM64; Dev Containers installation/editor reopen; Codex availability in the container; image digest recording. Record the results in [the setup checkpoint](00-start-here.md) with the actual commit and observed versions before considering this task complete.
+Verified locally on September 6, 2026 from branch baseline `445db9a` plus the check-script fix:
+
+- `docker build --file .devcontainer/Dockerfile --tag gre-dev:local .devcontainer` exited 0.
+- The documented `docker run` check exited 0 with `--network none`, ending in `GRE development toolchain: PASS (linux/arm64)` as non-root `vscode`.
+- Observed Python 3.14.7, Node 24.20.0, pnpm 11.10.0, uv 0.12.10, npm 11.19.0, and Git 2.39.5.
+- The first runtime check failed its exact stdout comparison: pnpm successfully executed Node but automatically ran dependency preflight and printed update notices. The temporary project's `pnpm-workspace.yaml` now sets `verifyDepsBeforeRun: false` and `updateNotifier: false`. The corrected check passed offline; no pins or image configuration changed.
+- Microsoft Dev Containers `ms-vscode-remote.remote-containers@0.466.0` confirmed using the installed VS Code CLI. No extension installation was needed.
+
+Build-resolved image references (recorded observations, not yet digest pins in the Dockerfile):
+
+| Image | Resolved digest |
+| --- | --- |
+| `python:3.14.7-slim-bookworm` | `sha256:9ab8d9c8514b44f90cf0029dd42fdd7e9e211e639c8b995304cc04568dee900f` |
+| `node:24.20.0-bookworm-slim` | `sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e` |
+| `ghcr.io/astral-sh/uv:0.12.10` | `sha256:2bb3ebca0a796a155094a27773d290c4b074572e6107f171d88d086682fd2500` |
+| Local `gre-dev:local` image ID | `sha256:49b1d04e826ba31bdbd0b68e06cad505410ea2cf0767b7758476d1e0877ebb18` |
+
+Pending: editor reopen and Codex availability in the container. Record that result in [the setup checkpoint](00-start-here.md).
 
 Then establish local PostgreSQL, Temporal, and Azurite, application dependency compatibility/lockfiles, and the initial environment checks needed for backlog planning. These remain setup work. The agreed sequence continues with prioritized backlog and document reconciliation before product feature development.
 

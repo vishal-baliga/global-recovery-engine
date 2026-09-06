@@ -37,14 +37,14 @@ The initial findings come from the read-only local Codex inspection pasted by Vi
 | VS Code and Codex | VS Code 1.136.1 and Codex extension present; user reports signed in; `code` command unavailable in the inspected shell |
 | ChatGPT GitHub connection | Account and private repository access verified |
 | Repository baseline | Project references and Codex guidance committed in `e6dcf64`; later setup findings are incremental documentation updates |
-| Clone on the Mac | Present and clean at inspection; `main` tracks `origin/main`; correct remote `vishal-baliga/global-recovery-engine`; local commit `e6dcf64` |
-| Git | 2.50.1; live GitHub authentication from the Mac was not tested during the inspection |
+| Clone on the Mac | Fetched origin successfully; clean working tree safely switched to `setup/devcontainer`, tracking `origin/setup/devcontainer` at `445db9a` before local setup fixes. Correct remote `vishal-baliga/global-recovery-engine`. |
+| Git | 2.50.1; authenticated fetch from the private GitHub origin succeeded on the Mac. |
 | Apple Command Line Tools | Installed and selected; package version 26.6.0.0.1781586589 |
 | Homebrew | Installed and verified by user-provided terminal output: 6.0.22, prefix `/opt/homebrew`, `brew doctor` reports “Your system is ready to brew.” |
 | Docker | User output verifies Desktop 4.89.0 (238018), client/engine 29.7.2, client `darwin/arm64`, server `linux/arm64`, context `desktop-linux`; Compose 5.5.0. ARM64 `hello-world` image download and container execution succeeded; user supplied the complete “Hello from Docker!” output. |
-| Dev Containers | Not found during the initial inspection; installation confirmation still pending. Initial GRE configuration is prepared on `setup/devcontainer`; its build/editor session still need verification. |
-| Node/pnpm | Absent from the host PATH at the initial inspection. Container pins: Node 24.20.0 and pnpm 11.10.0; first build pending. |
-| Python/uv | Apple Python 3.9.6 remains on the host. Container pins: Python 3.14.7 and uv 0.12.10; first build pending. |
+| Dev Containers | Microsoft `ms-vscode-remote.remote-containers` 0.466.0 confirmed installed through the VS Code CLI. GRE image build and offline ARM64 check passed; editor reopen remains pending. |
+| Node/pnpm | Absent from the host PATH at the initial inspection. Container Node 24.20.0 and pnpm 11.10.0 built and verified on ARM64. |
+| Python/uv | Apple Python 3.9.6 remains on the host. Container Python 3.14.7 and uv 0.12.10 built and verified on ARM64. |
 | Other CLIs | GitHub, PostgreSQL, Temporal, Azure, Terraform, and Dev Container CLIs not found on PATH; install only when their setup stage requires them |
 | Local database, Temporal, Azurite, provider fakes | Not yet established |
 | Cloud and service accounts | Azure, Temporal Cloud, Clerk, runtime AI, and integration provisioning not verified; architecture selection alone does not provision them |
@@ -54,14 +54,10 @@ Treat PATH checks as observations of the inspected environment, not proof that a
 
 ## Next action on the Mac
 
-Build and verify the first GRE development container using [the development-environment guide](09-development-environment.md). The configuration and environment check are on the `setup/devcontainer` branch for the first Mac build. JSON/Python syntax and pin consistency have been checked; this hosted workspace has no Docker engine, so no successful GRE image build or container runtime check is claimed yet.
+Reopen this checkout in VS Code using **Dev Containers: Reopen in Container**. Microsoft Dev Containers 0.466.0 is installed. The image built successfully on the Mac's Docker Desktop engine 29.7.2 (`linux/arm64`) from branch baseline `445db9a`, and the corrected check ended with `GRE development toolchain: PASS (linux/arm64)` with networking disabled.
 
-The completed Docker smoke check verifies the native ARM64 host/container path. The prior VS Code app-data prompt's final choice was not reported; the successful Docker output does not establish which permission was granted or denied.
+The check initially rejected pnpm's successful execution because automatic dependency preflight and update notices added stdout. The temporary check project now disables those behaviors; all exact version, non-root, architecture, workspace-write, Python virtual-environment/SSL/SQLite, and pnpm execution checks passed. No runtime pins changed. See [the development-environment guide](09-development-environment.md) for commands and image digests.
 
-Give local Codex this bounded task:
+The actual VS Code container session and Codex availability still need confirmation after reopening. The image smoke check does not establish editor readiness. No product features or application dependencies were added.
 
-> Locate the GRE repository root and inspect Git status. Fetch origin and safely check out the setup/devcontainer branch, preserving local changes. Read AGENTS.md and docs/09-development-environment.md. Build the development image and run its environment check for arm64. Diagnose and fix setup failures on this branch, report the results, and update the checkpoint with what actually passed. Confirm the Microsoft Dev Containers extension is installed, then guide me through Reopen in Container. Stay within environment setup; product stories follow the agreed backlog/document steps.
-
-The first build uses the Mac's Docker engine and downloads the pinned toolchain. A result ending in `GRE development toolchain: PASS (linux/arm64)` establishes the checks listed in the guide. The actual VS Code container session and Codex availability must also be confirmed before this environment step is complete.
-
-After successful verification, record image digests and establish local PostgreSQL, Temporal, Azurite, application dependency compatibility/lockfiles, and the required environment checks. These are pending setup work, followed by backlog prioritization and document reconciliation.
+Following editor confirmation, establish local PostgreSQL, Temporal, Azurite, application dependency compatibility/lockfiles, and the required environment checks. These remain setup work, followed by backlog prioritization and document reconciliation.

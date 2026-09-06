@@ -81,6 +81,11 @@ def main():
             "name": "gre-environment-check", "private": True,
             "packageManager": f"pnpm@{pins['PNPM_VERSION']}",
         }))
+        # pnpm 11 defaults to installing before exec. Keep this dependency-free
+        # smoke check local to the installed runtime and its temporary project.
+        (node_project / "pnpm-workspace.yaml").write_text(
+            "verifyDepsBeforeRun: false\nupdateNotifier: false\n"
+        )
         result = run(
             "pnpm", "--dir", str(node_project), "exec", "node", "--eval",
             "process.stdout.write('pnpm ready')",
