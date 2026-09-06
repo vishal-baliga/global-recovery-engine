@@ -46,7 +46,8 @@ The initial findings come from the read-only local Codex inspection pasted by Vi
 | Node/pnpm | Absent from the host PATH at the initial inspection. Container Node 24.20.0 and pnpm 11.10.0 built and verified on ARM64. |
 | Python/uv | Apple Python 3.9.6 remains on the host. Container Python 3.14.7 and uv 0.12.10 built and verified on ARM64. |
 | Other CLIs | GitHub, PostgreSQL, Temporal, Azure, Terraform, and Dev Container CLIs not found on PATH; install only when their setup stage requires them |
-| Local database, Temporal, Azurite, provider fakes | Not yet established |
+| Local PostgreSQL | PostgreSQL 18.6 Bookworm verified on native ARM64. Mac host startup/health and editor-container TCP connectivity passed. A committed synthetic row survived a normal PostgreSQL restart; probe cleanup passed. Private internal network and persistent named volume configured; lifecycle commands and resolved digest recorded in the environment guide. |
+| Temporal, Azurite, provider fakes | Not yet established |
 | Cloud and service accounts | Azure, Temporal Cloud, Clerk, runtime AI, and integration provisioning not verified; architecture selection alone does not provision them |
 | Product build/tests | No application scaffolding, dependency locks, CI pipeline, or executable product acceptance checks yet |
 
@@ -64,14 +65,30 @@ On September 6, 2026, Vishal supplied a local Codex report confirming the actual
 - `python .devcontainer/check_environment.py --expect-arch arm64` exited 0 with `GRE development toolchain: PASS (linux/arm64)`.
 - All pinned versions, Python virtual environment/SSL/SQLite, pnpm execution, and workspace write checks passed.
 
-GitHub separately confirms setup commit `c937128`. The report did not include the current local HEAD or working-tree status; inspect them before the next edit. The earlier pnpm stdout/preflight fix and build-resolved image digests are recorded in [the development-environment guide](09-development-environment.md).
+The next session inspected a clean working tree on `setup/devcontainer`, fetched origin, and safely fast-forwarded `c937128` to `2c80392` before PostgreSQL setup edits. No local changes needed stashing or removal. The earlier pnpm stdout/preflight fix and build-resolved image digests are recorded in [the development-environment guide](09-development-environment.md).
 
-This completes the language-toolchain and editor/agent setup. Local services, application dependency compatibility, and product behavior have not yet been verified.
+This completes the language-toolchain and editor/agent setup. The subsequent PostgreSQL verification is recorded below; other local services, application dependency compatibility, and product behavior remain pending.
+
+## Completed PostgreSQL increment
+
+On September 6, 2026, Vishal ran the Mac host helper to start `postgres:18.6-bookworm`
+on `linux/arm64` and attach this development container. The agent connected using
+the locked Psycopg 3.3.5 probe from Python 3.14 ARM64, checked the server version,
+architecture, and persistent data path, and committed one synthetic record.
+After Vishal's normal database restart, the agent verified the same record and a
+changed server start time, then cleaned up the probe. All steps passed.
+
+The database uses named volume `gre-postgres18-data`, internal network
+`gre-database`, verified empty host port bindings (`{}`), and a generated Git-ignored
+development password. See [the environment guide](09-development-environment.md#local-postgresql-18)
+for exact Mac start/stop/restart/attach commands, the observed image digest, and
+verification details. Recreated editor containers need host network attachment.
+Docker orchestration remains on the Mac; no CLI/socket was added to the editor.
 
 ## Next environment increment
 
-Establish local PostgreSQL 18 and its connection from the development container. Use a verified native ARM64 image with an explicit version, persistent development storage, local-only access, and documented start/stop commands. Verify connectivity and that a synthetic record survives a normal service restart. Keep application tables and migrations for the later product work.
-
-Inspect Git status and safely bring `setup/devcontainer` up to date before editing, preserving any local changes. The current development container has no Docker CLI or socket mount; run Docker orchestration from the Mac host unless a subsequent setup change explicitly establishes another route.
-
-Then establish local Temporal and Azurite, application dependency compatibility/lockfiles, and the remaining environment checks. These remain setup work, followed by backlog prioritization and document reconciliation.
+Establish local Temporal and Azurite, then application dependency compatibility/
+lockfiles and the remaining environment checks. These remain setup work, followed
+by backlog prioritization and document reconciliation. No application tables or
+migrations were introduced; the probe used its own environment-check schema.
+Inspect Git status and preserve local changes before the next increment.

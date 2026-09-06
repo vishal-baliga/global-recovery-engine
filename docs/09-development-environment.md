@@ -77,6 +77,144 @@ Build-resolved image references (recorded observations, not yet digest pins in t
 
 Vishal subsequently supplied the successful editor/agent verification: Codex executed in `/workspaces/global-recovery-engine` on Debian GNU/Linux 12 (bookworm), Linux `7.0.12-linuxkit`, `aarch64` / ARM64, as non-root `vscode` with UID/GID `1000`. The Docker marker and VS Code container server were present. The environment check exited 0 with `GRE development toolchain: PASS (linux/arm64)`, including all pinned versions, Python virtual environment/SSL/SQLite, pnpm execution, and workspace write checks. GitHub confirms the earlier check fix and build records in commit `c937128`; the report did not include the current local HEAD. See [the setup checkpoint](00-start-here.md) for the next increment.
 
-Then establish local PostgreSQL, Temporal, and Azurite, application dependency compatibility/lockfiles, and the initial environment checks needed for backlog planning. These remain setup work. The agreed sequence continues with prioritized backlog and document reconciliation before product feature development.
+The PostgreSQL increment and its verification are recorded below. Next establish local Temporal and Azurite, application dependency compatibility/lockfiles, and the remaining environment checks needed for backlog planning. These remain setup work. The agreed sequence continues with prioritized backlog and document reconciliation before product feature development.
 
 [VS Code Dev Containers guide](https://code.visualstudio.com/docs/devcontainers/containers) and the [Dev Container specification](https://github.com/devcontainers/spec/blob/main/docs/specs/devcontainerjson-reference.md) define the editor and lifecycle behavior used here.
+
+## Local PostgreSQL 18
+
+This increment adds only a local development service and a synthetic environment
+probe. Run Docker commands on the **Mac host**; the editor container has neither
+Docker CLI nor socket access.
+
+`.devcontainer/compose.postgres.yaml` selects `postgres:18.6-bookworm` and explicitly
+requests `linux/arm64`. The [official image metadata](https://github.com/docker-library/official-images/blob/master/library/postgres)
+lists `arm64v8` for this tag. This pins the database patch version and Debian suite;
+the tag is not immutable. The host startup command reports its resolved digest and
+architecture for the verification record.
+
+The named volume `gre-postgres18-data` mounts `/var/lib/postgresql`; PostgreSQL 18
+stores the cluster in `/var/lib/postgresql/18/docker`, following the
+[official image layout](https://hub.docker.com/_/postgres). Normal stop/start and
+restart preserve the volume. Do not use `down --volumes` or remove that volume as
+part of routine lifecycle work.
+
+The internal Docker network `gre-database` has **no published database port**.
+The attached development container connects to `gre-postgres:5432`, database/user
+`gre_dev`. The development container retains its original network for internet
+access. The database is accessible only to containers attached to its private
+network (and administrators controlling Docker), with SCRAM password authentication.
+There is no Mac/LAN database listener or VS Code port forwarding.
+
+Startup generates a random local password at `local-data/postgres/password`,
+which Git already ignores. Compose mounts it as a secret; its path, not its value,
+appears in configuration. The parent directory is mode 700; the file is readable
+inside the database container so its `postgres` user can initialize the cluster.
+Keep this file with the local volume: changing it alone does not change an already
+initialized database password. `gre_dev` is the image's local bootstrap superuser;
+application roles and migrations belong to later implementation work.
+
+### Mac host commands
+
+From this checkout's root in **Mac Terminal**, with Docker Desktop running:
+
+```sh
+# Find the GRE editor container; confirm the workspace mount if several exist.
+docker ps --format 'table {{.ID}}\t{{.Names}}\t{{.Image}}'
+# Replace GRE_CONTAINER_ID with the running editor container's ID.
+bash .devcontainer/postgres-host.sh up GRE_CONTAINER_ID
+```
+
+`up` initializes the password only when absent, waits for database health, checks
+that the supplied container mounts this checkout, and attaches it to the database
+network. It prints the downloaded image architecture/digest and PostgreSQL version.
+The existing session at implementation time was `9b0a594f1f29`; IDs change after
+recreation. No editor rebuild is required. After rebuilding/recreating the editor
+container, rerun `up` with its new ID (or `attach` if the database is already up).
+This explicit host attachment is required; `devcontainer.json` remains standalone.
+
+```sh
+bash .devcontainer/postgres-host.sh status
+bash .devcontainer/postgres-host.sh stop
+bash .devcontainer/postgres-host.sh up
+bash .devcontainer/postgres-host.sh restart
+bash .devcontainer/postgres-host.sh attach GRE_CONTAINER_ID
+```
+
+`stop` keeps the container, volume, network, and editor attachment. `up` starts it
+again. `restart` performs a normal database restart and waits for health. `status`
+reports service health, `Internal=true`, actual host port bindings, and the named volume mount. Empty host bindings (`{}`) mean there is no published database port. If `up` fails,
+inspect `docker compose -f .devcontainer/compose.postgres.yaml logs --tail 80 postgres`
+and correct the failure before running the probe.
+
+### Connectivity and persistence check
+
+Run in the **development container**:
+
+```sh
+uv run --frozen --script .devcontainer/check_postgres.py connect
+uv run --frozen --script .devcontainer/check_postgres.py seed
+```
+
+The script's adjacent lockfile pins its isolated Psycopg environment (3.3.5,
+including the binary package). This is an environment-check dependency, not an
+application dependency lock. The initial run downloads wheels; subsequent cached
+runs can use `--offline`. The check requires PostgreSQL 18.6, native aarch64 server
+build, and the expected data directory, and authenticates over TCP from the editor.
+
+`seed` commits one UUID-tagged synthetic row in
+`gre_environment_check.restart_probe` and writes its receipt under ignored
+`local-data/postgres/`. It refuses to overwrite an outstanding receipt.
+Then run on the **Mac host**:
+
+```sh
+bash .devcontainer/postgres-host.sh restart
+```
+
+Back in the **development container**:
+
+```sh
+uv run --frozen --script .devcontainer/check_postgres.py verify
+uv run --frozen --script .devcontainer/check_postgres.py cleanup
+```
+
+`verify` requires both the same stored payload and a changed PostgreSQL server
+start time, so reading before restart cannot falsely pass. `cleanup` removes only
+this probe's row and receipt; the empty environment-check table may remain.
+No application tables are created. This verifies normal-restart persistence,
+not backup/restore or disaster recovery.
+
+### PostgreSQL verification record
+
+Verified September 6, 2026 after clean fast-forward of `setup/devcontainer` from
+`c937128` to `2c80392`; no pre-existing local changes were present.
+
+- Vishal's Mac host output confirms image pull, named-volume/network creation,
+  database health, and attachment of editor container `9b0a594f1f29`.
+- Docker reports `linux/arm64`, PostgreSQL `18.6 (Debian 18.6-1.pgdg12+2)`,
+  and resolved image digest
+  `postgres@sha256:1c59e2c3c818eaa0f0628f695b36e7c9e362d6b219b36a54a32df645cbd7e1af`.
+  This is an observed digest; Compose pins the patch/suite tag.
+- The isolated Psycopg 3.3.5 CPython 3.14 ARM64 binary installed successfully.
+  The agent's TCP connection from the running development container passed,
+  confirming server build `aarch64-unknown-linux-gnu` and data directory
+  `/var/lib/postgresql/18/docker`.
+- The probe committed synthetic record `9faf60cb-cb80-4db2-8a07-1310bb2ce1d1`.
+  Vishal ran the normal host restart helper; the database returned healthy.
+  The agent's subsequent offline-client verification passed: the row was unchanged
+  and server start time advanced from `2026-09-06 23:01:51.424061+00` to
+  `2026-09-06 23:04:02.668422+00`.
+- Probe cleanup passed; the synthetic row and local receipt were removed.
+  The database remains running with its persistent volume.
+- Host status confirms `Internal=true`. The first status helper encountered
+  Compose's `invalid IP:0` when querying an unpublished port; it now uses
+  `docker inspect` for port bindings and volume details. The corrected helper
+  passed on the Mac: `Host port bindings={}` and
+  `Volume=gre-postgres18-data -> /var/lib/postgresql`; the database was healthy.
+- Host shell syntax, script CLI, Git whitespace/secret-ignore checks, and the
+  existing ARM64 language-toolchain check passed. No application features,
+  application schema/migrations, or cloud resources were added.
+
+Recreated editor containers need the documented host `attach` command. This step
+verifies a normal PostgreSQL restart; volume recreation and backup restore were
+not tested.
