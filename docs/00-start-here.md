@@ -28,7 +28,7 @@ This checkpoint resolves historical scope/status conflicts during setup. The two
 
 ## Environment status
 
-The following findings come from the read-only local Codex inspection pasted by Vishal after cloning. That inspection made no file changes or installations. They describe the Mac at the time of the report; subsequent repository updates are tracked in Git.
+The initial findings come from the read-only local Codex inspection pasted by Vishal after cloning. That inspection made no file changes or installations. Later user-reported installation results are recorded below. Each observation describes the Mac at the time of its report; repository updates are tracked in Git.
 
 | Item | Evidence/status |
 | --- | --- |
@@ -39,7 +39,7 @@ The following findings come from the read-only local Codex inspection pasted by 
 | Clone on the Mac | Present and clean at inspection; `main` tracks `origin/main`; correct remote `vishal-baliga/global-recovery-engine`; local commit `e6dcf64` |
 | Git | 2.50.1; live GitHub authentication from the Mac was not tested during the inspection |
 | Apple Command Line Tools | Installed and selected; package version 26.6.0.0.1781586589 |
-| Homebrew | Not found on PATH or at standard installation locations; installation pending |
+| Homebrew | Installed and verified by user-provided terminal output: 6.0.22, prefix `/opt/homebrew`, `brew doctor` reports “Your system is ready to brew.” |
 | Docker | CLI and `/Applications/Docker.app` not found; engine readiness unverified |
 | Dev Containers | VS Code extension not found; no repository configuration or CLI present |
 | Node/pnpm | Node, npm, pnpm, and Corepack not found on PATH |
@@ -53,22 +53,42 @@ Treat PATH checks as observations of the inspected environment, not proof that a
 
 ## Next action on the Mac
 
-Install native Apple silicon Homebrew using the command published on [Homebrew's official site](https://brew.sh/), run interactively in a terminal on the Mac:
+Install Docker Desktop and the Microsoft Dev Containers extension. Homebrew setup is complete. Docker runs the local Linux containers; Dev Containers connects VS Code to the project's reproducible development environment once its configuration is created.
+
+### 1. Install and start Docker Desktop
+
+Close VS Code for installation and use the macOS Terminal app. Install the [Homebrew Docker Desktop cask](https://formulae.brew.sh/cask/docker-desktop):
 
 ```sh
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew install --cask docker-desktop
 ```
 
-The installer presents its planned changes and may request local administrator authentication. The user completes any password entry directly in the Mac terminal. Homebrew's supported Apple silicon prefix is `/opt/homebrew`. Follow the installer's printed **Next steps** to configure the actual shell, then open a fresh terminal. [Homebrew installation and shell setup](https://docs.brew.sh/Installation)
-
-Verify and report:
+After installation succeeds, launch Docker:
 
 ```sh
-brew --version
-brew --prefix
-brew doctor
+open -a Docker
 ```
 
-The expected prefix is `/opt/homebrew`; report the actual version and any diagnostic warnings. Homebrew is still pending until installation and verification results are available. Docker/Dev Containers and the project language toolchains follow in subsequent setup steps.
+Complete Docker's first-run setup, review its terms, and select the recommended settings. Enter any requested Mac administrator password directly in the local dialog. Wait for the engine to finish starting before verification. [Docker Desktop installation for Mac](https://docs.docker.com/desktop/setup/install/mac-install/)
+
+### 2. Install the VS Code extension
+
+Reopen VS Code and the GRE folder. Open Extensions (`Cmd+Shift+X`) and install [Dev Containers by Microsoft](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers), extension ID `ms-vscode-remote.remote-containers`. This UI route works even though the `code` shell command is not yet configured. [VS Code Dev Containers setup](https://code.visualstudio.com/docs/devcontainers/containers#_installation)
+
+The extension installation does not create the GRE Dev Container configuration. That repository setup follows the host readiness checks.
+
+### 3. Verify the container runtime
+
+In a fresh terminal, run:
+
+```sh
+docker version
+docker compose version
+docker run --rm hello-world
+```
+
+Report the output and confirm the Dev Containers extension is installed. `docker version` should include both client and server details; `hello-world` checks image download and container execution. Its temporary container is removed when it exits. Record actual architecture/version details and any errors. Docker and Dev Containers remain pending until these results are available.
+
+After host readiness is established, configure and verify the project's Dev Container and language toolchains. The Mac has 16 GiB RAM; measure container resource use as the local services are introduced. Keep this stage scoped to environment setup in the agreed delivery sequence.
 
 This checkpoint is updated through GitHub. Before the next local repository edit, inspect Git status and fetch/pull the latest documentation with a fast-forward update when the working tree permits it. Preserve any local changes. The read-only restriction applied to the completed first inspection; subsequent setup follows the user's active instructions and authorization.
