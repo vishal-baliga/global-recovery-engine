@@ -40,8 +40,8 @@ The initial findings come from the read-only local Codex inspection pasted by Vi
 | Git | 2.50.1; live GitHub authentication from the Mac was not tested during the inspection |
 | Apple Command Line Tools | Installed and selected; package version 26.6.0.0.1781586589 |
 | Homebrew | Installed and verified by user-provided terminal output: 6.0.22, prefix `/opt/homebrew`, `brew doctor` reports “Your system is ready to brew.” |
-| Docker | CLI and `/Applications/Docker.app` not found; engine readiness unverified |
-| Dev Containers | VS Code extension not found; no repository configuration or CLI present |
+| Docker | User output verifies Desktop 4.89.0 (238018), client/engine 29.7.2, client `darwin/arm64`, server `linux/arm64`, context `desktop-linux`; Compose 5.5.0. Image download and `hello-world` execution not yet confirmed. |
+| Dev Containers | Not found during the initial inspection; installation confirmation still pending. No GRE Dev Container configuration established yet. |
 | Node/pnpm | Node, npm, pnpm, and Corepack not found on PATH |
 | Python/uv | Apple Python 3.9.6 available; Python 3.14 and uv not found on PATH |
 | Other CLIs | GitHub, PostgreSQL, Temporal, Azure, Terraform, and Dev Container CLIs not found on PATH; install only when their setup stage requires them |
@@ -53,42 +53,32 @@ Treat PATH checks as observations of the inspected environment, not proof that a
 
 ## Next action on the Mac
 
-Install Docker Desktop and the Microsoft Dev Containers extension. Homebrew setup is complete. Docker runs the local Linux containers; Dev Containers connects VS Code to the project's reproducible development environment once its configuration is created.
+Finish the Docker smoke check and confirm the Microsoft Dev Containers extension. Docker client/server connectivity and native ARM64 execution architecture are verified; this is not yet evidence of a successful container run.
 
-### 1. Install and start Docker Desktop
+### Resolve the permission prompt and collect the remaining output
 
-Close VS Code for installation and use the macOS Terminal app. Install the [Homebrew Docker Desktop cask](https://formulae.brew.sh/cask/docker-desktop):
+The user shared a macOS dialog asking whether Visual Studio Code may access data from other apps. The screenshot does not identify the target app/container or the triggering VS Code process, terminal command, or extension. Apple describes this permission as protecting another developer's application data container. [Apple privacy explanation](https://developer.apple.com/videos/play/wwdc2023/10053/)
 
-```sh
-brew install --cask docker-desktop
+The recommendation is to choose **Don't Allow for now**, then observe the current command's result. No evidence yet establishes that this access is required for the GRE setup. The user's actual choice has not been reported. If an access error occurs, diagnose the specific operation and requested resource before changing permissions.
+
+The last supplied Docker line was:
+
+```text
+Unable to find image 'hello-world:latest' locally
 ```
 
-After installation succeeds, launch Docker:
+This line alone is normal on a first run: the default image policy initiates a download when an image is absent locally. It does not establish that the download or execution completed. [Docker image pull policy](https://docs.docker.com/reference/cli/docker/container/run/#set-the-pull-policy---pull)
+
+Let the existing command finish and supply the remaining output. Success includes **Hello from Docker!**; an error should be recorded exactly. If the original command has already ended and no complete result is available, retry once in the same VS Code terminal:
 
 ```sh
-open -a Docker
-```
-
-Complete Docker's first-run setup, review its terms, and select the recommended settings. Enter any requested Mac administrator password directly in the local dialog. Wait for the engine to finish starting before verification. [Docker Desktop installation for Mac](https://docs.docker.com/desktop/setup/install/mac-install/)
-
-### 2. Install the VS Code extension
-
-Reopen VS Code and the GRE folder. Open Extensions (`Cmd+Shift+X`) and install [Dev Containers by Microsoft](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers), extension ID `ms-vscode-remote.remote-containers`. This UI route works even though the `code` shell command is not yet configured. [VS Code Dev Containers setup](https://code.visualstudio.com/docs/devcontainers/containers#_installation)
-
-The extension installation does not create the GRE Dev Container configuration. That repository setup follows the host readiness checks.
-
-### 3. Verify the container runtime
-
-In a fresh terminal, run:
-
-```sh
-docker version
-docker compose version
 docker run --rm hello-world
 ```
 
-Report the output and confirm the Dev Containers extension is installed. `docker version` should include both client and server details; `hello-world` checks image download and container execution. Its temporary container is removed when it exits. Record actual architecture/version details and any errors. Docker and Dev Containers remain pending until these results are available.
+### Confirm the editor extension
 
-After host readiness is established, configure and verify the project's Dev Container and language toolchains. The Mac has 16 GiB RAM; measure container resource use as the local services are introduced. Keep this stage scoped to environment setup in the agreed delivery sequence.
+In VS Code Extensions, confirm that [Dev Containers by Microsoft](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers), ID `ms-vscode-remote.remote-containers`, is installed. Install it if still absent. The `code` shell command remains unverified, so use the Extensions UI.
 
-This checkpoint is updated through GitHub. Before the next local repository edit, inspect Git status and fetch/pull the latest documentation with a fast-forward update when the working tree permits it. Preserve any local changes. The read-only restriction applied to the completed first inspection; subsequent setup follows the user's active instructions and authorization.
+After these results, configure and verify the GRE Dev Container and language toolchains. The shell prompt shows a directory named `GRE Development`; inspect `git rev-parse --show-toplevel` before repository edits rather than inferring the repository root from the prompt. Docker's smoke command itself may run from any directory.
+
+Before local repository edits, inspect Git status and bring in the latest GitHub documentation with a fast-forward update when the working tree permits it. Preserve local changes. The first inspection's read-only scope does not prohibit later setup already authorized by the user.
