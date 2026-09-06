@@ -14,7 +14,7 @@ Vishal is the sole developer, using a MacBook Air M4 (2025), VS Code, and Codex.
 
 Proceed incrementally: environment setup, prioritized backlog, project/delivery document reconciliation, then product implementation. Do the active setup work without inventing a product backlog or starting application features early. Routine authorized inspection and reversible setup work should continue without repeated confirmation.
 
-The repository initially has documents and a reference ZIP only. There are no established build, lint, test, or launch commands. Inspect actual files before claiming a command exists or succeeds. Record working commands when the toolchain is established. A check run in a hosted workspace does not verify the developer's Mac.
+The initial Dev Container configuration is in `.devcontainer/`; read `docs/09-development-environment.md` for build and verification instructions. Its first ARM64 build remains to be verified on the Mac. The environment check is `python .devcontainer/check_environment.py --expect-arch arm64`, run inside the container. There are no application build, lint, test, or launch commands yet. Inspect actual files before claiming a command exists or succeeds. A check run in a hosted workspace does not verify the developer's Mac.
 
 ## Architecture direction
 

@@ -20,6 +20,7 @@ The agreed sequence is **brief → stack/environment → prioritized backlog →
 | [06 — Pilot MVP brief](06-pilot-mvp-brief.md) | Required pilot outcomes, real-case readiness, and operating/business dependencies |
 | [07 — Future register](07-future-development-and-business-deliverables.md) | Preserved future deliverables and scope-change rules |
 | [08 — Stack and environment](08-stack-and-environment-decision.md) | Working architecture and proposed runtime targets |
+| [09 — Development environment](09-development-environment.md) | Initial container configuration, exact toolchain pins, and Mac verification task |
 | [01 — Business overview](01-business-project-overview.md), [02 — Product strategy](02-product-offering-competitive-strategy.md) | Earlier business/product baseline; B2B-only and MVP-unselected passages await reconciliation |
 | [03 — Operating model](03-operating-model.md), [04 — Workflow](04-workflow-interaction-specification.md), [05 — Domain contracts](05-domain-data-contracts.md) | Domain/reference detail to apply and extend for selected pilot stories |
 | [Contract package](../reference/README.md) | Preserved offline schemas, synthetic example, and validator |
@@ -40,10 +41,10 @@ The initial findings come from the read-only local Codex inspection pasted by Vi
 | Git | 2.50.1; live GitHub authentication from the Mac was not tested during the inspection |
 | Apple Command Line Tools | Installed and selected; package version 26.6.0.0.1781586589 |
 | Homebrew | Installed and verified by user-provided terminal output: 6.0.22, prefix `/opt/homebrew`, `brew doctor` reports “Your system is ready to brew.” |
-| Docker | User output verifies Desktop 4.89.0 (238018), client/engine 29.7.2, client `darwin/arm64`, server `linux/arm64`, context `desktop-linux`; Compose 5.5.0. Image download and `hello-world` execution not yet confirmed. |
-| Dev Containers | Not found during the initial inspection; installation confirmation still pending. No GRE Dev Container configuration established yet. |
-| Node/pnpm | Node, npm, pnpm, and Corepack not found on PATH |
-| Python/uv | Apple Python 3.9.6 available; Python 3.14 and uv not found on PATH |
+| Docker | User output verifies Desktop 4.89.0 (238018), client/engine 29.7.2, client `darwin/arm64`, server `linux/arm64`, context `desktop-linux`; Compose 5.5.0. ARM64 `hello-world` image download and container execution succeeded; user supplied the complete “Hello from Docker!” output. |
+| Dev Containers | Not found during the initial inspection; installation confirmation still pending. Initial GRE configuration is prepared on `setup/devcontainer`; its build/editor session still need verification. |
+| Node/pnpm | Absent from the host PATH at the initial inspection. Container pins: Node 24.20.0 and pnpm 11.10.0; first build pending. |
+| Python/uv | Apple Python 3.9.6 remains on the host. Container pins: Python 3.14.7 and uv 0.12.10; first build pending. |
 | Other CLIs | GitHub, PostgreSQL, Temporal, Azure, Terraform, and Dev Container CLIs not found on PATH; install only when their setup stage requires them |
 | Local database, Temporal, Azurite, provider fakes | Not yet established |
 | Cloud and service accounts | Azure, Temporal Cloud, Clerk, runtime AI, and integration provisioning not verified; architecture selection alone does not provision them |
@@ -53,32 +54,14 @@ Treat PATH checks as observations of the inspected environment, not proof that a
 
 ## Next action on the Mac
 
-Finish the Docker smoke check and confirm the Microsoft Dev Containers extension. Docker client/server connectivity and native ARM64 execution architecture are verified; this is not yet evidence of a successful container run.
+Build and verify the first GRE development container using [the development-environment guide](09-development-environment.md). The configuration and environment check are on the `setup/devcontainer` branch for the first Mac build. JSON/Python syntax and pin consistency have been checked; this hosted workspace has no Docker engine, so no successful GRE image build or container runtime check is claimed yet.
 
-### Resolve the permission prompt and collect the remaining output
+The completed Docker smoke check verifies the native ARM64 host/container path. The prior VS Code app-data prompt's final choice was not reported; the successful Docker output does not establish which permission was granted or denied.
 
-The user shared a macOS dialog asking whether Visual Studio Code may access data from other apps. The screenshot does not identify the target app/container or the triggering VS Code process, terminal command, or extension. Apple describes this permission as protecting another developer's application data container. [Apple privacy explanation](https://developer.apple.com/videos/play/wwdc2023/10053/)
+Give local Codex this bounded task:
 
-The recommendation is to choose **Don't Allow for now**, then observe the current command's result. No evidence yet establishes that this access is required for the GRE setup. The user's actual choice has not been reported. If an access error occurs, diagnose the specific operation and requested resource before changing permissions.
+> Locate the GRE repository root and inspect Git status. Fetch origin and safely check out the setup/devcontainer branch, preserving local changes. Read AGENTS.md and docs/09-development-environment.md. Build the development image and run its environment check for arm64. Diagnose and fix setup failures on this branch, report the results, and update the checkpoint with what actually passed. Confirm the Microsoft Dev Containers extension is installed, then guide me through Reopen in Container. Stay within environment setup; product stories follow the agreed backlog/document steps.
 
-The last supplied Docker line was:
+The first build uses the Mac's Docker engine and downloads the pinned toolchain. A result ending in `GRE development toolchain: PASS (linux/arm64)` establishes the checks listed in the guide. The actual VS Code container session and Codex availability must also be confirmed before this environment step is complete.
 
-```text
-Unable to find image 'hello-world:latest' locally
-```
-
-This line alone is normal on a first run: the default image policy initiates a download when an image is absent locally. It does not establish that the download or execution completed. [Docker image pull policy](https://docs.docker.com/reference/cli/docker/container/run/#set-the-pull-policy---pull)
-
-Let the existing command finish and supply the remaining output. Success includes **Hello from Docker!**; an error should be recorded exactly. If the original command has already ended and no complete result is available, retry once in the same VS Code terminal:
-
-```sh
-docker run --rm hello-world
-```
-
-### Confirm the editor extension
-
-In VS Code Extensions, confirm that [Dev Containers by Microsoft](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers), ID `ms-vscode-remote.remote-containers`, is installed. Install it if still absent. The `code` shell command remains unverified, so use the Extensions UI.
-
-After these results, configure and verify the GRE Dev Container and language toolchains. The shell prompt shows a directory named `GRE Development`; inspect `git rev-parse --show-toplevel` before repository edits rather than inferring the repository root from the prompt. Docker's smoke command itself may run from any directory.
-
-Before local repository edits, inspect Git status and bring in the latest GitHub documentation with a fast-forward update when the working tree permits it. Preserve local changes. The first inspection's read-only scope does not prohibit later setup already authorized by the user.
+After successful verification, record image digests and establish local PostgreSQL, Temporal, Azurite, application dependency compatibility/lockfiles, and the required environment checks. These are pending setup work, followed by backlog prioritization and document reconciliation.
