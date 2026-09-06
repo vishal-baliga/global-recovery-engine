@@ -5,6 +5,13 @@
 **Owner:** Vishal, sole developer with coding-agent assistance  
 **Scope:** The two-track pilot in `06-pilot-mvp-brief.md`; future scope remains in `07-future-development-and-business-deliverables.md`.
 
+**Setup update — September 6, 2026:** The initial core Python/web dependency
+combination is now resolved and verified in the ARM64 editor container; see
+[the dependency baseline](10-dependency-baseline.md) for exact pins, the
+TypeScript compatibility fallback, actual checks, and retained integration work.
+This validates setup fixtures only. The broader integrations and cloud deployment
+in this architecture remain unimplemented/unprovisioned.
+
 ## 1. Recommendation and reasoning
 
 **Use TypeScript/Next.js for the web experience, Python/FastAPI for the domain application and AI work, PostgreSQL for authoritative business records, and Temporal for durable workflows. Deploy containerized application processes on Azure managed services. Develop in VS Code with Codex, a reproducible Dev Container, and a private GitHub monorepo.**

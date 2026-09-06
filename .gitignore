@@ -29,6 +29,8 @@ dist/
 build/
 coverage/
 *.tsbuildinfo
+# Next.js regenerates this alongside ignored route declarations.
+fixtures/web/next-env.d.ts
 playwright-report/
 test-results/
 

@@ -2,7 +2,23 @@
 
 Recovery infrastructure helping creditors reconstruct unresolved obligations and coordinate a supported path to resolution.
 
-**Current stage: development-environment setup.** This repository contains planning references, coding-agent guidance, and the initial Dev Container configuration. The native ARM64 container build, language-toolchain checks, and VS Code/Codex container session passed on the Mac, as reported by Vishal. Local PostgreSQL, Temporal, and Azurite remain to be established. Application scaffolding, dependency locks, automated product checks, and cloud resources are not yet established.
+**Current stage: initial environment baseline verified; backlog planning is next.**
+The ARM64 development container, local PostgreSQL/Temporal/Azurite, and shared
+Python/pnpm dependency environments passed their setup checks. Minimal fixtures
+verify FastAPI, OpenAPI/client generation, TypeScript, a Next.js production build,
+and read-only access to all three services. Customer features, domain logic,
+application migrations, CI, and live integrations remain unimplemented.
+
+Inside the development container, from the repository root with services running:
+
+```sh
+uv sync --locked
+pnpm install --frozen-lockfile
+uv run --locked python -m scripts.check_environment
+```
+
+See [the dependency baseline](docs/10-dependency-baseline.md) for resolved versions,
+fresh-install verification, Mac service commands, and required later integrations.
 
 ## Start here
 
@@ -13,7 +29,8 @@ Read [Current decisions and setup checkpoint](docs/00-start-here.md) first. It e
 | [Pilot MVP brief](docs/06-pilot-mvp-brief.md) | Required outcomes for both pilot journeys |
 | [Future development and business deliverables](docs/07-future-development-and-business-deliverables.md) | Deferred scope, business work, and strategic boundaries |
 | [Stack and environment decision](docs/08-stack-and-environment-decision.md) | Selected architecture direction and proposed runtime targets |
-| [Development container setup](docs/09-development-environment.md) | Build the first container and verify its language toolchains |
+| [Development environment](docs/09-development-environment.md) | Container/local-service commands and verification records |
+| [Dependency baseline](docs/10-dependency-baseline.md) | Shared locks, setup fixtures, combined check, and remaining integrations |
 | [Codex instructions](AGENTS.md) | Repository context and working rules for coding agents |
 | [Contract reference](reference/README.md) | Earlier schemas and synthetic validation package |
 

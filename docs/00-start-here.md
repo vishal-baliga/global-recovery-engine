@@ -11,7 +11,7 @@ The user has proceeded from the two-track pilot brief to stack selection and inc
 
 The pilot includes domestic U.S. personal/friend loan assistance and India-origin B2B recovery against U.S. businesses. Domestic personal loans are an initial acquisition priority; both journeys remain pilot commitments. Cross-border personal loans and general remittance are future or separate scope, as recorded in the future register.
 
-The agreed sequence is **brief → stack/environment → prioritized backlog → project/delivery document updates → development**. Preparing this repository is environment and context setup. It does not establish a runnable application or a prioritized product backlog.
+The agreed sequence is **brief → stack/environment → prioritized backlog → project/delivery document updates → development**. Preparing this repository is environment and context setup. The setup fixtures do not establish a product application or a prioritized product backlog.
 
 ## How to read the documents
 
@@ -20,7 +20,8 @@ The agreed sequence is **brief → stack/environment → prioritized backlog →
 | [06 — Pilot MVP brief](06-pilot-mvp-brief.md) | Required pilot outcomes, real-case readiness, and operating/business dependencies |
 | [07 — Future register](07-future-development-and-business-deliverables.md) | Preserved future deliverables and scope-change rules |
 | [08 — Stack and environment](08-stack-and-environment-decision.md) | Working architecture and proposed runtime targets |
-| [09 — Development environment](09-development-environment.md) | Initial container configuration, exact toolchain pins, and Mac verification task |
+| [09 — Development environment](09-development-environment.md) | Container/local-service configuration and actual Mac verification records |
+| [10 — Dependency baseline](10-dependency-baseline.md) | Shared manifests/locks, combined setup check, resolved versions, and retained integration requirements |
 | [01 — Business overview](01-business-project-overview.md), [02 — Product strategy](02-product-offering-competitive-strategy.md) | Earlier business/product baseline; B2B-only and MVP-unselected passages await reconciliation |
 | [03 — Operating model](03-operating-model.md), [04 — Workflow](04-workflow-interaction-specification.md), [05 — Domain contracts](05-domain-data-contracts.md) | Domain/reference detail to apply and extend for selected pilot stories |
 | [Contract package](../reference/README.md) | Preserved offline schemas, synthetic example, and validator |
@@ -38,7 +39,7 @@ The initial findings come from the read-only local Codex inspection pasted by Vi
 | ChatGPT GitHub connection | Account and private repository access verified |
 | Repository baseline | Project references and Codex guidance committed in `e6dcf64`; later setup findings are incremental documentation updates |
 | Clone on the Mac | Fetched origin successfully; clean working tree safely switched to `setup/devcontainer`, tracking `origin/setup/devcontainer` at `445db9a` before local setup fixes. Correct remote `vishal-baliga/global-recovery-engine`. |
-| Git | Host Git 2.50.1; authenticated fetch succeeded on the Mac. Temporal setup commit `f099e27` is present on GitHub branch `setup/devcontainer`; the Azurite increment began from this clean, up-to-date baseline. PR #1 remains a draft. |
+| Git | Host Git 2.50.1; authenticated fetch succeeded on the Mac. Azurite setup commit `5bd4c1b` is present on GitHub branch `setup/devcontainer`; the dependency baseline began from this clean, up-to-date baseline. PR #1 remains a draft. |
 | Apple Command Line Tools | Installed and selected; package version 26.6.0.0.1781586589 |
 | Homebrew | Installed and verified by user-provided terminal output: 6.0.22, prefix `/opt/homebrew`, `brew doctor` reports “Your system is ready to brew.” |
 | Docker | User output verifies Desktop 4.89.0 (238018), client/engine 29.7.2, client `darwin/arm64`, server `linux/arm64`, context `desktop-linux`; Compose 5.5.0. ARM64 `hello-world` image download and container execution succeeded; user supplied the complete “Hello from Docker!” output. |
@@ -51,7 +52,8 @@ The initial findings come from the read-only local Codex inspection pasted by Vi
 | Local Azurite | Blob-only Azurite 3.36.0 verified native ARM64, pinned by digest, with internal network/no host ports and persistent named storage. Locked SDK 12.30.1 ran on Python 3.14.7/API 2025-11-05. Authenticated bytes/metadata, anonymous HTTP 403, same-blob restart persistence, and scoped cleanup all passed. |
 | Provider fakes | Not yet established |
 | Cloud and service accounts | Azure, Temporal Cloud, Clerk, runtime AI, and integration provisioning not verified; architecture selection alone does not provision them |
-| Product build/tests | No application scaffolding, dependency locks, CI pipeline, or executable product acceptance checks yet |
+| Dependency baseline/setup fixtures | Shared Python and pnpm manifests/locks verified with fresh locked installs. FastAPI/Pydantic, generated TypeScript client, strict TypeScript checks, and Next 16 production fixture build passed; read-only checks reached all three services from the shared Python environment. See document 10. |
+| Product/CI | No customer/domain implementation, application migrations, CI pipeline, or executable product acceptance suite yet. Later integration requirements remain tracked in document 10. |
 
 Treat PATH checks as observations of the inspected environment, not proof that a tool cannot exist elsewhere. Update this table with actual results as setup progresses. Use a project-managed Python later; leave the Apple-provided Python in place.
 
@@ -69,7 +71,7 @@ On September 6, 2026, Vishal supplied a local Codex report confirming the actual
 
 The next session inspected a clean working tree on `setup/devcontainer`, fetched origin, and safely fast-forwarded `c937128` to `2c80392` before PostgreSQL setup edits. No local changes needed stashing or removal. The earlier pnpm stdout/preflight fix and build-resolved image digests are recorded in [the development-environment guide](09-development-environment.md).
 
-This completes the language-toolchain and editor/agent setup. The subsequent PostgreSQL verification is recorded below; other local services, application dependency compatibility, and product behavior remain pending.
+This completes the language-toolchain and editor/agent setup. Subsequent PostgreSQL, Temporal, Azurite, and initial shared dependency verification are recorded below; application integrations and product behavior remain pending.
 
 ## Completed PostgreSQL increment
 
@@ -137,10 +139,40 @@ RBAC/managed identity/TLS, backup recovery, upgrades, production durability, or
 application storage adapters. Recreated editor containers require host attachment.
 The emulator's default root user remains a development-service limitation.
 
-## Next environment increment
+## Completed initial dependency baseline
 
-Resolve application dependency compatibility/lockfiles and the remaining
-environment checks. Provider fakes remain unestablished. These remain setup work,
-followed by backlog prioritization and document reconciliation. No application
-features, cloud provisioning, or production integrations were added. Inspect Git
-status and preserve local changes before the next increment.
+On September 6, 2026, the shared root Python environment resolved FastAPI,
+Pydantic, SQLAlchemy/Psycopg/Alembic, Temporal, and Azure Blob together. The pnpm
+workspace resolved Next.js 16.3.4, React 19.2.8, TypeScript 6.0.3, and Hey API
+0.99.0. TypeScript 7.0.2 initially resolved but failed Hey API compiler-API use;
+6.0.3 passed generation, checking, and building. Full pins and remaining
+requirements are in [the dependency baseline](10-dependency-baseline.md).
+
+Both `uv sync --locked` and `pnpm install --frozen-lockfile` passed in fresh
+empty environments with unchanged manifests/locks. The combined check passed
+FastAPI request/response and validation, OpenAPI export, generated-client live
+HTTP requests, strict TypeScript checking, and a Next.js production fixture build.
+SQLAlchemy accessed PostgreSQL in a read-only transaction; Alembic read no current
+migration heads without creating a version table. Temporal and authenticated
+Azurite checks passed concurrently. The retained Temporal workflow/run was still
+completed, and all existing service verification receipts were unchanged.
+
+Run from the editor repository root after locked installation:
+
+```sh
+uv run --locked python -m scripts.check_environment
+```
+
+All fixtures are setup-only. The earlier individual service probes, data volumes,
+credentials, and completed restart records are preserved. Docker orchestration
+remains on the Mac; no host commands or service restarts were needed this increment.
+
+## Next planning stage
+
+Use the verified initial environment to prepare the prioritized backlog for both
+pilot tracks, carrying the explicit remaining integrations/quality/operations
+requirements in document 10 into the relevant tasks. Provider fakes and live
+integrations remain unestablished. Then reconcile project/delivery documents
+before product implementation. No customer features or domain implementation
+were added by this baseline. Inspect Git status and preserve local changes before
+the next task.

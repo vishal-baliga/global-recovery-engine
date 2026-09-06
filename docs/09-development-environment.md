@@ -77,7 +77,7 @@ Build-resolved image references (recorded observations, not yet digest pins in t
 
 Vishal subsequently supplied the successful editor/agent verification: Codex executed in `/workspaces/global-recovery-engine` on Debian GNU/Linux 12 (bookworm), Linux `7.0.12-linuxkit`, `aarch64` / ARM64, as non-root `vscode` with UID/GID `1000`. The Docker marker and VS Code container server were present. The environment check exited 0 with `GRE development toolchain: PASS (linux/arm64)`, including all pinned versions, Python virtual environment/SSL/SQLite, pnpm execution, and workspace write checks. GitHub confirms the earlier check fix and build records in commit `c937128`; the report did not include the current local HEAD. See [the setup checkpoint](00-start-here.md) for the next increment.
 
-The PostgreSQL, Temporal, and Azurite increments and their verification are recorded below. Next resolve application dependency compatibility/lockfiles and the remaining environment checks needed for backlog planning. These remain setup work. The agreed sequence continues with prioritized backlog and document reconciliation before product feature development.
+The PostgreSQL, Temporal, and Azurite increments and their verification are recorded below. The initial shared dependency baseline is now verified in [document 10](10-dependency-baseline.md); its remaining integration requirements carry into backlog planning. These remain setup work. The agreed sequence continues with prioritized backlog and document reconciliation before product feature development.
 
 [VS Code Dev Containers guide](https://code.visualstudio.com/docs/devcontainers/containers) and the [Dev Container specification](https://github.com/devcontainers/spec/blob/main/docs/specs/devcontainerjson-reference.md) define the editor and lifecycle behavior used here.
 
@@ -397,7 +397,7 @@ has no production authentication/TLS. Normal server and worker restart recovery
 passed, but backup/restore, data-volume loss, server upgrades, production
 operations, and application workflow/activity behavior were not tested. The
 Python lock is specific to this environment probe. The Azurite increment is
-recorded below; application compatibility/locks remain subsequent setup work.
+recorded below; the initial shared application compatibility/locks are now verified in [document 10](10-dependency-baseline.md), with later integration work retained.
 
 ## Local Azurite Blob Storage
 
@@ -562,3 +562,33 @@ service upgrades, or full Azure feature parity. Recreated editor containers need
 host network attachment. The official emulator image runs as root; non-root
 service hardening has not been established. Application storage adapters and
 cloud integration remain later work.
+
+
+## Shared application dependency baseline
+
+The initial dependency combination is verified in
+[10 — Dependency baseline](10-dependency-baseline.md). Root `pyproject.toml` /
+`uv.lock` resolve the Python libraries together; the pnpm workspace and lockfile
+resolve Next.js/React/TypeScript/Hey API together. Existing isolated service
+probes and completed restart records are preserved.
+
+Run inside the **development container** from the repository root:
+
+```sh
+uv sync --locked
+pnpm install --frozen-lockfile
+uv run --locked python -m scripts.check_environment
+```
+
+On September 6, 2026, fresh installs and the combined check passed: FastAPI
+request/response validation, OpenAPI export, generated TypeScript client HTTP
+requests, strict TypeScript checks, and Next.js 16.3.4 production build. The shared
+Python environment accessed PostgreSQL through SQLAlchemy, read Alembic revision
+state, reached Temporal, and authenticated to Azurite concurrently. These were
+read-only service checks; existing data and receipts were preserved. No Mac
+orchestration or service restarts were needed for this increment.
+
+Hey API 0.99.0 failed with TypeScript 7.0.2's compiler API; TypeScript 6.0.3 passed.
+The new baseline document records full versions, fresh-install reproduction,
+fixture limits, and required later integration/quality/cloud work. The Next build
+is a setup fixture, not product or deployment readiness.
