@@ -28,29 +28,47 @@ This checkpoint resolves historical scope/status conflicts during setup. The two
 
 ## Environment status
 
+The following findings come from the read-only local Codex inspection pasted by Vishal after cloning. That inspection made no file changes or installations. They describe the Mac at the time of the report; subsequent repository updates are tracked in Git.
+
 | Item | Evidence/status |
 | --- | --- |
-| Development machine | User reports MacBook Air M4, 2025; macOS version and memory not yet checked |
-| VS Code and Codex | User reports extension installed and signed in |
+| Development machine | MacBook Air M4 (2025), native `arm64`, 16 GiB RAM, macOS 26.6.2 |
+| VS Code and Codex | VS Code 1.136.1 and Codex extension present; user reports signed in; `code` command unavailable in the inspected shell |
 | ChatGPT GitHub connection | Account and private repository access verified |
-| Repository baseline | Project references, README, agent instructions, and this checkpoint prepared for the initial setup commit |
-| Clone on the Mac | Not yet verified; this is the next step |
-| Git, Apple command-line tools, Homebrew, Docker | Presence and versions on the Mac not yet verified |
-| Node/pnpm, Python/uv, Dev Container | Not yet verified or version-locked |
+| Repository baseline | Project references and Codex guidance committed in `e6dcf64`; later setup findings are incremental documentation updates |
+| Clone on the Mac | Present and clean at inspection; `main` tracks `origin/main`; correct remote `vishal-baliga/global-recovery-engine`; local commit `e6dcf64` |
+| Git | 2.50.1; live GitHub authentication from the Mac was not tested during the inspection |
+| Apple Command Line Tools | Installed and selected; package version 26.6.0.0.1781586589 |
+| Homebrew | Not found on PATH or at standard installation locations; installation pending |
+| Docker | CLI and `/Applications/Docker.app` not found; engine readiness unverified |
+| Dev Containers | VS Code extension not found; no repository configuration or CLI present |
+| Node/pnpm | Node, npm, pnpm, and Corepack not found on PATH |
+| Python/uv | Apple Python 3.9.6 available; Python 3.14 and uv not found on PATH |
+| Other CLIs | GitHub, PostgreSQL, Temporal, Azure, Terraform, and Dev Container CLIs not found on PATH; install only when their setup stage requires them |
 | Local database, Temporal, Azurite, provider fakes | Not yet established |
 | Cloud and service accounts | Azure, Temporal Cloud, Clerk, runtime AI, and integration provisioning not verified; architecture selection alone does not provision them |
 | Product build/tests | No application scaffolding, dependency locks, CI pipeline, or executable product acceptance checks yet |
 
-Treat these as observations, not a claim that an unverified tool is absent. Update this table with actual results as setup progresses.
+Treat PATH checks as observations of the inspected environment, not proof that a tool cannot exist elsewhere. Update this table with actual results as setup progresses. Use a project-managed Python later; leave the Apple-provided Python in place.
 
 ## Next action on the Mac
 
-In VS Code, use the Command Palette (`Cmd+Shift+P`) → **Git: Clone**, enter `https://github.com/vishal-baliga/global-recovery-engine.git`, choose a parent folder such as `~/Developer`, and open the resulting project folder. Complete GitHub sign-in if VS Code requests it. If Git is missing, resolve that prerequisite before retrying. [VS Code cloning instructions](https://code.visualstudio.com/docs/sourcecontrol/quickstart#_option-a-clone-a-repository-locally)
+Install native Apple silicon Homebrew using the command published on [Homebrew's official site](https://brew.sh/), run interactively in a terminal on the Mac:
 
-Once open, start a Codex conversation in that folder with:
+```sh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
 
-> Read AGENTS.md and docs/00-start-here.md, then the pilot brief and stack decision. We are setting up GRE incrementally on my MacBook Air M4. Inspect the local repository and development tools, report what is present or missing, and recommend the next setup step. Keep this first check read-only; do not install tools or begin application implementation yet.
+The installer presents its planned changes and may request local administrator authentication. The user completes any password entry directly in the Mac terminal. Homebrew's supported Apple silicon prefix is `/opt/homebrew`. Follow the installer's printed **Next steps** to configure the actual shell, then open a fresh terminal. [Homebrew installation and shell setup](https://docs.brew.sh/Installation)
 
-The inspection should establish the OS/architecture and memory, Git/remote/working-tree state, and availability of command-line tools, Homebrew, Docker, Node/pnpm, and Python/uv. Report versions and readiness only; do not print environment secrets or credential-file contents. An installed Docker client does not by itself establish that its engine is running.
+Verify and report:
 
-The repo carries the durable project context for the VS Code agent. After this initial check, resolve the missing prerequisites incrementally, establish and verify the reproducible environment, then use those decisions to prioritize the backlog.
+```sh
+brew --version
+brew --prefix
+brew doctor
+```
+
+The expected prefix is `/opt/homebrew`; report the actual version and any diagnostic warnings. Homebrew is still pending until installation and verification results are available. Docker/Dev Containers and the project language toolchains follow in subsequent setup steps.
+
+This checkpoint is updated through GitHub. Before the next local repository edit, inspect Git status and fetch/pull the latest documentation with a fast-forward update when the working tree permits it. Preserve any local changes. The read-only restriction applied to the completed first inspection; subsequent setup follows the user's active instructions and authorization.

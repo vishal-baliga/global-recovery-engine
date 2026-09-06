@@ -10,7 +10,7 @@ Follow the user's current instructions and established authorization. The checkp
 
 ## Current delivery stage
 
-Vishal is the sole developer, using a MacBook Air M4 (2025), VS Code, and Codex. GitHub is connected to ChatGPT; the VS Code Codex extension is installed and signed in, as reported by the user. Local repository access and the remaining toolchain still need verification.
+Vishal is the sole developer, using a MacBook Air M4 (2025), VS Code, and Codex. GitHub is connected to ChatGPT; the VS Code Codex extension is installed and signed in, as reported by the user. The local Codex inspection confirms a clean clone on native arm64 macOS 26.6.2 with 16 GiB RAM, Git, and Apple Command Line Tools. See the setup checkpoint for the remaining toolchain work; Homebrew installation is next.
 
 Proceed incrementally: environment setup, prioritized backlog, project/delivery document reconciliation, then product implementation. Do the active setup work without inventing a product backlog or starting application features early. Routine authorized inspection and reversible setup work should continue without repeated confirmation.
 
