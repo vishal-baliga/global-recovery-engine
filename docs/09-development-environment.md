@@ -77,7 +77,7 @@ Build-resolved image references (recorded observations, not yet digest pins in t
 
 Vishal subsequently supplied the successful editor/agent verification: Codex executed in `/workspaces/global-recovery-engine` on Debian GNU/Linux 12 (bookworm), Linux `7.0.12-linuxkit`, `aarch64` / ARM64, as non-root `vscode` with UID/GID `1000`. The Docker marker and VS Code container server were present. The environment check exited 0 with `GRE development toolchain: PASS (linux/arm64)`, including all pinned versions, Python virtual environment/SSL/SQLite, pnpm execution, and workspace write checks. GitHub confirms the earlier check fix and build records in commit `c937128`; the report did not include the current local HEAD. See [the setup checkpoint](00-start-here.md) for the next increment.
 
-The PostgreSQL increment and its verification are recorded below. Next establish local Temporal and Azurite, application dependency compatibility/lockfiles, and the remaining environment checks needed for backlog planning. These remain setup work. The agreed sequence continues with prioritized backlog and document reconciliation before product feature development.
+The PostgreSQL and Temporal increments and their verification are recorded below. Next establish local Azurite, application dependency compatibility/lockfiles, and the remaining environment checks needed for backlog planning. These remain setup work. The agreed sequence continues with prioritized backlog and document reconciliation before product feature development.
 
 [VS Code Dev Containers guide](https://code.visualstudio.com/docs/devcontainers/containers) and the [Dev Container specification](https://github.com/devcontainers/spec/blob/main/docs/specs/devcontainerjson-reference.md) define the editor and lifecycle behavior used here.
 
@@ -218,3 +218,183 @@ Verified September 6, 2026 after clean fast-forward of `setup/devcontainer` from
 Recreated editor containers need the documented host `attach` command. This step
 verifies a normal PostgreSQL restart; volume recreation and backup restore were
 not tested.
+
+## Local Temporal development server
+
+This increment uses the official Temporal CLI's embedded development server,
+with SQLite persistence separate from GRE's PostgreSQL business-record database.
+It adds only a synthetic workflow and environment probe. The official
+[Docker image](https://hub.docker.com/r/temporalio/temporal) and
+[server command reference](https://docs.temporal.io/cli/command-reference/server)
+describe `server start-dev` and persistent `--db-filename` storage.
+
+`.devcontainer/compose.temporal.yaml` pins CLI image `temporalio/temporal:1.8.3`
+**and** multi-platform digest
+`sha256:cea463d98a8d6def4420f903ea5c3fcd0d85c8d10fbcc2770a50c12fff2eb26d`,
+with `platform: linux/arm64`. Docker Hub's tag metadata lists native Linux ARM64.
+The CLI version identifies the image; its embedded server version is reported by
+`temporal --version` and recorded below after runtime verification.
+
+The named volume `gre-temporal-dev-data` mounts `/home/temporal`, the image's
+non-root user's home, so the initialized volume inherits writable ownership.
+The server writes `/home/temporal/gre-temporal.db` and its SQLite companion files
+there. Normal stop/start/restart keeps this volume. Do not remove the volume or
+use `down --volumes` for routine lifecycle work. CLI upgrades may require a new
+development database; this increment does not establish an upgrade/restore path.
+
+The internal `gre-temporal` Docker network carries gRPC at `gre-temporal:7233`.
+A second dedicated bridge network, `gre-temporal-ui`, allows Docker Desktop to
+serve the published localhost UI port; publishing from an internal-only network
+did not work on the verified Mac. Only the Temporal server joins this bridge.
+It permits server egress and does not publish gRPC; other Docker containers would
+need explicit network attachment to reach the server.
+No gRPC host port is published. The only host binding is
+**`127.0.0.1:8233`**, for the embedded UI at <http://127.0.0.1:8233/>. No VS Code
+port forwarding is configured. The development server has no production
+authentication/TLS and must contain only synthetic data; access is limited to
+attached containers, local Mac users through the UI, and Docker administrators.
+The editor retains its original network for internet access. The database and
+Temporal services use separate internal networks and volumes.
+
+### Mac host lifecycle and editor attachment
+
+Run from this GRE checkout's root in **Mac Terminal**:
+
+```sh
+docker ps --format 'table {{.ID}}\t{{.Names}}\t{{.Image}}'
+# Replace GRE_CONTAINER_ID with the GRE editor container ID.
+bash .devcontainer/temporal-host.sh up GRE_CONTAINER_ID
+curl --fail --silent --output /dev/null --write-out 'Temporal UI HTTP %{http_code}\n' http://127.0.0.1:8233/
+```
+
+`up` starts Temporal, waits for gRPC health, checks that the supplied editor
+container mounts this checkout, and attaches it to the private network. It
+reports CLI/server versions, native architecture, runtime user, resolved digest,
+port bindings, and volume mount. The editor container during initial verification
+is `9b0a594f1f29`; recreated containers have a new ID.
+
+```sh
+bash .devcontainer/temporal-host.sh status
+bash .devcontainer/temporal-host.sh stop
+bash .devcontainer/temporal-host.sh up
+bash .devcontainer/temporal-host.sh restart
+bash .devcontainer/temporal-host.sh attach GRE_CONTAINER_ID
+```
+
+`stop` preserves the volume, network, and editor attachment; `up` starts the
+existing service again. `restart` performs a normal restart, waits for health,
+and refreshes the ignored server-start receipt used by the probe. `status`
+reports actual Docker configuration, including `Internal=true`, the sole
+localhost UI binding, and the persistent volume. Rebuilding/recreating the
+editor requires `attach` with its new ID; `devcontainer.json` stays standalone.
+All Docker orchestration runs on the Mac; the editor has no Docker CLI/socket.
+
+If startup fails, inspect:
+
+```sh
+docker compose -f .devcontainer/compose.temporal.yaml logs --tail 100 temporal
+```
+
+### Locked Python SDK connectivity and restart probe
+
+`.devcontainer/check_temporal.py.lock` locks the isolated `temporalio==1.32.0`
+SDK and transitive packages for Python `>=3.14,<3.15`. Its published ARM64 stable
+ABI wheel installs on CPython 3.14. This is an environment-probe lock, not an
+application dependency decision. The first run downloads packages; after caching,
+`--offline` prevents further network package access.
+
+Run in the **development container**:
+
+```sh
+uv run --frozen --script .devcontainer/check_temporal.py connect
+uv run --frozen --script .devcontainer/check_temporal.py seed
+```
+
+`seed` starts an isolated worker and a UUID-named synthetic workflow on a unique
+task queue in namespace `default`. It queries the workflow to verify it is
+waiting for a signal, saves the exact workflow/run IDs and host restart receipt
+under ignored `local-data/temporal/`, then shuts down the worker. No background
+probe worker is left running. Workflow execution timeout is one day; complete
+the restart check within that window.
+
+Restart the **server on the Mac host**:
+
+```sh
+bash .devcontainer/temporal-host.sh restart
+```
+
+Run in a **new development-container process**:
+
+```sh
+uv run --frozen --offline --script .devcontainer/check_temporal.py resume
+```
+
+`resume` checks the same server container has a changed start timestamp, launches
+a new worker with a different identity, opens the saved workflow **and run ID**,
+and queries that it is still waiting. It then signals that execution, verifies
+its exact synthetic result and completed status without following another run,
+and checks history contains exactly one start, signal, and completion. Both
+commands have a 60-second overall timeout. The separate workflow module preserves
+the SDK's default workflow sandbox.
+
+The completed execution/history remains available for inspection in the local UI,
+subject to the development namespace's retention. The ignored receipt records
+the verification. To run a fresh probe after success, archive the receipt first:
+
+```sh
+mv -n local-data/temporal/workflow-probe.json local-data/temporal/workflow-probe.previous.json
+```
+
+The command does not overwrite an existing archive; rename that archive first
+if you need to archive another receipt. A pending
+receipt is deliberately not overwritten by `seed`; finish or diagnose that
+execution before starting another probe. This establishes normal development
+server/worker restart recovery, not production durability, backup restoration,
+application replay compatibility, activity retries, or external-effect handling.
+
+### Temporal verification record
+
+Verified September 6, 2026 from clean `setup/devcontainer` at `ea7cb38` plus
+this increment. Origin was fetched and the branch was already up to date.
+
+- Vishal's Mac output confirms the pinned image digest above, `linux/arm64`,
+  runtime `aarch64`, and non-root `temporal` UID/GID 1000. The image reports
+  **CLI 1.8.3, embedded Server 1.31.2, UI 2.50.1**.
+- The named volume is `gre-temporal-dev-data -> /home/temporal`; the SDK network
+  reports `Internal=true`. Docker reports exactly
+  `{"8233/tcp":[{"HostIp":"127.0.0.1","HostPort":"8233"}]}` as host port bindings.
+  No gRPC port is published. The Mac UI request returned HTTP 200.
+- The initial internal-only network allowed SDK access but the Mac UI request
+  returned HTTP 000. Adding the dedicated UI bridge resolved host access while
+  retaining the localhost-only binding and internal SDK network. The service
+  was recreated for this adjustment before the synthetic workflow was started.
+- SDK 1.32.0 and its locked dependencies installed successfully on CPython 3.14.7
+  ARM64. The agent's `connect`, `seed`, and `resume` commands passed from the
+  development container using the locked environment; workflow checks ran with
+  offline package access and the SDK's default workflow sandbox.
+- Synthetic workflow ID:
+  `gre-environment-bd049407-ba8c-4ca1-8c2b-0c42cbceb85b`.
+  Exact run ID: `01a07906-7524-703d-9f22-507260b910c5`.
+  The first worker confirmed it was waiting for a signal, then exited cleanly.
+- Vishal ran the normal server restart helper. Container
+  `45f07f76c4cf8dacd346e28a1d8956a2018e2f983abbfbefd2e7f6a77827a2e7`
+  remained the same; its start timestamp changed from
+  `2026-09-06T23:20:18.814375214Z` to `2026-09-06T23:21:34.82863468Z`.
+- The replacement worker used identity
+  `gre-environment-worker-ead561fc-ec4c-4441-8a8c-d5e19f201ed4`, replacing
+  `gre-environment-worker-ef16acfb-4996-436c-9af3-880c5035180b`.
+  It queried the same run as waiting, signaled it, and verified completion with
+  result `GRE synthetic probe completed: bd049407-ba8c-4ca1-8c2b-0c42cbceb85b`.
+  The nine-event history has exactly one start, signal, and completion.
+  The replacement worker also exited cleanly.
+- Host helper syntax, Python parsing/CLI, lockfile parsing, Git whitespace, and
+  local receipt ignore checks passed. No unrelated changes were present.
+
+Temporal remains running; its completed synthetic history and ignored receipt
+are retained for inspection. Recreated editor containers need manual host network
+attachment. The UI bridge permits outbound networking; the development service
+has no production authentication/TLS. Normal server and worker restart recovery
+passed, but backup/restore, data-volume loss, server upgrades, production
+operations, and application workflow/activity behavior were not tested. The
+Python lock is specific to this environment probe. Azurite and application
+compatibility/locks remain subsequent setup work.

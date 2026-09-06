@@ -38,7 +38,7 @@ The initial findings come from the read-only local Codex inspection pasted by Vi
 | ChatGPT GitHub connection | Account and private repository access verified |
 | Repository baseline | Project references and Codex guidance committed in `e6dcf64`; later setup findings are incremental documentation updates |
 | Clone on the Mac | Fetched origin successfully; clean working tree safely switched to `setup/devcontainer`, tracking `origin/setup/devcontainer` at `445db9a` before local setup fixes. Correct remote `vishal-baliga/global-recovery-engine`. |
-| Git | Host Git 2.50.1; authenticated fetch succeeded on the Mac. Commit `c937128` containing the pnpm check fix and setup records is present on GitHub branch `setup/devcontainer`; PR #1 remains a draft. |
+| Git | Host Git 2.50.1; authenticated fetch succeeded on the Mac. PostgreSQL setup commit `ea7cb38` is present on GitHub branch `setup/devcontainer`; the Temporal increment began from this clean, up-to-date baseline. PR #1 remains a draft. |
 | Apple Command Line Tools | Installed and selected; package version 26.6.0.0.1781586589 |
 | Homebrew | Installed and verified by user-provided terminal output: 6.0.22, prefix `/opt/homebrew`, `brew doctor` reports “Your system is ready to brew.” |
 | Docker | User output verifies Desktop 4.89.0 (238018), client/engine 29.7.2, client `darwin/arm64`, server `linux/arm64`, context `desktop-linux`; Compose 5.5.0. ARM64 `hello-world` image download and container execution succeeded; user supplied the complete “Hello from Docker!” output. |
@@ -47,7 +47,8 @@ The initial findings come from the read-only local Codex inspection pasted by Vi
 | Python/uv | Apple Python 3.9.6 remains on the host. Container Python 3.14.7 and uv 0.12.10 built and verified on ARM64. |
 | Other CLIs | GitHub, PostgreSQL, Temporal, Azure, Terraform, and Dev Container CLIs not found on PATH; install only when their setup stage requires them |
 | Local PostgreSQL | PostgreSQL 18.6 Bookworm verified on native ARM64. Mac host startup/health and editor-container TCP connectivity passed. A committed synthetic row survived a normal PostgreSQL restart; probe cleanup passed. Private internal network and persistent named volume configured; lifecycle commands and resolved digest recorded in the environment guide. |
-| Temporal, Azurite, provider fakes | Not yet established |
+| Local Temporal | Official CLI development-server image 1.8.3 pinned by digest; embedded Server 1.31.2 / UI 2.50.1 verified native ARM64 and non-root. Persistent SQLite volume, private SDK network, localhost-only UI (HTTP 200), and locked Python 3.14 SDK 1.32.0 probe passed. The same workflow/run completed after normal server and worker restarts. |
+| Azurite, provider fakes | Not yet established |
 | Cloud and service accounts | Azure, Temporal Cloud, Clerk, runtime AI, and integration provisioning not verified; architecture selection alone does not provision them |
 | Product build/tests | No application scaffolding, dependency locks, CI pipeline, or executable product acceptance checks yet |
 
@@ -85,10 +86,35 @@ for exact Mac start/stop/restart/attach commands, the observed image digest, and
 verification details. Recreated editor containers need host network attachment.
 Docker orchestration remains on the Mac; no CLI/socket was added to the editor.
 
+## Completed Temporal increment
+
+On September 6, 2026, Vishal started the official Temporal CLI development server
+from the Mac. CLI 1.8.3 (Server 1.31.2, UI 2.50.1) ran natively on ARM64 as UID
+1000. The image is pinned by version and resolved digest in Compose. SQLite state
+persists in named volume `gre-temporal-dev-data`. The SDK network is internal;
+the dedicated UI bridge enables only a `127.0.0.1:8233` host binding, verified
+with HTTP 200. gRPC remains unpublished.
+
+The locked SDK 1.32.0 probe ran on Python 3.14.7 in the editor container. It
+started a synthetic workflow, queried it as waiting for a signal, and shut down
+its worker. After a normal Mac-hosted server restart, a new worker queried,
+signaled, and completed the **same workflow/run ID**. History contained exactly
+one start, signal, and completion (nine events). Both worker processes exited
+cleanly. The completed synthetic history and ignored receipt remain available.
+See [the environment guide](09-development-environment.md#local-temporal-development-server)
+for exact host lifecycle/attachment and probe commands, the image digest,
+workflow/run IDs, timestamps, and observed results.
+
+This establishes normal development-server and worker restart recovery, not
+backup/restore, upgrade safety, production availability/authentication, or
+application workflow behavior. Recreated editor containers require host network
+attachment. The UI bridge allows server egress. Docker orchestration remains on
+the Mac, with no Docker CLI/socket added to the editor.
+
 ## Next environment increment
 
-Establish local Temporal and Azurite, then application dependency compatibility/
-lockfiles and the remaining environment checks. These remain setup work, followed
-by backlog prioritization and document reconciliation. No application tables or
-migrations were introduced; the probe used its own environment-check schema.
-Inspect Git status and preserve local changes before the next increment.
+Establish local Azurite, then application dependency compatibility/lockfiles and
+the remaining environment checks. These remain setup work, followed by backlog
+prioritization and document reconciliation. No application workflows, tables, or
+migrations were introduced; the workflow and schema probes are synthetic setup
+checks. Inspect Git status and preserve local changes before the next increment.
