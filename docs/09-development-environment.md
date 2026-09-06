@@ -1,6 +1,6 @@
 # Development environment — first container
 
-**Status:** First image build and offline ARM64 environment check passed on Vishal’s Mac on September 6, 2026. Microsoft Dev Containers 0.466.0 is installed. VS Code container reopen and Codex availability in that session remain pending.
+**Status:** Language-toolchain and editor/agent setup verified on Vishal’s Mac on September 6, 2026, based on his local Codex reports. The image build, offline ARM64 check, and actual VS Code/Codex container session passed. Local services and application dependency compatibility remain pending.
 
 ## What this step establishes
 
@@ -75,7 +75,7 @@ Build-resolved image references (recorded observations, not yet digest pins in t
 | `ghcr.io/astral-sh/uv:0.12.10` | `sha256:2bb3ebca0a796a155094a27773d290c4b074572e6107f171d88d086682fd2500` |
 | Local `gre-dev:local` image ID | `sha256:49b1d04e826ba31bdbd0b68e06cad505410ea2cf0767b7758476d1e0877ebb18` |
 
-Pending: editor reopen and Codex availability in the container. Record that result in [the setup checkpoint](00-start-here.md).
+Vishal subsequently supplied the successful editor/agent verification: Codex executed in `/workspaces/global-recovery-engine` on Debian GNU/Linux 12 (bookworm), Linux `7.0.12-linuxkit`, `aarch64` / ARM64, as non-root `vscode` with UID/GID `1000`. The Docker marker and VS Code container server were present. The environment check exited 0 with `GRE development toolchain: PASS (linux/arm64)`, including all pinned versions, Python virtual environment/SSL/SQLite, pnpm execution, and workspace write checks. GitHub confirms the earlier check fix and build records in commit `c937128`; the report did not include the current local HEAD. See [the setup checkpoint](00-start-here.md) for the next increment.
 
 Then establish local PostgreSQL, Temporal, and Azurite, application dependency compatibility/lockfiles, and the initial environment checks needed for backlog planning. These remain setup work. The agreed sequence continues with prioritized backlog and document reconciliation before product feature development.
 

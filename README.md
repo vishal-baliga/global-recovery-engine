@@ -2,7 +2,7 @@
 
 Recovery infrastructure helping creditors reconstruct unresolved obligations and coordinate a supported path to resolution.
 
-**Current stage: development-environment setup.** This repository contains planning references, coding-agent guidance, and the initial Dev Container configuration. The first GRE container build is pending verification on the Mac. Application scaffolding, dependency locks, automated product checks, and cloud resources are not yet established.
+**Current stage: development-environment setup.** This repository contains planning references, coding-agent guidance, and the initial Dev Container configuration. The native ARM64 container build, language-toolchain checks, and VS Code/Codex container session passed on the Mac, as reported by Vishal. Local PostgreSQL, Temporal, and Azurite remain to be established. Application scaffolding, dependency locks, automated product checks, and cloud resources are not yet established.
 
 ## Start here
 

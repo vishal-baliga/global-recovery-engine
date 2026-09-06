@@ -34,15 +34,15 @@ The initial findings come from the read-only local Codex inspection pasted by Vi
 | Item | Evidence/status |
 | --- | --- |
 | Development machine | MacBook Air M4 (2025), native `arm64`, 16 GiB RAM, macOS 26.6.2 |
-| VS Code and Codex | VS Code 1.136.1 and Codex extension present; user reports signed in; `code` command unavailable in the inspected shell |
+| VS Code and Codex | VS Code 1.136.1; Vishal supplied the local Codex report confirming execution inside the GRE container, with the Docker marker and VS Code container server present. |
 | ChatGPT GitHub connection | Account and private repository access verified |
 | Repository baseline | Project references and Codex guidance committed in `e6dcf64`; later setup findings are incremental documentation updates |
 | Clone on the Mac | Fetched origin successfully; clean working tree safely switched to `setup/devcontainer`, tracking `origin/setup/devcontainer` at `445db9a` before local setup fixes. Correct remote `vishal-baliga/global-recovery-engine`. |
-| Git | 2.50.1; authenticated fetch from the private GitHub origin succeeded on the Mac. |
+| Git | Host Git 2.50.1; authenticated fetch succeeded on the Mac. Commit `c937128` containing the pnpm check fix and setup records is present on GitHub branch `setup/devcontainer`; PR #1 remains a draft. |
 | Apple Command Line Tools | Installed and selected; package version 26.6.0.0.1781586589 |
 | Homebrew | Installed and verified by user-provided terminal output: 6.0.22, prefix `/opt/homebrew`, `brew doctor` reports “Your system is ready to brew.” |
 | Docker | User output verifies Desktop 4.89.0 (238018), client/engine 29.7.2, client `darwin/arm64`, server `linux/arm64`, context `desktop-linux`; Compose 5.5.0. ARM64 `hello-world` image download and container execution succeeded; user supplied the complete “Hello from Docker!” output. |
-| Dev Containers | Microsoft `ms-vscode-remote.remote-containers` 0.466.0 confirmed installed through the VS Code CLI. GRE image build and offline ARM64 check passed; editor reopen remains pending. |
+| Dev Containers | Microsoft `ms-vscode-remote.remote-containers` 0.466.0 confirmed installed through the VS Code CLI. GRE image build, offline ARM64 check, and actual editor/Codex container session passed. |
 | Node/pnpm | Absent from the host PATH at the initial inspection. Container Node 24.20.0 and pnpm 11.10.0 built and verified on ARM64. |
 | Python/uv | Apple Python 3.9.6 remains on the host. Container Python 3.14.7 and uv 0.12.10 built and verified on ARM64. |
 | Other CLIs | GitHub, PostgreSQL, Temporal, Azure, Terraform, and Dev Container CLIs not found on PATH; install only when their setup stage requires them |
@@ -52,12 +52,26 @@ The initial findings come from the read-only local Codex inspection pasted by Vi
 
 Treat PATH checks as observations of the inspected environment, not proof that a tool cannot exist elsewhere. Update this table with actual results as setup progresses. Use a project-managed Python later; leave the Apple-provided Python in place.
 
-## Next action on the Mac
+## Completed editor and agent verification
 
-Reopen this checkout in VS Code using **Dev Containers: Reopen in Container**. Microsoft Dev Containers 0.466.0 is installed. The image built successfully on the Mac's Docker Desktop engine 29.7.2 (`linux/arm64`) from branch baseline `445db9a`, and the corrected check ended with `GRE development toolchain: PASS (linux/arm64)` with networking disabled.
+On September 6, 2026, Vishal supplied a local Codex report confirming the actual VS Code container session:
 
-The check initially rejected pnpm's successful execution because automatic dependency preflight and update notices added stdout. The temporary check project now disables those behaviors; all exact version, non-root, architecture, workspace-write, Python virtual-environment/SSL/SQLite, and pnpm execution checks passed. No runtime pins changed. See [the development-environment guide](09-development-environment.md) for commands and image digests.
+- Workspace: `/workspaces/global-recovery-engine`.
+- Operating system: Debian GNU/Linux 12 (bookworm), Linux `7.0.12-linuxkit`.
+- Architecture: `aarch64` / ARM64.
+- User: `vscode`, UID/GID `1000`, non-root.
+- Docker marker and VS Code container server present.
+- `python .devcontainer/check_environment.py --expect-arch arm64` exited 0 with `GRE development toolchain: PASS (linux/arm64)`.
+- All pinned versions, Python virtual environment/SSL/SQLite, pnpm execution, and workspace write checks passed.
 
-The actual VS Code container session and Codex availability still need confirmation after reopening. The image smoke check does not establish editor readiness. No product features or application dependencies were added.
+GitHub separately confirms setup commit `c937128`. The report did not include the current local HEAD or working-tree status; inspect them before the next edit. The earlier pnpm stdout/preflight fix and build-resolved image digests are recorded in [the development-environment guide](09-development-environment.md).
 
-Following editor confirmation, establish local PostgreSQL, Temporal, Azurite, application dependency compatibility/lockfiles, and the required environment checks. These remain setup work, followed by backlog prioritization and document reconciliation.
+This completes the language-toolchain and editor/agent setup. Local services, application dependency compatibility, and product behavior have not yet been verified.
+
+## Next environment increment
+
+Establish local PostgreSQL 18 and its connection from the development container. Use a verified native ARM64 image with an explicit version, persistent development storage, local-only access, and documented start/stop commands. Verify connectivity and that a synthetic record survives a normal service restart. Keep application tables and migrations for the later product work.
+
+Inspect Git status and safely bring `setup/devcontainer` up to date before editing, preserving any local changes. The current development container has no Docker CLI or socket mount; run Docker orchestration from the Mac host unless a subsequent setup change explicitly establishes another route.
+
+Then establish local Temporal and Azurite, application dependency compatibility/lockfiles, and the remaining environment checks. These remain setup work, followed by backlog prioritization and document reconciliation.
