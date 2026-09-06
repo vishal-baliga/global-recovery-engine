@@ -1,0 +1,53 @@
+# Local secrets and environment configuration
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+
+# Python environments and generated state
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.pyright/
+.coverage
+.coverage.*
+htmlcov/
+
+# JavaScript dependencies and generated output
+node_modules/
+.pnpm-store/
+.next/
+out/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+playwright-report/
+test-results/
+
+# Infrastructure state and local service data
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfvars
+!*.tfvars.example
+crash.log
+/local-data/
+/private-data/
+/uploads/
+/tmp/
+*.log
+
+# macOS and editor temporary files
+.DS_Store
+._*
+*.swp
+*.swo
