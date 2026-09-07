@@ -1,286 +1,91 @@
 # Global Recovery Engine — Business & Project Overview
 
-**Updated:** September 6, 2026  
-**Purpose:** The authoritative introduction to the business, customers, offerings, commercial model, project status, objectives, and next decisions.  
-**Stage:** Business, product, and workflow design with an initial executable contract reference. The current documents do not establish production availability, customer traction, or product-market fit.  
-**Project lead and initial developer:** Vishal; development is planned around one developer with AI assistance.  
-**Document status:** Current consolidated reference. Detailed capabilities, operating rules, and interactions are maintained in the companion documents listed in Section 16.
+**Updated:** September 7, 2026
 
-## 1. Business summary
+**Owner:** Vishal, project lead and sole initial developer
 
-**Global Recovery Engine (GRE) is programmable infrastructure for resolving commercial payment obligations across organizations and borders.** It connects evidence, authority, decisions, execution, and outcomes so businesses, recovery operators, specialist providers, and authorized software agents can work from a continuous case record.
+**Status:** Current business direction and commercial hypotheses; no live service, partner, legal clearance, price, or traction is established by this document.
 
-The initial target is an end-to-end recovery operating system for India-origin B2B commercial claims against U.S. businesses. The first buyer hypothesis is a recovery operator with recurring case volume. GRE helps that buyer establish what is owed, identify missing or disputed facts, choose an economically sensible permitted route, coordinate authorized work, and reconcile the result.
+**Purpose:** Own the business definition, customer focus, commercial model, objectives, and project direction. The [Pilot Brief](06-pilot-brief.md) owns the promised release scope.
 
-The platform is designed to serve both people using workspaces and customers embedding the same capabilities into their own software or agents. The contracting customer remains an organization; an agent is an authenticated service consumer acting for an identified principal.
+## 1. Business and customer promise
 
-The immediate technical wedge is lower total effort, fewer critical errors, better handoffs, and more reliable authorized execution on a defined customer job. The longer-term opportunity is commercial resolution and recourse infrastructure for increasingly automated commerce.
+Global Recovery Engine (GRE) is recovery continuity infrastructure: a shared system that makes the evidence, balance, rights, authority, and history of an unresolved obligation usable across independently accountable organizations.
 
-## 2. Vision, mission, and customer promise
+The sole planned release is the **Pilot: GRE Foundation + GRE Trade & Receivables**. It includes the Recovery Network & Control capabilities needed to prepare, place, observe, correct, recall, and transfer Trade matters. This is one customer offer and one modular application. Private Resolution, Consumer Credit Infrastructure, and a separately sold Network offering are future development.
 
-**Vision:** Make legitimate commercial obligations and their resolution histories understandable, portable, and usable across organizations, jurisdictions, and software agents.
+The customer benefit is:
 
-**Mission:** Help businesses and authorized operators preserve evidence, resolve disagreement, choose economically sensible actions, execute within valid mandates, and reconcile the resulting money and rights.
+> Make a commercial claim provider-ready, appoint an independent executor, and keep a usable record when the case or provider changes.
 
-**Target customer promise:**
+This is a product promise to build and validate, not a statement of current availability. GRE should make difficult cases easier to understand and act on while showing when an asserted balance is wrong, evidence is insufficient, a route is unavailable, or further pursuit is uneconomic. A completed assessment with a reasoned no-route result is a legitimate paid deliverable. Neither a packet, provider acceptance, agreement, nor service completion proves debt recovery.
 
-> Bring a supported commercial payment problem. Establish its evidence and options, authorize the appropriate work, and follow it through to a clear service result and trustworthy observations of the underlying claim.
+The vision extends to several matter families using the same trustworthy core. The immediate mission is narrower: prove useful claim readiness and continuity on one defined commercial profile before expanding the operating perimeter.
 
-A useful result can be recovery, a sustainable agreement, dispute resolution, finding an already-paid invoice, a well-supported handoff, or a decision to avoid uneconomic pursuit. Activity volume and aggressive collection are not measures of success by themselves.
+## 2. The problem and selected buyer
 
-## 3. The problem we are solving
+Invoices rarely contain everything a recovery provider needs. Contracts, performance evidence, disputes, credits, receipts, ownership changes, prior mandates, and deadlines live in different systems. The creditor and each provider reconstruct the case, repeat questions, reconcile different balances, and lose context during handoff. A provider portal can expose status while leaving the creditor unable to reuse the underlying record elsewhere.
 
-Commercial recovery is fragmented across source records, organizations, decision makers, and jurisdictions. An unpaid balance rarely contains everything needed to act responsibly.
+GRE's business hypothesis is that **recurring creditor-side buyers will pay to reduce this reconstruction, acceptance, and switching cost**. Agencies and law firms are essential users and potential integration partners. Their incentives inform the product, but they are no longer the default economic buyer.
 
-| Customer problem | Consequence | GRE's proposed solution |
+| Dimension | Selected hypothesis and admission boundary |
+|---|---|
+| Initial direction | India-creditor → U.S.-business-obligor commercial goods/services receivables. This is a candidate corridor, not declared U.S.-wide availability. |
+| First buyer | A creditor-side finance, credit, AR, treasury, or legal-operations owner with recurring complex files and an existing or prospective provider relationship. |
+| Anchor/channel candidates | Enterprise creditors, authorized servicers, factors, trade-credit insurers, or receivables platforms with repeated eligible cases and a budget owner. Rights and role must be established for each arrangement. |
+| Lighthouse customer | An exporter or supplier with recurring cross-border exceptions and measurable internal/provider preparation effort. |
+| Initial users | Creditor reviewers and authority holders; GRE service/support staff; separately authorized provider intake and reporting users. |
+| Claim profile | Existing commercial goods/services claims with identity, performance, dispute, balance, or handoff complexity. The historical USD 5,000–250,000 and 30–365 days overdue ranges remain discovery hypotheses, not admission rules. |
+| Poor fit | Ordinary low-value dunning, a one-off customer seeking an entirely managed collector, consumer or uncertain mixed-purpose matters, and matters whose only need is legal representation. |
+
+The organization label does not settle classification. Uncertain natural-person purpose, guarantees, acquired claims, complex rights, or unclear actor status require a scoped hold and review rather than automatic Trade activation. Supported states, activities, languages, source formats, providers, and data/payment paths must be declared through the release process.
+
+## 3. Portfolio and packaging
+
+| Portfolio component | Job | Current disposition |
 |---|---|---|
-| Contracts, invoices, delivery, acceptance, emails, credits, and payments are scattered | Repeated reconstruction and unsupported assertions | A source-linked claim and evidence record |
-| It is unclear whether to negotiate, obtain more evidence, use a provider, escalate, or stop | Money and time spent on weak or unsuitable routes | Explicit alternatives, prerequisites, cost/time scenarios, and uncertainty |
-| Authority, provider eligibility, rules, and instructions differ by action | Delays, inconsistent approvals, and unauthorized commitments | Scoped mandates and action-time checks |
-| Each provider repeats intake and returns different status formats | Lost context, rework, and opaque responsibility | Controlled handoff packages, accepted work orders, and normalized observations |
-| Agreements, cash, accounting adjustments, and legal releases are mixed together | Incorrect balances, premature closure, or double counting | Separate financial, rights, agreement, and completion records |
-| Existing interfaces assume a human operates every step | Excess handling and limited use from customer-owned agents | One controlled service for human and machine callers |
+| **GRE Foundation** | Shared evidence, exact money, rights, authority, service scope, policy, action, observation, privacy, and continuity meaning | Build the depth needed by the Pilot; reuse across future profiles. |
+| **GRE Trade & Receivables** | Make commercial claims ready for a supported route and preserve creditor continuity | Sole Pilot matter family. |
+| **GRE Recovery Network & Control** | Provider preflight, direct appointment, controlled exchange, return events, recall, and switching | Required Trade subset included in the Pilot; broader standalone packaging is future. |
+| **GRE Private Resolution** | Clarify an existing private obligation, support voluntary exact agreement, or provide a safe exit | Future candidate; no parallel beta or domestic personal-loan commitment. |
+| **GRE Consumer Credit Infrastructure** | Preserve account, dispute, preference, protection, and provider continuity for institutional creditors | Future candidate; U.S.-origin account/India-resident borrower remains a design hypothesis. |
 
-The business hypothesis is that customers will pay for a measurable improvement across this job. The existence of collection agencies or a large trade corridor does not establish willingness to pay for GRE.
+Trade, Consumer Credit, and Private Resolution are matter classifications. Network is a horizontal commercial offering; Foundation is shared infrastructure. Neither is an additional matter classification. Commercial edition, service mode, action execution mode, and release eligibility remain separate concepts. Buying an edition never unlocks an unreleased activity.
 
-## 4. Initial market and customer focus
+The Pilot uses one clear offer with separately scoped assessment, preparation/transfer, and continuing observation services. Future embedded, provider-facing, or enterprise editions reuse the same domain service. They do not require separate products or general public APIs now. Detailed packages and differentiation belong in [Product Offering & Competitive Strategy](02-product-offering-competitive-strategy.md).
 
-| Dimension | Current design focus |
-|---|---|
-| Corridor | India-origin commercial claims against U.S. business debtors |
-| Claim profile | Approximately USD 5,000–250,000 and 30–365 days overdue |
-| Initial buyer | Cross-border collection agency, recovery boutique, or export-receivables operator with recurring volume |
-| Initial users | Intake reviewers, case managers, supervisors, and creditor authority holders |
-| Economic buyer | Owner, operations leader, or recovery lead accountable for handling cost, capacity, and client results |
-| Candidate claim segments | Digital services, staffing, SaaS, and professional services; selection requires real case and buyer evidence |
-| Adjacent buyers | Recurring-volume creditor teams and software/platform distributors |
-| Expansion direction | Further claim types, corridors, and smaller claims when demand, execution coverage, and economics justify them |
+## 4. What the customer buys and who acts
 
-This is a commercial focus, not a universal schema limit or proof that the corridor is already supported. The initial profile remains a hypothesis to test.
+A **Case** retains the continuing obligation and history. Each **Service Request** specifies the contracted work, accountable actor, price/cap, window, deliverable, completion condition, and surviving duties. An assessment does not silently become collection or indefinite monitoring.
 
-Operator-first distribution may provide repeated files, operational expertise, and measurable workflow value. It can also create conflicts: an operator may resist portable case records, data reuse, or advice that reduces its fees. Cooperation must be earned through lower intake cost, greater capacity, accepted handoffs, reporting value, private playbooks, and clear client-relationship terms.
-
-## 5. The full offering
-
-The target offering is one system with four connected layers.
-
-| Layer | Customer value | Representative capabilities |
+| GRE service | Useful deliverable | Responsibility at the boundary |
 |---|---|---|
-| **Intelligence** | Understand the claim and choose useful next work | Evidence construction, entity/balance reconciliation, disputes, readiness, route eligibility, economic scenarios, and decision support |
-| **Operations** | Run the authorized case without losing context | Decision inbox, tasks, mandates, communications, disputes, terms, plans, payment observations, and service completion |
-| **Network** | Coordinate work across organizations | Eligible providers, scoped evidence packages, quotes, accepted instructions, specialist escalation, and returned outcomes |
-| **Control** | Make actions accountable and bounded | Policy applicability, identity/authority, approvals/delegation, data permissions, execution checks, receipts, auditability, and evaluation |
+| Claim readiness and route assessment | Source-linked Claim Passport, reconciled position, gaps, options, cost/time assumptions, and disposition | Creditor supplies assertions and authority; reviewers preserve uncertainty and seek qualified advice where required. |
+| Provider preflight and transfer | Named profile comparison, minimized review packet, validation delta, direct appointment, and explicit provider response | Disclosure for review grants no execution authority. The provider independently validates and accepts its engagement. |
+| Creditor continuity | Scoped status, corrections, costs, payment observations, exports, recall/switch records, and unresolved-duty tracking | Provider performs collection; GRE handles its agreed platform and continuity work. |
 
-The detailed capability matrix and competitive targets are owned by [Product Offering & Competitive Strategy](02-product-offering-competitive-strategy.md).
+The creditor directly appoints the agency or law firm for collection, settlement authority, fees, and applicable oversight. The provider conducts obligor communications, negotiation, and professional execution through its own identity, personnel, channels, and judgment. GRE does not conduct post-default obligor collection, negotiate as collector for the creditor, direct provider tactics, or hold/pass through repayments. Money uses the entitled creditor or an authorized financial arrangement outside GRE custody.
 
-### Core customer deliverables
+GRE remains responsible for its own processing, representations, disclosures, security, corrections, complaints, incidents, and agreed continuity/support duties. Direct contracting and naming the service software do not establish legal immunity. The [Operating Model](03-operating-model.md) owns role boundaries, handoff/cutover, current-state checks, and surviving responsibilities; [Pilot Release & Assurance](13-pilot-release-and-assurance.md) owns the actual activation evidence.
 
-- **Claim Passport:** A versioned record of asserted and reviewed facts, rights, evidence, disputes, and readiness for a stated purpose. Integrity and authorship do not certify factual truth or legal validity.
-- **Recoverability assessment:** Eligible options, material gaps, assumptions, cost/time scenarios, and reasons to act, gather another fact, monitor, or stop. Uncalibrated model confidence is not a recovery probability.
-- **Authorized strategy:** A scoped plan with responsible actors, limits, dependencies, compatible parallel work, review triggers, and fallback decisions.
-- **Interoperable handoff:** A permitted evidence package and typed work order that a provider can accept without reconstructing the entire case.
-- **Resolution and execution records:** Exact proposals/agreements, authority references, actual dispatch/results, cash observations, and remaining duties.
-- **Outcome observations:** What was observed, over what period, from which source, with known zero, unknown, pending, and censored results distinguished.
+## 5. Commercial model and go-to-market
 
-### Additional capabilities within the full design
+Begin with a creditor's existing provider or approved panel. A single eligible provider can validate the first accepted placement. Demonstrating portability requires two independent providers accepting the same core under stated conditions. No partner is named or represented as available in this plan.
 
-Source-connected evidence readiness before default preserves useful records earlier. Bilateral issue resolution allows each party or its agent to exchange approved evidence and proposals while private strategies remain isolated. Delegated automation can increase as action-specific authority, assurance, economics, and service readiness permit.
+Lead selling with a difficult file, the buyer's measured preparation problem, and a complete diagnostic result. Expand the same relationship into transfer and scoped continuity if the customer values them. Provider adoption must save intake/reporting effort, respect independent validation and private playbooks, and preserve clearly disclosed client relationships. Eligibility precedes ranking; explain conflicts, restrictions, and economic relationships. No pay-to-rank or hidden referral bias is permitted.
 
-These capabilities are design commitments with separately declared availability. Evidence monitoring packages, portfolio assurance, pooled benchmarks, and broader agentic-commerce recourse require additional demand and data-rights evidence.
+Pricing is unselected. Test defined assessment/placement work and recurring case or capacity commitments rather than raw AI calls. The price must cover useful corrections and no-route results. State service windows, outside fees, extension/reopening terms, cancellation/refund treatment, and who invoices for provider work. GRE defect rework is not new billable volume. Success-linked pricing remains a separately reviewed future option.
 
-## 6. Two delivery editions
+Measure contribution after founder/reviewer/support time, provider onboarding and maintenance, technology, data, acquisition, and corridor-assurance costs. Counting only model tokens would hide the central economic risk. Size the reachable business from eligible annual cases and paid buyer commitments; trade volume and total unpaid debt are not GRE revenue.
 
-| Edition | Intended buyer | How it is used | Proposed revenue basis |
-|---|---|---|---|
-| **Recovery Operations** | Recurring-volume recovery operators or creditor teams | Human workspaces and supported automation across their case lifecycle | Platform minimum, included claim capacity, and defined usage bands |
-| **Embedded Resolution** | Recovery software and subsequently AR/ERP, finance/payment, or agent-platform distributors | The same controlled capabilities inside the buyer's existing product and agents | Committed infrastructure spend with defined assessment/resolution units |
+Discovery and evidence collection follow [Market Validation & Proof](14-market-validation-and-proof.md). Permission for service delivery, private evaluation, pooled benchmarking, and training must be established separately. GRE must deliver value without cross-tenant learning.
 
-These editions share the same evidence, authority, action, and outcome semantics. Embedded deployment is a distribution and architectural option from the beginning; it does not require launching many integrations at once.
+## 6. Objectives, risks, and current project status
 
-Customers do not need every counterparty or provider to adopt GRE before receiving value. Controlled document exchange and adapted external workflows can support early participation, provided authority, disclosure, acceptance, and observations remain traceable.
+Success means less total effort to a useful assessment and accepted or correctly rejected placement; fewer critical evidence/balance/authority errors; usable correction and switching continuity; repeat paid use; and viable support-adjusted economics. Show raw automation and reviewed results separately. Provider reports, missing outcomes, open observation windows, reversals, and internal effort remain visible. Recorded involvement does not establish causal recovery improvement.
 
-## 7. What customers engage us to do
+The main risks are weak recurring demand, expensive exceptions, uncooperative providers, additional contracting friction, inadequate data rights, uncertain operating permissions, and incumbents bundling similar preparation or placement tools. Narrow or reconsider the buyer/offer if buyers only want managed collection, repeated cases are unavailable, or the support cost overwhelms willingness to pay. A separate managed-execution business would require an explicit business-model decision; it cannot be simulated through undisclosed subcontracting.
 
-A **Case** preserves the continuing claim, evidence, rights, and resolution history. A **Service Request** states the supported work the customer has engaged GRE to do now.
+The selected direction is one modular application on the existing verified environment. Stack/runtime ownership remains in [08](08-stack-and-environment-decision.md), with factual setup and dependency history in [09](09-development-environment.md) and [10](10-dependency-baseline.md). Documentation and reference checks do not establish production handlers or live enforcement.
 
-| Service request | Intended deliverable | What completion means |
-|---|---|---|
-| Assess a claim | Claim Passport, readiness findings, alternatives, and limitations | The assessment was delivered; execution still needs its own scope and authority |
-| Operate authorized resolution | Coordinated supported actions, issues, proposals, and observations | The contracted active work reached its defined end or transfer condition |
-| Arrange or coordinate specialist work | Accepted work order, permitted packet, instructions, and return obligations | The agreed handoff/coordination scope is fulfilled; it does not itself prove debt recovery |
-| Monitor or service an existing matter | Defined signals, plan/instalment observations, review triggers, and reporting | The agreed monitoring period or exit condition is reached, renewed, or transferred explicitly |
-
-A case can contain several compatible service requests. Completing one cannot silently terminate the others. Finishing contracted work is different from collecting the debt, satisfying a settlement, completing reporting, or extinguishing rights.
-
-Each request needs an identified principal, scope, authority, deliverable, cost/cap, responsible role, and completion/follow-up terms. There is no automatic conversion from assessment into collection or indefinite monitoring.
-
-## 8. Business role and execution responsibilities
-
-GRE's initial business role is to supply intelligence, orchestration, controlled interfaces, and records. Creditor/customer organizations and eligible providers supply the authority and services applicable to their actions.
-
-| Activity | Intended responsibility |
-|---|---|
-| Claim assertion and commercial instructions | Creditor or other documented principal/rights holder |
-| Intake, coordination, and client relationship | Contracted operator or creditor team, according to deployment |
-| Collection communication and negotiation | Identified, eligible, authorized actor within the mandate |
-| Legal advice, filing, representation, or enforcement | Appropriately qualified and authorized counsel/provider |
-| Receipt, movement, or refund of funds | Creditor account or lawful bank/payment/provider arrangement |
-| Platform processing, access controls, action checks, integrations, and records | GRE, within its actual service obligations |
-
-The initial model does not require GRE to buy debt, act as the creditor, practice law, or hold recovered funds. Consumer/mixed-purpose debt and unsupported corridors require a separately established service scope.
-
-Actual legal and contractual responsibilities depend on conduct, authority, representations, fees, and applicable rules. Describing the business as software or using a partner does not establish an exemption.
-
-**Provider-selection neutrality** means eligibility, conflicts, fees, restrictions, and ranking are transparent. Customer-selected panels are allowed when disclosed. There is no pay-to-rank. A service acting for one principal is not automatically an impartial adjudicator; shared resolution must preserve each party's private information and disclosed role.
-
-## 9. Business model and unit economics
-
-### Pricing principles
-
-- Charge principally for contracted work and capacity rather than human seats, agent counts, or raw model calls.
-- Define included service windows, routine operations, amendments/retries, duplicates, reopened cases, transfers, and passive monitoring.
-- Disclose outside data, specialist/legal work, unusual processing, and integration costs; require appropriate caps and approvals.
-- Rework caused by GRE defects is not fresh billable volume.
-- Core revenue must make sense when the correct result is an assessment, reconciliation, dispute disposition, or no pursuit.
-- Defer contingent/success fees until attribution, conflicts, applicable responsibilities, and reversal adjustments are resolved.
-- Show commercial consequences when a service is activated, expanded, extended, renewed, or ended.
-
-Dollar prices and contractual SLAs remain undecided.
-
-### Measure our costs and customer value separately
-
-GRE's economics include the review labor it supplies, compute/data, onboarding, support, expert maintenance, infrastructure, and incident handling. Customer staff effort belongs in the customer's ROI calculation; it should not also be counted as GRE labor unless GRE bears that cost.
-
-For illustration only, assume USD 30 of software revenue per handled case, USD 5 of direct compute/data cost, and review labor supplied by GRE at USD 45/hour:
-
-| GRE review effort | Review cost | Contribution before other support, sales, and R&D |
-|---|---:|---:|
-| 20 minutes | USD 15.00 | USD 10.00, approximately 33% |
-| 5 minutes | USD 3.75 | USD 21.25, approximately 71% |
-
-These are arithmetic examples, not prices, forecasts, or validated margins. Founder time must be costed. Provider/counsel pass-through must not inflate software margin.
-
-Customer value includes reduced total handling effort, less handoff rework, avoided uneconomic spend, and credible improvements in net proceeds or time. Gross recovered dollars alone do not establish incremental value.
-
-## 10. Competitive position and technical advantage
-
-GRE's target differentiation is the combination of commercial-claim evidence, cross-border route economics, portable context, precise delegated authority, and continuity across independent executors.
-
-Established vendors already market decisioning, workflow, portals, compliance, agentic automation, and provider routing. We must meet the chosen customer's complete job and demonstrate improvement, rather than treating feature labels as novelty.
-
-The strongest potential advantages are:
-
-1. Lower total effort per correctly resolved unit of work.
-2. Fewer critical evidence, financial, authority, and execution errors.
-3. Case records that independent organizations can reuse with less reconstruction.
-4. Maintained corridor knowledge and a rigorous domain evaluation corpus.
-5. Better decisions from representative, permissioned observations.
-6. Recurring integrations and credible provider execution relationships.
-
-Generic agents, prompts, model access, graph schemas, and audit infrastructure are copyable foundations. Their implementation must produce measurable gains. A permanent lead or established data moat is not assumed.
-
-Use a modular core and replaceable model, workflow, communication, payment, and protocol adapters. Scope the system for one developer while preserving the domain contracts needed for more automation and distribution.
-
-## 11. Go-to-market and validation
-
-Begin with recurring-volume buyers and a measurable operating problem. Validate workflow fit, budgets, data access, integration effort, procurement requirements, responsibility for errors, and support expectations together.
-
-Current discovery targets are approximately three design partners and an initial 30–50 permissioned historical files spanning paid, disputed, rejected, unsuccessful, and unresolved cases. These are proposed validation targets, not traction claims or sufficient samples for universal recovery predictions. A paid pilot and named budget owner would strengthen evidence of demand; they do not alone establish product-market fit.
-
-An embedded prospect should demonstrate commitment to the integration and service economics, rather than only interest in an API.
-
-Data rights must be established separately for service delivery, tenant-private evaluation, cross-tenant benchmarking, and model training. Required outcome return does not automatically permit reuse or resale. GRE must remain valuable in an organization-private deployment without pooled learning.
-
-Protect agreed client relationships, allow private playbooks, disclose provider restrictions, and test the operator's incentive to cooperate. Monitor customer, data-source, and execution-provider concentration.
-
-### Size the reachable business from buyers and work
-
-Estimate reachable recurring buyers, eligible annual service volume, adoption, contract spend, and support cost. Avoid counting the same claims through both an operator and its distributor. International trade volume and aggregate receivables provide context; they are not GRE software revenue.
-
-Detailed market evidence and dated competitor sources are maintained in Product Offering & Competitive Strategy.
-
-## 12. Objectives and success measures
-
-| Objective | Evidence of progress |
-|---|---|
-| Make claims understandable | Critical-field correctness, evidence coverage, resolved contradictions, and review effort |
-| Make decisions useful | Clear alternatives, uncertainty, information-request value, and supported net-value/time improvement |
-| Make execution reliable | Correct authorized effects, low duplicate/unknown-effect rates, effective revocation, and traceable follow-up |
-| Preserve continuity | Accepted handoffs, fewer repeated document requests, and lower reconstruction cost |
-| Resolve appropriately | Net creditor proceeds and time to appropriate resolution for a fixed eligible cohort, with disputes and open/censored cases visible |
-| Build useful learning | Permitted outcome coverage, calibration, representative evaluation, and measured improvement on held-out cases |
-| Build a viable business | Paid recurring use, customer value, support-adjusted contribution, retention, and manageable concentration |
-
-Measure raw extraction separately from reviewed results. Expert agreement and human corrections are useful evidence, not automatic ground truth. The earlier 70% intake-effort reduction target remains a hypothesis to test against comparable total-effort baselines.
-
-Recorded involvement does not prove causal recovery lift. Selection bias, missing observations, case mix, and unchosen routes constrain comparisons. Simulation tests behavior; real observations are needed to establish recovery economics.
-
-## 13. Five-year direction and expansion gates
-
-The long-term target is that a business, recovery operator, or its own agent can bring a commercial payment problem and obtain a controlled, evidence-grounded resolution process without every organization rebuilding the case.
-
-The business should remain useful if capable models become cheap, regulated autonomy stays constrained, or larger finance platforms bundle basic recovery workflows. Broader agent adoption creates an additional path to distribution and bilateral resolution; it is not required to arrive on a forecast date.
-
-Expand only when the relevant evidence is present:
-
-- **More autonomy:** adequate action-specific assurance, valid mandates, monitored behavior, and acceptable service cost.
-- **More corridors/routes:** sourced and reviewed rules, eligible execution, integration/data rights, support, and tested operational coverage.
-- **Smaller claims:** positive contribution and proportionate legitimate resolution after total handling cost.
-- **Pooled intelligence/benchmarks:** separate rights, representative samples, privacy controls, and measurable incremental value.
-- **Evidence monitoring/portfolio assurance:** recurring buyer demand and useful source access.
-- **Agentic-commerce recourse:** production integration interest, supported authorization, and paid service demand.
-
-Detailed scenarios and leading indicators are owned by Product Offering & Competitive Strategy.
-
-## 14. Project status and immediate sequence
-
-| Area | Current status |
-|---|---|
-| Business direction | Adopted for design: commercial-resolution infrastructure, initially focused on a defined B2B corridor |
-| Initial buyer/corridor/profile | Working commercial hypotheses requiring customer and operating evidence |
-| Full offering | Defined as Intelligence, Operations, Network, and Control, delivered through two editions |
-| Operating model | Defined and aligned with service requests, authority, financial distinctions, and honest outcome observations |
-| Primary workflow | Reviewed; 36 behavioral acceptance scenarios specified |
-| Core domain/data and command contracts | First reviewable baseline 0.1.0 defined in [Domain & Data Contracts](05-domain-data-contracts.md); 29 record types, 23 command operations, a synthetic worked case, and offline conformance checks. Production handlers are not implemented. |
-| MVP scope | Not selected |
-| Production/corridor availability | Not established by these documents; each capability requires a declared readiness status |
-| Prices, SLAs, first integrations, and initial claim subtype | Undecided pending evidence |
-| Legal entity, funding, and commercial contracting structure | Not established in this document set |
-
-The current sequence is:
-
-1. **Completed as a first reviewable baseline:** canonical domain/data contracts, concrete schemas, and the worked case in [Domain & Data Contracts](05-domain-data-contracts.md) and [recovery-contracts.zip](../reference/recovery-contracts.zip).
-2. **Next:** map capabilities and dependencies, compare complete candidate MVP paths, and select one using customer value, engineering effort, operating responsibility, and validation evidence.
-3. Define the implementation architecture and ordered build plan for a sole developer.
-4. Build the reference journey with meaningful acceptance checks and service costs visible.
-5. Validate with authorized real-case walkthroughs and commercial evidence, then refine.
-
-Buyer, pricing, and case-access validation proceed alongside design. Synthetic examples can support engineering before real data becomes available. This sequence is a project plan, not an instruction to contact anyone or enable external collection.
-
-## 15. Principal risks and decisions that could change the plan
-
-The main risks are weak paid demand, insufficient data rights, operator resistance, expensive human exceptions, misleading outcome comparisons, unreliable evidence, external execution failures, underpriced corridor maintenance, and incumbent bundling.
-
-Reconsider the buyer, packaging, or technical thesis if customers mainly value cheap extraction, integrations capture most of the value, private operation is uneconomic, rights needed for promised features are unavailable, or strong general models plus ordinary workflow tooling match our customer outcome.
-
-Commercial scope must follow actual support and responsibility. Architecture coverage is not a promise of global execution. Do not expand the feature catalogue simply to avoid an unfavorable demand or economics result.
-
-## 16. Document map and maintenance
-
-There is one current document for each purpose:
-
-| Document | Authoritative purpose |
-|---|---|
-| **01-business-project-overview.md** — this document | Business definition, customers, solutions, packaging, economics, objectives, status, and project sequence |
-| [02-product-offering-competitive-strategy.md](02-product-offering-competitive-strategy.md) | Detailed capability scope, competitor comparison, differentiation, technology strategy, and expansion scenarios |
-| [03-operating-model.md](03-operating-model.md) | Domain meaning, responsibilities, authority, state, action checks, financial/rights rules, events, outcomes, and runtime constraints |
-| [04-workflow-interaction-specification.md](04-workflow-interaction-specification.md) | Human/agent interaction behavior, stages and branches, waiting work, exceptions, and behavioral acceptance criteria |
-| [05-domain-data-contracts.md](05-domain-data-contracts.md) | Exact core data/command shapes, versioned references, transitions, consistency rules, worked-case semantics, and conformance limits |
-
-The machine-readable companion [recovery-contracts.zip](../reference/recovery-contracts.zip) contains the current schema, synthetic case, validator, tests, and dependency file. It serves a separate engineering purpose and does not duplicate these documents.
-
-Update these files in place using stable filenames. Record the update date and maintain revision history rather than creating a second current file for the same purpose. Cross-cutting decisions must be propagated to affected references; summaries point to the authoritative detailed document.
-
-The former Product Charter is consolidated into this overview. The completed AI-era strategic review is absorbed into the business, competitive, operating, and interaction references. Historical review labels and completed “next steps” do not define current scope.
-
-External research retains its original verification date and citations. A documentation update does not certify that every external fact or legal rule was rechecked. Detailed capability availability, pricing, and legal applicability remain subject to their stated evidence and approval requirements.
+The current sequence is **reconcile current documents → reconcile versioned contracts and conformance → reconcile the prioritized Pilot backlog → develop the application → satisfy the affected live-service release gates**. Existing setup assets remain intact. [12](12-scope-decisions-and-reconciliation.md) records decisions and supersession; [05](05-domain-data-contracts.md) owns contracts; [11](11-prioritized-pilot-backlog.md) owns implementation order; [07](07-future-development-and-business-deliverables.md) preserves future scope. No application features, cloud accounts, or paid resources are authorized by this documentation pass.
