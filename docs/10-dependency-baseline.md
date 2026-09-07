@@ -154,26 +154,26 @@ for those observed restarts.
 
 ## Required later work
 
-These are retained integration/validation requirements from the pilot and stack,
-not a new prioritized backlog or deferrals of either pilot journey. Vishal owns
-carrying them into backlog tasks and choosing scoped manual/provider routes where
-the pilot brief permits them. No requirement is complete merely because its
-library is installed.
+These are retained integration/validation areas from the selected stack. The current
+Foundation + Trade Pilot and future-family dispositions are authoritative in
+[06](06-pilot-brief.md), [07](07-future-development-and-business-deliverables.md)
+and [11](11-prioritized-pilot-backlog.md). Vishal owns their scoped implementation
+and any permitted manual/provider route. Installation alone completes no product requirement.
 
 | Required integration/work | Remaining validation before the dependent capability |
 | --- | --- |
 | Domain/API and database | Application package boundaries, real schemas/migrations and upgrade tests, exact money/currency handling, transaction behavior, application roles/RLS, and tenant/case authorization. Alembic was read-only here. |
 | Temporal workers | Domain checks shared with the API, workflow/activity implementation, retries/idempotency, replay/versioning, changed authority before effects, callbacks/reconciliation, and deployment/shutdown behavior. |
 | Blob and document processing | Application storage adapter, permissions/retention, real Azure identity/TLS/networking, upload limits/formats, backup/restore; add and validate the selected Document Intelligence SDK when implementing extraction. |
-| Authentication | Clerk SDK selection/locks and web/API integration; verify sessions/organizations separately from case access, borrower disclosure, and action mandates. No Clerk package or account integration is established here. |
+| Authentication | Clerk SDK selection/locks and web/API integration; verify sessions/organizations separately from case access, provider disclosure, and action mandates. No Clerk package or account integration is established here. |
 | Runtime AI | OpenAI SDK/Responses/Pydantic compatibility, model/data settings, refusal handling, evaluations, source attribution, and provider adapter; not installed or runtime-tested by this baseline. |
 | Web runtime/client | Application routes/components, actual base URL/auth configuration, errors/cache behavior, accessibility, and browser/end-to-end checks. Add Tailwind/shadcn and TanStack Query when their planned use is defined. |
-| Contact, payments, e-signature, specialists | Provider fakes and sandbox adapters, actor/service admission, executable supported routes, callbacks/deduplication/reconciliation, and partner acceptance. Required pilot portions remain required; future depth is mapped by F-P07/F-P10/F-P11. |
+| Provider exchange, payments, external acceptance | Provider fakes and sandbox/assisted adapters, exact actor/service admission, direct appointment/acceptance, callbacks/deduplication and reconciliation. GRE obligor contact, bilateral resolution and plan-operation interfaces are outside this Pilot; future depth and families remain in 07. |
 | Quality and delivery | Appropriate Ruff/type-check/pytest/Hypothesis and web test/lint tooling, CI, generated-contract drift checks, security/dependency-update checks, realistic failure fixtures, and product acceptance checks. Current scripts are setup checks only. |
 | Cloud and operations | Costed/authorized Azure and Temporal Cloud provisioning, managed PostgreSQL/Blob, Clerk/provider accounts, deployment images, Terraform/CI delivery, secrets, OpenTelemetry, backup/restore, and incident handling. |
 
-See [the pilot brief](06-pilot-mvp-brief.md), [stack decision](08-stack-and-environment-decision.md),
+See [the Pilot brief](06-pilot-brief.md), [architecture](08-stack-and-environment-decision.md),
 and [future register](07-future-development-and-business-deliverables.md) for
-required outcomes and scope boundaries. The next planning stage remains the
-prioritized two-track backlog, then substantive document reconciliation and
-product implementation; this baseline implements no customer-facing feature.
+current outcomes and scope boundaries. Documents and reference contracts are now
+reconciled; implementation follows [11](11-prioritized-pilot-backlog.md).
+This historical dependency verification implements no customer-facing feature.

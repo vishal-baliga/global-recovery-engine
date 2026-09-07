@@ -1,15 +1,39 @@
 # Global Recovery Engine
 
-Recovery infrastructure helping creditors reconstruct unresolved obligations and coordinate a supported path to resolution.
+Recovery preparation and continuity infrastructure for independently accountable execution.
 
-**Current stage: initial environment verified; prioritized backlog drafted for review.**
-The ARM64 development container, local PostgreSQL/Temporal/Azurite, and shared
-Python/pnpm dependency environments passed their setup checks. Minimal fixtures
-verify FastAPI, OpenAPI/client generation, TypeScript, a Next.js production build,
-and read-only access to all three services. Customer features, domain logic,
-application migrations, CI, and live integrations remain unimplemented.
+**Current release scope: one Pilot — GRE Foundation + Trade & Receivables.** The first profile targets India creditors with unpaid commercial goods/services claims against U.S. businesses. GRE prepares source-linked claims, tests readiness against a named provider's requirements, supports direct appointment and acceptance, and preserves corrections, observations and portability. Buyer demand, precise coverage and live release remain to be established.
 
-Inside the development container, from the repository root with services running:
+**Current stage:** Authoritative project documents and versioned reference contracts reconciled. The development toolchain is verified; customer product implementation begins with P-001 in the backlog.
+
+## Start and develop
+
+- [Start here](docs/00-start-here.md): current decisions, observed setup and next work.
+- [Pilot brief](docs/06-pilot-brief.md): included outcomes, operating boundaries and real service requirements.
+- [Prioritized Pilot backlog](docs/11-prioritized-pilot-backlog.md): Foundation/Trade delivery and the disposition of every old backlog item.
+- [Architecture](docs/08-stack-and-environment-decision.md): shared modules, stack and source/effect ownership.
+- [Development environment](docs/09-development-environment.md) and [dependency baseline](docs/10-dependency-baseline.md): exact commands, pins and observed verification.
+- [Agent instructions](AGENTS.md): working and validation rules.
+
+## Specification owners
+
+| Document | Purpose |
+|---|---|
+| [01 — Business overview](docs/01-business-project-overview.md) | Buyer, value and business boundaries |
+| [02 — Product and strategy](docs/02-product-offering-competitive-strategy.md) | Portfolio, packages and competitive hypothesis |
+| [03 — Operating model](docs/03-operating-model.md) | Responsibilities and domain invariants |
+| [04 — Workflow](docs/04-workflow-interaction-specification.md) | Complete Trade interactions and exceptions |
+| [05 — Contracts](docs/05-domain-data-contracts.md), [reference](reference/README.md) | Versioned schemas, fixtures, validators and migration limits |
+| [07 — Future development](docs/07-future-development-and-business-deliverables.md) | Other families, deferred depth and excluded models |
+| [12 — Scope decisions](docs/12-scope-decisions-and-reconciliation.md) | Authority, decisions and cross-file reconciliation |
+| [13 — Release and assurance](docs/13-pilot-release-and-assurance.md) | Conditions before real-data/live operation |
+| [14 — Market proof](docs/14-market-validation-and-proof.md) | Discovery, economics, measurement and public claims |
+
+Private Resolution, Consumer Credit and standalone Network commercialization remain future development. Trade includes the shared Network & Control capabilities it needs. GRE does not own debt, perform the provider's collection work or custody recovered funds. Its own platform, data, support and agreed continuity duties remain explicit.
+
+GitHub documents at the reviewed commit govern development. Historical research and original contractZIP0.1 preserve provenance; they do not override the current single-family scope. Current source-readable reference contracts are planning/conformance artifacts, not a deployed application.
+
+In the editor container, with local services running and attached:
 
 ```sh
 uv sync --locked
@@ -17,37 +41,4 @@ pnpm install --frozen-lockfile
 uv run --locked python -m scripts.check_environment
 ```
 
-See [the dependency baseline](docs/10-dependency-baseline.md) for resolved versions,
-fresh-install verification, Mac service commands, and required later integrations.
-
-## Start here
-
-Read [Current decisions and setup checkpoint](docs/00-start-here.md) first. It explains which documents govern the current work and what remains to be verified on the developer's Mac.
-
-| Reference | Purpose |
-| --- | --- |
-| [Pilot MVP brief](docs/06-pilot-mvp-brief.md) | Required outcomes for both pilot journeys |
-| [Future development and business deliverables](docs/07-future-development-and-business-deliverables.md) | Deferred scope, business work, and strategic boundaries |
-| [Stack and environment decision](docs/08-stack-and-environment-decision.md) | Selected architecture direction and proposed runtime targets |
-| [Development environment](docs/09-development-environment.md) | Container/local-service commands and verification records |
-| [Dependency baseline](docs/10-dependency-baseline.md) | Shared locks, setup fixtures, combined check, and remaining integrations |
-| [Prioritized pilot backlog](docs/11-prioritized-pilot-backlog.md) | 10 epics and 48 ordered delivery items covering both journeys, acceptance evidence, business dependencies and retained work |
-| [Codex instructions](AGENTS.md) | Repository context and working rules for coding agents |
-| [Contract reference](reference/README.md) | Earlier schemas and synthetic validation package |
-
-## Pilot scope
-
-- **Domestic U.S. personal/friend loans:** assist an individual lender with evidence reconstruction, assessment, borrower response, resolution, repayment tracking, specialist assistance, and explicit closure.
-- **India–U.S. commercial recovery:** assist Indian businesses with unpaid commercial obligations involving U.S. businesses, including authority, evidence, provider coordination, receipts, and cross-border costs.
-
-GRE supplies infrastructure, intelligence, coordination, controls, and records. Identified eligible creditors/providers execute the applicable recovery work. Funds follow established creditor/bank/provider arrangements.
-
-## Delivery sequence
-
-The proposed backlog is ready for review. Next, reconcile the project/delivery documents under GRE-001; product implementation follows that step. The setup fixtures remain distinct from customer features.
-
-Pilot brief → stack/environment setup → prioritized backlog → project and delivery document updates → application development.
-
-The working architecture is a TypeScript/Next.js web application, Python/FastAPI domain application and workers, PostgreSQL, Temporal, and managed Azure hosting. Versions and integrations must be validated during setup.
-
-Documents `01`–`05` retain the earlier design baseline. Their B2B-only scope and MVP-unselected status are superseded by the current decisions described in [Start here](docs/00-start-here.md); their applicable domain principles remain useful. Their substantive reconciliation follows backlog creation.
+See the environment guide for safe host lifecycle/attachment commands and the reference README for contract checks. Use synthetic data and keep credentials/customer evidence out of Git.

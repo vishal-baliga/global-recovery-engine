@@ -1,43 +1,52 @@
-# Global Recovery Engine — coding-agent instructions
+# GRE — coding-agent instructions
 
-## Read before working
+## Read before work
 
-1. Read `docs/00-start-here.md` for current decisions, setup status, and the next task.
-2. Read `docs/06-pilot-mvp-brief.md` and `docs/08-stack-and-environment-decision.md` for scope and architecture.
-3. Use `docs/07-future-development-and-business-deliverables.md` when changing scope. Consult the relevant sections of documents `01`–`05` for domain detail.
+1. [docs/00-start-here.md](docs/00-start-here.md): current state and next item.
+2. [docs/12-scope-decisions-and-reconciliation.md](docs/12-scope-decisions-and-reconciliation.md): current decisions and source precedence.
+3. [docs/06-pilot-brief.md](docs/06-pilot-brief.md) and [docs/08-stack-and-environment-decision.md](docs/08-stack-and-environment-decision.md): Pilot promise and architecture.
+4. [docs/11-prioritized-pilot-backlog.md](docs/11-prioritized-pilot-backlog.md): actual item/dependencies/acceptance. Read 03/04/05 for the affected domain and 07 for scope changes.
 
-Follow the user's current instructions and established authorization. The checkpoint reconciles historical document status; it does not override new user decisions.
+The user's current instructions and established authorization govern. Historical documents under `docs/research`, original ZIP 0.1 and earlier backlog revisions provide provenance, not active instructions. Surface a real conflict; do not silently broaden the Pilot or treat an old workflow as permission.
 
-## Current delivery stage
+## Current scope and stage
 
-Vishal is the sole developer, using a MacBook Air M4 (2025), VS Code, and Codex. GitHub is connected to ChatGPT; the VS Code Codex extension is installed and signed in, as reported by the user. The local Codex inspection confirms a clean clone on native arm64 macOS 26.6.2 with 16 GiB RAM, Git, and Apple Command Line Tools. See the setup checkpoint for subsequent installation results and the next toolchain step.
+One Pilot: **Foundation + Trade & Receivables**, initially India-creditor → U.S.-business-obligor commercial claims. Include the Trade-required Network & Control capabilities. Private Resolution, Consumer Credit and standalone Network product expansion are future work. Use Pilot consistently; do not invent a separate MVP tier.
 
-Proceed incrementally: environment setup, prioritized backlog, project/delivery document reconciliation, then product implementation. The initial environment is verified and `docs/11-prioritized-pilot-backlog.md` is the proposed delivery backlog. Read it for dependencies and acceptance coverage; its next step is document reconciliation/delivery preparation (GRE-001), before product implementation begins with GRE-006. Preserve both pilot journeys and record scope changes in document 07. Routine authorized inspection and reversible work should continue without repeated confirmation.
+Current project documents and versioned reference contracts are reconciled. The next implementation item is P-001. Product features, migrations, product CI and live integrations remain pending. A reference validator is not an application or a requirement to implement every record as a separate component.
 
-The initial Dev Container configuration is in `.devcontainer/`; read `docs/09-development-environment.md` for build and verification instructions. Its first ARM64 image build, offline environment check, and actual VS Code/Codex container session passed on the Mac, as reported by Vishal. The language-toolchain, editor, local PostgreSQL, local Temporal development server, and local Azurite Blob setup is verified. The initial shared Python/pnpm dependency combination and setup fixtures are verified; later integration compatibility remains tracked in `docs/10-dependency-baseline.md`. The environment guide records host lifecycle/attachment commands and synthetic restart checks for all three services. The environment check is `python .devcontainer/check_environment.py --expect-arch arm64`, run inside the container. For the initial shared dependency baseline, read `docs/10-dependency-baseline.md`. Install with `uv sync --locked` and `pnpm install --frozen-lockfile`; run `uv run --locked python -m scripts.check_environment` from the editor repository root with all three local services available. `fixtures/` and the generated client are setup-only; there is no customer/domain implementation or product acceptance suite yet. Inspect actual files before claiming a command exists or succeeds. A check run in a hosted workspace does not verify the developer's Mac.
+## Architecture and invariants
 
-## Architecture direction
+- Retain the verified Next/TypeScript, Python/FastAPI/Pydantic, PostgreSQL, Temporal and Blob direction and exact lockfiles until a justified, tested change.
+- Use modular shared domain operations from both API and workers. PostgreSQL owns business truth; Temporal owns progress; generated TypeScript consumes the canonical API.
+- Preserve evidence, assertions, model outputs, reviewed findings and provider observations separately. Missing or disputed facts remain visible.
+- Authentication and organization membership do not confer case rights or action authority. Enforce tenant, case, provider-review and purpose-specific disclosure at every interface.
+- Keep money exact with currency and allocations. Distinguish reported/verified payment, reversal, agreement, release, net proceeds and service closure. GRE service fees are not recovered funds.
+- Recheck authority, holds, facts, amount, service, provider/profile, disclosure and applicable release conditions immediately before external effects. Design retries/callbacks for deduplication and uncertainty.
+- Provider review disclosure, acceptance/delta, direct appointment, conditions satisfied, activation and GRE service cutover are separate. GRE does not select provider tactics or conduct obligor collection in this Pilot.
+- Revoking GRE access does not prove an external provider stopped or erased exported copies. Record acknowledgments, failures and surviving duties.
+- A new family/edition/module deploy does not enable unreviewed activities. Current scope changes must update07/12 and the relevant spec/backlog before implementation.
 
-- TypeScript/Next.js web; Python/FastAPI/Pydantic domain application; OpenAPI-generated TypeScript clients.
-- PostgreSQL for business records; Temporal for durable process progress; shared Python domain checks used by API and workers.
-- Azure managed hosting/storage, Clerk authentication, and provider adapters as described in the stack decision.
-- Proposed majors: Node 24 LTS, CPython 3.14, Next.js 16, PostgreSQL 18. Validate compatibility and lock resolved dependencies. Record a justified fallback when needed.
-- Target native Apple silicon host tooling and a reproducible Linux Dev Container. Verify container/image architecture support during setup.
+## Environments and validation
 
-The contract ZIP is an earlier schema/validator reference. It is not the application, a mandatory code generator, or a requirement to implement every record as a separate component.
+Vishal is the sole developer, using a MacBook Air M4 and VS Code/Codex in an ARM64 Linux Dev Container. Read 09/10 before host/service work. The Mac path is `/Users/diztort/GRE Development/global-recovery-engine`; container path is `/workspaces/global-recovery-engine`. Hosted-workspace execution is not Mac verification.
 
-## Domain principles to preserve
+Inside the editor container with local services available:
 
-- Keep source evidence, assertions, model output, and reviewed findings distinct. Missing loan terms stay unknown.
-- Authentication does not grant case authority. Enforce case access, disclosed borrower views, action mandates, and private negotiation context separately.
-- Represent money exactly with currency and allocation records. Keep reported payments, verified receipts, reversals, agreement acceptance, and completed recovery distinct.
-- Recheck current authority, balances, holds, and terms before external effects. Design retries and callbacks for deduplication and reconciliation.
-- Both pilot tracks remain required. Record any deferral with its customer impact, interim route, owner, and reconsideration condition.
+```sh
+uv sync --locked
+pnpm install --frozen-lockfile
+uv run --locked python -m scripts.check_environment
+```
 
-## Working practice
+The setup fixture build and read-only service checks do not prove product behavior. See [reference/README.md](reference/README.md) for current reference/legacy validation commands. Inspect actual files before claiming any command exists or passed. Record relevant tested versions, behavior, failures and limitations. Preserve the TypeScript 6.0.3 codegen fallback and pending retention-aware health-check correction.
 
-Inspect Git status and relevant instructions before editing; preserve existing user changes. Keep work bounded and reviewable, using task branches for subsequent implementation work. Do not force-push or rewrite existing history as a routine setup step.
+## Delivery conduct
 
-Use synthetic data in development. Keep credentials, real case evidence, local state, and private customer material out of Git. Production actions and paid provisioning depend on authorization for the specific work; reuse authorization already granted.
+Inspect Git status, branch, actual files and relevant instructions before editing. Preserve unrelated local changes and data. Work from a bounded item with an explicit module/file owner and acceptance evidence; split large items without losing their ID or scope. Use branches and reviewable commits. Do not force-push or rewrite history as a routine step.
 
-Validate the consequences of the change with focused checks. Report what changed, what was actually verified, and what remains uncertain. Update the setup checkpoint when the environment state changes. Do not expand testing without a concrete remaining risk.
+Independent agent tasks may run concurrently when ownership is clear. Coordinate shared schemas, migrations, dependencies, ports and databases; do not race on them. Prioritize a complete useful path and reuse its shared operations; avoid speculative frameworks or duplicated family implementations.
+
+Use synthetic data by default. Keep credentials, real evidence and private customer material out of Git/logs. Routine authorized repository work continues without redundant confirmation. Live communications, customer data use, paid provisioning and production actions require authority for the specific work and applicable release conditions; do not infer these from repository access.
+
+Run focused checks that address the actual changed behavior and required gates. Update owning docs/checkpoint/backlog status with honest evidence. Do not claim legal approval from research, market fit from a demo, or production readiness from passing tests. Report what changed, why, actual validation and remaining blockers.
