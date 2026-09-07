@@ -2,7 +2,7 @@
 
 Recovery infrastructure helping creditors reconstruct unresolved obligations and coordinate a supported path to resolution.
 
-**Current stage: initial environment baseline verified; backlog planning is next.**
+**Current stage: initial environment verified; prioritized backlog drafted for review.**
 The ARM64 development container, local PostgreSQL/Temporal/Azurite, and shared
 Python/pnpm dependency environments passed their setup checks. Minimal fixtures
 verify FastAPI, OpenAPI/client generation, TypeScript, a Next.js production build,
@@ -31,6 +31,7 @@ Read [Current decisions and setup checkpoint](docs/00-start-here.md) first. It e
 | [Stack and environment decision](docs/08-stack-and-environment-decision.md) | Selected architecture direction and proposed runtime targets |
 | [Development environment](docs/09-development-environment.md) | Container/local-service commands and verification records |
 | [Dependency baseline](docs/10-dependency-baseline.md) | Shared locks, setup fixtures, combined check, and remaining integrations |
+| [Prioritized pilot backlog](docs/11-prioritized-pilot-backlog.md) | 10 epics and 48 ordered delivery items covering both journeys, acceptance evidence, business dependencies and retained work |
 | [Codex instructions](AGENTS.md) | Repository context and working rules for coding agents |
 | [Contract reference](reference/README.md) | Earlier schemas and synthetic validation package |
 
@@ -42,6 +43,8 @@ Read [Current decisions and setup checkpoint](docs/00-start-here.md) first. It e
 GRE supplies infrastructure, intelligence, coordination, controls, and records. Identified eligible creditors/providers execute the applicable recovery work. Funds follow established creditor/bank/provider arrangements.
 
 ## Delivery sequence
+
+The proposed backlog is ready for review. Next, reconcile the project/delivery documents under GRE-001; product implementation follows that step. The setup fixtures remain distinct from customer features.
 
 Pilot brief → stack/environment setup → prioritized backlog → project and delivery document updates → application development.
 

@@ -1,8 +1,11 @@
 # Current decisions and setup checkpoint
 
-**Checkpoint date:** September 6, 2026  
-**Project:** Global Recovery Engine (working name)  
-**Owner/developer:** Vishal  
+**Checkpoint date:** September 7, 2026
+
+**Project:** Global Recovery Engine (working name)
+
+**Owner/developer:** Vishal
+
 **Repository:** `vishal-baliga/global-recovery-engine` — private
 
 ## Current direction
@@ -11,7 +14,7 @@ The user has proceeded from the two-track pilot brief to stack selection and inc
 
 The pilot includes domestic U.S. personal/friend loan assistance and India-origin B2B recovery against U.S. businesses. Domestic personal loans are an initial acquisition priority; both journeys remain pilot commitments. Cross-border personal loans and general remittance are future or separate scope, as recorded in the future register.
 
-The agreed sequence is **brief → stack/environment → prioritized backlog → project/delivery document updates → development**. Preparing this repository is environment and context setup. The setup fixtures do not establish a product application or a prioritized product backlog.
+The agreed sequence is **brief → stack/environment → prioritized backlog → project/delivery document updates → development**. Preparing this repository is environment and context setup. The setup fixtures do not establish a product application. A proposed prioritized backlog is now recorded in document 11.
 
 ## How to read the documents
 
@@ -22,6 +25,7 @@ The agreed sequence is **brief → stack/environment → prioritized backlog →
 | [08 — Stack and environment](08-stack-and-environment-decision.md) | Working architecture and proposed runtime targets |
 | [09 — Development environment](09-development-environment.md) | Container/local-service configuration and actual Mac verification records |
 | [10 — Dependency baseline](10-dependency-baseline.md) | Shared manifests/locks, combined setup check, resolved versions, and retained integration requirements |
+| [11 — Prioritized pilot backlog](11-prioritized-pilot-backlog.md) | Proposed order, 10 epics/48 items, dependencies, acceptance evidence, manual routes, and retained requirements |
 | [01 — Business overview](01-business-project-overview.md), [02 — Product strategy](02-product-offering-competitive-strategy.md) | Earlier business/product baseline; B2B-only and MVP-unselected passages await reconciliation |
 | [03 — Operating model](03-operating-model.md), [04 — Workflow](04-workflow-interaction-specification.md), [05 — Domain contracts](05-domain-data-contracts.md) | Domain/reference detail to apply and extend for selected pilot stories |
 | [Contract package](../reference/README.md) | Preserved offline schemas, synthetic example, and validator |
@@ -167,12 +171,16 @@ All fixtures are setup-only. The earlier individual service probes, data volumes
 credentials, and completed restart records are preserved. Docker orchestration
 remains on the Mac; no host commands or service restarts were needed this increment.
 
-## Next planning stage
+## Backlog planning checkpoint — September 7, 2026
 
-Use the verified initial environment to prepare the prioritized backlog for both
-pilot tracks, carrying the explicit remaining integrations/quality/operations
-requirements in document 10 into the relevant tasks. Provider fakes and live
-integrations remain unestablished. Then reconcile project/delivery documents
-before product implementation. No customer features or domain implementation
-were added by this baseline. Inspect Git status and preserve local changes before
-the next task.
+GitHub confirms the completed initial setup baseline at `5511b1ef3096b7791a3c8be62a916c469c9f3a73` on `setup/devcontainer`. The custom setup code, dependency manifests, and documented TypeScript fallback were reviewed without finding a blocker to backlog planning. Runtime evidence remains the local Mac/Codex reports above; no new hosted runtime check is represented as a Mac verification.
+
+[Document 11](11-prioritized-pilot-backlog.md) proposes 48 delivery items across 10 epics and eight stages: documentation/business decisions; shared foundations; domestic assessment; borrower resolution/payment; complete domestic outcomes; India–U.S. commercial completion; assisted processing/live readiness; and pilot evaluation. Both tracks remain required. The draft maps all pilot capabilities and document 10’s remaining integration/quality/operations requirements, including the combined check’s dependence on retained Temporal history, to delivery items. No pilot deliverable was deferred and document 07’s candidates/boundaries are unchanged.
+
+The backlog is on a separate documentation branch based on the verified setup commit. Setup PR #1 remains a draft; neither branch is merged by this planning work. The source environment, service data and local Mac working tree were not changed.
+
+## Next action
+
+Review the proposed backlog order and acceptance coverage, then complete GRE-001: reconcile documents 01–05 and prepare the initial architecture, journey/acceptance, operating-decision and first-story delivery records. Detailed contracts extend with their dependent stories; the reference ZIP is not an application scaffold.
+
+GRE-002–GRE-005 business decisions can proceed alongside documentation. Product coding begins with GRE-006 after the documentation step. Inspect local Git status, preserve changes, and synchronize the appropriate reviewed branch before editing. Do not rerun completed service-restart probes merely to begin planning; use the documented combined check when a concrete environment change needs verification.
