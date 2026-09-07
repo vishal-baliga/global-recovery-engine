@@ -1,84 +1,69 @@
-# Current decisions and setup checkpoint
+# Start here — current GRE baseline
 
-**Checkpoint date:** September 6, 2026  
-**Project:** Global Recovery Engine (working name)  
-**Owner/developer:** Vishal  
-**Repository:** `vishal-baliga/global-recovery-engine` — private
+**Updated:** September 7, 2026. **Owner/developer:** Vishal.
 
-## Current direction
+**Current scope:** One market-facing **Pilot: GRE Foundation + Trade & Receivables**, with the Network & Control capabilities needed by Trade.
 
-The user has proceeded from the two-track pilot brief to stack selection and incremental environment setup. Use the pilot brief and stack document as the working baselines for this stage. Their original proposal/version labels are preserved; component compatibility and service configuration remain to be verified during implementation.
+**Stage:** Project documentation and reference contracts reconciled; product implementation follows the current backlog.
 
-The pilot includes domestic U.S. personal/friend loan assistance and India-origin B2B recovery against U.S. businesses. Domestic personal loans are an initial acquisition priority; both journeys remain pilot commitments. Cross-border personal loans and general remittance are future or separate scope, as recorded in the future register.
+## Current decision and next work
 
-The agreed sequence is **brief → stack/environment → prioritized backlog → project/delivery document updates → development**. Preparing this repository is environment and context setup. It does not establish a runnable application or a prioritized product backlog.
+Build a source-linked commercial claim readiness, named-provider preflight, direct appointment/acceptance and continuing correction/status/financial-observation service. The initial profile targets India creditors and U.S. business obligors. Buyer demand, exact released states/activities, provider coverage and live permission remain evidence to establish.
 
-## How to read the documents
+Private Resolution, institutional Consumer Credit and standalone Network commercialization are [future development](07-future-development-and-business-deliverables.md). There is no concurrent personal-loan Pilot commitment. GRE does not perform the provider's collection tactics or custody recovered funds. Its own disclosure, support and agreed continuity responsibilities survive handoff.
 
-| Files | Current use |
-| --- | --- |
-| [06 — Pilot MVP brief](06-pilot-mvp-brief.md) | Required pilot outcomes, real-case readiness, and operating/business dependencies |
-| [07 — Future register](07-future-development-and-business-deliverables.md) | Preserved future deliverables and scope-change rules |
-| [08 — Stack and environment](08-stack-and-environment-decision.md) | Working architecture and proposed runtime targets |
-| [01 — Business overview](01-business-project-overview.md), [02 — Product strategy](02-product-offering-competitive-strategy.md) | Earlier business/product baseline; B2B-only and MVP-unselected passages await reconciliation |
-| [03 — Operating model](03-operating-model.md), [04 — Workflow](04-workflow-interaction-specification.md), [05 — Domain contracts](05-domain-data-contracts.md) | Domain/reference detail to apply and extend for selected pilot stories |
-| [Contract package](../reference/README.md) | Preserved offline schemas, synthetic example, and validator |
+The next implementation item is **P-001 in [11](11-prioritized-pilot-backlog.md)**: introduce the minimal product package/quality structure on the verified setup. Business discovery/provider work can proceed alongside permitted synthetic development. Read the item's actual dependencies and prepare its bounded design before editing product code.
 
-This checkpoint resolves historical scope/status conflicts during setup. The two-track pilot and chosen architecture take precedence over older scope/status passages. Preserve applicable evidence, authority, financial, privacy, and outcome principles. Reconcile the original documents substantively at the agreed documentation stage; this import only converts their companion links into repository-relative links.
+## Read by purpose
 
-## Environment status
+| Need | Owning document |
+|---|---|
+| Current authority, changes and unresolved decisions | [12 — Scope and reconciliation](12-scope-decisions-and-reconciliation.md) |
+| Customer promise and exact Pilot inclusions | [06 — Pilot brief](06-pilot-brief.md) |
+| Business and competitive portfolio | [01](01-business-project-overview.md), [02](02-product-offering-competitive-strategy.md) |
+| Responsibilities and user/provider paths | [03 — Operating model](03-operating-model.md), [04 — Workflow](04-workflow-interaction-specification.md) |
+| Domain semantics and executable reference | [05](05-domain-data-contracts.md), [reference README](../reference/README.md) |
+| Modules and technology | [08 — Architecture](08-stack-and-environment-decision.md) |
+| Mac/container commands and actual pins | [09 — Environment](09-development-environment.md), [10 — Dependencies](10-dependency-baseline.md) |
+| Ordered delivery and old-item disposition | [11 — Backlog](11-prioritized-pilot-backlog.md) |
+| Real-data/live-service conditions | [13 — Release and assurance](13-pilot-release-and-assurance.md) |
+| Buyer discovery, proof and public claims | [14 — Market validation](14-market-validation-and-proof.md) |
+| Deferred families, depth and business options | [07 — Future register](07-future-development-and-business-deliverables.md) |
 
-The initial findings come from the read-only local Codex inspection pasted by Vishal after cloning. That inspection made no file changes or installations. Later user-reported installation results are recorded below. Each observation describes the Mac at the time of its report; repository updates are tracked in Git.
+Current checked-out Git documents govern development. Historical research, older attachments and superseded backlog revisions explain prior decisions; they do not override this scope. New owner decisions must be propagated to all affected owning artifacts.
 
-| Item | Evidence/status |
-| --- | --- |
-| Development machine | MacBook Air M4 (2025), native `arm64`, 16 GiB RAM, macOS 26.6.2 |
-| VS Code and Codex | VS Code 1.136.1 and Codex extension present; user reports signed in; `code` command unavailable in the inspected shell |
-| ChatGPT GitHub connection | Account and private repository access verified |
-| Repository baseline | Project references and Codex guidance committed in `e6dcf64`; later setup findings are incremental documentation updates |
-| Clone on the Mac | Present and clean at inspection; `main` tracks `origin/main`; correct remote `vishal-baliga/global-recovery-engine`; local commit `e6dcf64` |
-| Git | 2.50.1; live GitHub authentication from the Mac was not tested during the inspection |
-| Apple Command Line Tools | Installed and selected; package version 26.6.0.0.1781586589 |
-| Homebrew | Installed and verified by user-provided terminal output: 6.0.22, prefix `/opt/homebrew`, `brew doctor` reports “Your system is ready to brew.” |
-| Docker | User output verifies Desktop 4.89.0 (238018), client/engine 29.7.2, client `darwin/arm64`, server `linux/arm64`, context `desktop-linux`; Compose 5.5.0. Image download and `hello-world` execution not yet confirmed. |
-| Dev Containers | Not found during the initial inspection; installation confirmation still pending. No GRE Dev Container configuration established yet. |
-| Node/pnpm | Node, npm, pnpm, and Corepack not found on PATH |
-| Python/uv | Apple Python 3.9.6 available; Python 3.14 and uv not found on PATH |
-| Other CLIs | GitHub, PostgreSQL, Temporal, Azure, Terraform, and Dev Container CLIs not found on PATH; install only when their setup stage requires them |
-| Local database, Temporal, Azurite, provider fakes | Not yet established |
-| Cloud and service accounts | Azure, Temporal Cloud, Clerk, runtime AI, and integration provisioning not verified; architecture selection alone does not provision them |
-| Product build/tests | No application scaffolding, dependency locks, CI pipeline, or executable product acceptance checks yet |
+## Verified setup and honest limits
 
-Treat PATH checks as observations of the inspected environment, not proof that a tool cannot exist elsewhere. Update this table with actual results as setup progresses. Use a project-managed Python later; leave the Apple-provided Python in place.
+These are previously recorded Mac/local-Codex observations, preserved from setup commit `5511b1ef3096b7791a3c8be62a916c469c9f3a73`. The documentation pass did not rerun the Mac toolchain or restart its services.
 
-## Next action on the Mac
+| Area | Recorded evidence |
+|---|---|
+| Mac | MacBook Air M4 (2025), native ARM64,16GiB RAM, macOS26.6.2 |
+| Editor | VS Code 1.136.1, Dev Containers 0.466.0, signed-in Codex executing as non-root `vscode` in Debian 12 ARM64 |
+| Host tooling | Git 2.50.1; Apple CLT; Homebrew 6.0.22 at `/opt/homebrew`; Docker Desktop 4.89.0/Engine 29.7.2/Compose 5.5.0; ARM64 hello-world passed |
+| Language tools | Python 3.14.7, Node 24.20.0, pnpm 11.10.0, uv 0.12.10; offline and editor environment checks passed |
+| PostgreSQL |18.6 Bookworm ARM64; private network, persistent named volume; authenticated connectivity and synthetic normal-restart persistence passed |
+| Temporal |CLI1.8.3, embedded Server1.31.2/UI2.50.1, SDK1.32.0; same workflow/run survived server/worker restart; localhost UI worked |
+| Azurite |3.36.0 ARM64; private Blob emulator; authenticated bytes/metadata and HTTP403 anonymous rejection; restart persistence and scoped cleanup passed |
+| Shared dependencies |Fresh locked installs, FastAPI validation, generated client live requests, TypeScript check and Next fixture production build passed; TypeScript 6.0.3 fallback retained |
+| Still pending |Customer product, application migrations/CI, live identity/AI/OCR/provider integrations, production deployment and runtime acceptance evidence |
 
-Finish the Docker smoke check and confirm the Microsoft Dev Containers extension. Docker client/server connectivity and native ARM64 execution architecture are verified; this is not yet evidence of a successful container run.
+Exact historical commands, digests and test observations remain in 09/10. Recreated editor containers need host attachment; some image pins, backup/restore and upgrade validation remain work. Azurite's default root process and Temporal UI bridge egress are documented development limits. Historical workflow receipts can outlive server history; P-001 separates this evidence from repeatable health checks.
 
-### Resolve the permission prompt and collect the remaining output
+## Working locations and checks
 
-The user shared a macOS dialog asking whether Visual Studio Code may access data from other apps. The screenshot does not identify the target app/container or the triggering VS Code process, terminal command, or extension. Apple describes this permission as protecting another developer's application data container. [Apple privacy explanation](https://developer.apple.com/videos/play/wwdc2023/10053/)
+Mac checkout: `/Users/diztort/GRE Development/global-recovery-engine`.
+Editor container: `/workspaces/global-recovery-engine`.
+This hosted ChatGPT workspace is neither of those environments.
 
-The recommendation is to choose **Don't Allow for now**, then observe the current command's result. No evidence yet establishes that this access is required for the GRE setup. The user's actual choice has not been reported. If an access error occurs, diagnose the specific operation and requested resource before changing permissions.
-
-The last supplied Docker line was:
-
-```text
-Unable to find image 'hello-world:latest' locally
-```
-
-This line alone is normal on a first run: the default image policy initiates a download when an image is absent locally. It does not establish that the download or execution completed. [Docker image pull policy](https://docs.docker.com/reference/cli/docker/container/run/#set-the-pull-policy---pull)
-
-Let the existing command finish and supply the remaining output. Success includes **Hello from Docker!**; an error should be recorded exactly. If the original command has already ended and no complete result is available, retry once in the same VS Code terminal:
+From the editor repository root, with the three local services running and attached:
 
 ```sh
-docker run --rm hello-world
+uv sync --locked
+pnpm install --frozen-lockfile
+uv run --locked python -m scripts.check_environment
 ```
 
-### Confirm the editor extension
+These are setup/dependency checks. Use [reference README](../reference/README.md) for contract conformance commands. Do not substitute either for product behavior, production readiness or legal/commercial evidence.
 
-In VS Code Extensions, confirm that [Dev Containers by Microsoft](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers), ID `ms-vscode-remote.remote-containers`, is installed. Install it if still absent. The `code` shell command remains unverified, so use the Extensions UI.
-
-After these results, configure and verify the GRE Dev Container and language toolchains. The shell prompt shows a directory named `GRE Development`; inspect `git rev-parse --show-toplevel` before repository edits rather than inferring the repository root from the prompt. Docker's smoke command itself may run from any directory.
-
-Before local repository edits, inspect Git status and bring in the latest GitHub documentation with a fast-forward update when the working tree permits it. Preserve local changes. The first inspection's read-only scope does not prohibit later setup already authorized by the user.
+Keep credentials, customer evidence, local state and private material out of Git. Preserve local data and unrelated changes; inspect branch and working-tree status before work. The repository update does not mean the Mac checkout automatically changed branches or commits.

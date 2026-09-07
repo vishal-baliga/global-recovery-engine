@@ -1,280 +1,138 @@
-# Global Recovery Engine — Domain & Data Contracts
+# GRE — Domain and data contracts
 
-**Updated:** September 6, 2026  
-**Contract version:** 0.1.0 — first reviewable engineering baseline  
-**Purpose:** Canonical field shapes, references, command inputs, state transitions, consistency rules, and conformance boundaries derived from the reviewed operating model and workflows.  
-**Status:** Schema and synthetic reference validation. No production API, live recovery service, corridor certification, or MVP selection is established.  
-**Companion references:** [Business & Project Overview](01-business-project-overview.md) · [Product Offering & Competitive Strategy](02-product-offering-competitive-strategy.md) · [Operating Model](03-operating-model.md) · [Workflow & Interaction Specification](04-workflow-interaction-specification.md)  
-**Machine-readable companion:** [recovery-contracts.zip](../reference/recovery-contracts.zip)
+**Updated:** September 7, 2026
 
-## 1. What this baseline settles
+**Current reference contract:** 0.2.0 — Foundation plus Trade Pilot
 
-The operating model defines what the business records mean. The workflow specification defines what people and agents experience. This document defines how those meanings are represented, referenced, changed, and checked.
+**Status:** Executable offline reference; no application handlers, deployed controls, provider participation or live release is established.
 
-The core decisions are:
+**Scope authority:** The latest owner decision selects Foundation plus **GRE Trade & Receivables** as the sole Pilot. The earlier directive's parallel Private beta is superseded.
 
-1. A **Case**, **Service Request**, **Obligation**, **Action Intent**, and **Outcome Observation** have separate identities and states.
-2. A reference to a material record identifies its type, ID, and exact version. An approval also binds the exact proposed action and terms digest.
-3. External requests propose or report work. They cannot directly write trusted ownership, verification, authority, cash, or completion state.
-4. Human and agent callers use the same typed operations and independently enforced commit rules.
-5. Financial, evidence, authority, and observation records retain their different meanings when models, interfaces, connectors, or providers change.
+**Companions:** [Operating model](03-operating-model.md), [Workflows](04-workflow-interaction-specification.md), [Architecture](08-stack-and-environment-decision.md), [Pilot release and assurance](13-pilot-release-and-assurance.md).
 
-The record catalogue represents the full core model. It is not a requirement to implement every record type, route, screen, or service for the MVP. The next product decision selects one complete supported path through these contracts.
+## 1. Authority, version and implementation boundary
 
-## 2. Deliverables and authority
+The operating model owns domain meaning. This document owns contract semantics and consistency boundaries. The [v0.2 schema](../reference/v0.2/recovery-contracts.schema.json) owns its declared field names, required/nullable fields, enums and closed shapes. Resolve conflicts explicitly across those artifacts. A broad enum is representational capacity; it is never released behavior.
 
-| Artifact in the companion package | Purpose |
-|---|---|
-| `recovery-contracts.schema.json` | JSON Schema 2020-12 definitions for 29 record types, shared value types, 23 command operations, results, and the test bundle |
-| `worked-case.json` | One fictional case containing 89 versioned records across all 29 record types and four checkpoints |
-| `validate_contracts.py` | Schema validation, cross-record checks, financial checks, and a limited in-memory commit reference |
-| `test_contracts.py` | Positive and negative contract conformance cases; separate from the workflow specification's 36 acceptance scenarios |
-| `requirements.txt` | Pinned direct dependencies used for this reference validation |
+The [source-readable reference](../reference/v0.2/README.md) retains the 29 existing record definitions and 23 typed operation admissions under an explicit 0.2.0 contract, with bounded extensions. It introduces one record, `provider_acceptance_profile`. This is neither 30 services nor a complete backend. The modular application will implement only the shared operations used by the accepted Pilot slices.
 
-The JSON Schema is authoritative for the declared field names, required/nullable fields, enum values, and closed object shapes in version 0.1.0. This document is authoritative for engineering semantics not expressible in JSON Schema. The Operating Model remains authoritative for domain meaning. Resolve a conflict explicitly across the affected references; do not silently choose whichever representation is easiest to implement.
+The immutable [v0.1 ZIP](../reference/recovery-contracts.zip) remains historical and independently runnable. Its approved settlement-offer commit harness is **not** the current Pilot executor. The v0.2 `foundation_checks.py` retains its schema, reference, history, financial and selected transition invariants, while omitting that settlement dispatcher. The new `PilotHarness` demonstrates a narrow synthetic provider-review/acceptance/appointment/activation sequence. It exposes no HTTP endpoints, database migrations, external effects or production authorization API.
 
-Stored records, commands, and export bundles are different interfaces. A tenant-private test bundle is not a public API request and is never an automatic counterparty disclosure package.
+The [complete migration crosswalk](../reference/v0.2/migration.md) maps **all 29 legacy record types, all 23 operations, every execution-mode declaration, and the retained case/state aliases**. Closed-version consumers must negotiate supported versions. A legacy file cannot become v0.2 merely by changing its version string. The new fixtures are deliberately reauthored synthetic examples, not a production data migration or proof that all historical records can be converted automatically.
 
-## 3. Identity, ownership, and time
+## 2. Shared identity, source ownership and time
 
-Every stored record carries `record_type`, `record_id`, `record_version`, `schema_version`, `tenant_id`, `created_at`, `recorded_at`, `valid_from`, `valid_until`, and `data_policy_ref`.
+Each record retains `record_type`, `record_id`, `record_version`, `schema_version`, `tenant_id`, `created_at`, `recorded_at`, `valid_from`, `valid_until` and `data_policy_ref`. A typed material reference remains `{"type":"claim_passport","id":"passport_demo","version":2}` and resolves within its negotiated contract and tenant. An opaque ID conveys no permission.
 
-| Contract | Rule |
-|---|---|
-| Record identity | Opaque ID; no encoded amount, customer name, legal conclusion, or permission. The reference implementation permits a bounded lowercase identifier alphabet. |
-| Version identity | A positive integer identifies one immutable material snapshot. Corrections create another version or a compensating record; published action bindings and agreement terms require new proposal identities when materially changed. |
-| Typed reference | `{"type":"claim_passport","id":"passport_demo","version":2}`. Material decisions and receipts do not use an ambiguous “latest” reference. |
-| Tenant | A security and contractual boundary, separate from legal principal, creditor, provider, or actor. A caller-supplied tenant ID must agree with authenticated scope. |
-| Actor IDs | Resolve through the trusted identity service. A string naming an operator, reviewer, or agent is not proof of identity, employment, qualification, or authority. |
-| Recorded time | When the system knew a record/version. The service assigns it; an imported source cannot backdate the system's knowledge. |
-| Valid time | When a fact, right, or rule applied. A late correction may describe an earlier period while retaining its later recorded time. |
-| Source time | Preserve reported occurrence/update time and provenance separately. Clock differences and unknown source ordering remain explicit. |
-| Dates and deadlines | UTC instants use `Z`; a date-only deadline preserves local date, time zone, calendar reference, wording, and basis. An operational target does not acquire legal effect. |
-| Retention | Retain required evidence and history only under the applicable policy. Disposed content is explicitly unavailable; a reference cannot promise eternal retrieval. |
+Material snapshots are immutable. Corrections append another version or a compensating record. The server owns recorded time; imported source occurrence time cannot backdate what GRE knew. Valid time and recorded time remain separate. Decisions use the information available at their cutoff; later facts cannot be inserted into earlier evaluation. A new effect must additionally pass current facts, authority, holds, policy and release checks.
 
-A complete conformance bundle resolves all of its typed references within the same tenant. Production services may use scoped reference retrieval rather than transmitting every referenced object. Cross-organization exchange must create a permissioned package and receiving-side references with provenance; knowing another tenant's identifier grants no access.
+Each fact has one canonical writer. Views and exports compose source references; they do not create another editable balance, authority ledger or success status. A Passport hash proves internal content consistency, not identity, truth, enforceability or permissible disclosure. Evidence, party assertions, contrary evidence, scoped verification and AI inference retain separate meanings. Uploaded documents and provider/model outputs remain untrusted inputs.
 
-JSON Schema checks the declared shapes. Trusted identity resolution, residency, retention enforcement, time-zone/calendar applicability, and legal authority require service controls.
+Cross-organization transfer requires a permitted receiving-side mapping. In the bounded fixture, `work_order.disclosure.receiver_namespace` and `recipient_mappings[]` bind each included artifact reference to a receiving ID. These are synthetic mapping examples, not shared cross-tenant IDs or access grants. Production needs authenticated recipient scope, import provenance, permissioned reference retrieval and retention-aware handling of unavailable sources.
 
-## 4. Core records and responsibility
+## 3. Classification, commercial entitlement and release
 
-| Record | Main responsibility and relationships |
-|---|---|
-| `party` | Legal identity, asserted roles, and scoped identity verification; roles do not themselves grant authority |
-| `data_policy` | Purpose-specific processing, disclosure, evaluation, learning, retention, and disposition permissions |
-| `case` | Compatible claims/obligations, coordination owner, scoped services, state vector, and remaining duties |
-| `service_request` | Contracting party, represented principal, bounded work, allowed acts, window, caps, deliverable, and fulfillment |
-| `obligation` | Underlying payment duty, compatible invoice/charge/credit lines, obligated parties, and linked cases |
-| `rights_interest` | Documented ownership, assignment, subrogation, security, participation, or servicing interest |
-| `claim_passport` | Versioned assertion, evidence, rights, action-specific readiness, gaps, and financial-position reference |
-| `evidence_item` | Source artifact metadata, integrity hash, custody, derivation, observation time, and retrieval/disposition |
-| `evidence_assertion` | A proposition with supporting and contrary evidence; distinguishes party assertions, attestations, observations, and AI inference |
-| `verification_record` | Who verified what, by which method and evidence, for which scope, with which limitations |
-| `authority_grant` | Verified principal/delegate relationship, permitted/prohibited actions, scope, bounds, dates, and revocation |
-| `policy_snapshot` | Exact policy evaluation and material inputs for a particular case/action |
-| `capability` | Declared availability, supported actions/modes/routes, assurance evidence, owner, limits, and reassessment |
-| `corridor_pack` | Sourced and reviewed jurisdiction configuration, applicability, supported routes, and maintenance ownership |
-| `strategy_plan` | Authorized coordination across primary, fallback, and parallel routes, with costs and exit triggers |
-| `decision_episode` | Information available at the time, eligible alternatives, uncertainty, selection rule, and observation horizon |
-| `action_intent` | Exact proposed action, immutable binding, status, approvals, and operation identity |
-| `approval` | An authorized decision tied to one action/version, binding digest, principal, and expiry |
-| `execution_receipt` | A particular dispatch attempt and observed result, including uncertainty and remediation responsibility |
-| `work_order` | Provider scope, evidence access, authority, eligibility, acceptance, budget, and return obligations |
-| `waiting_requirement` | Required response, owner, recipient, delivery/acceptance status, due basis, expiry, and escalation |
-| `agreement` | Exact proposed/shared terms, independent party acceptances, validity review, and subsequent fulfillment/release observation |
-| `payment` | Source-classified reported or reconciled transaction; debtor payment differs from insurer or sale proceeds |
-| `allocation` | Application or reversal of reconciled debtor payment against an underlying obligation |
-| `financial_position` | A reconcilable position across asserted duty, accounting view, effective releases, allocated cash, and outstanding amount |
-| `outcome_observation` | Scoped service result and independently observed financial/business results, source, horizon, and attribution limits |
-| `event` | Versioned subject/source references, occurrence and recorded time, actor, causal linkage, reasons, and payload integrity |
-| `model_execution` | Actual retained input/output references, replaceable model/workflow identity, cost, disposition, and limitations |
-| `external_binding` | A verified recipient, communication identity, payment destination, provider endpoint, or source-write target |
+`case.classification` contains `matter_family`, `profile_id`, `profile_version`, `status`, `purpose`, `claim_type`, claimant/obligated-party type, natural-person involvement, creditor/obligor countries, source references and review owner. `case.commercial_entitlements` is independent. `NETWORK_CONTROL` does not change classification or bypass a family gate.
 
-Specialist proceedings, richer dispute taxonomies, complex rights waterfalls, and route-specific legal/financial instruments need their own reviewed extensions before implementation. The core identifiers and references preserve room for them; this baseline does not supply every specialized payload.
+The represented operational profile is confirmed Trade, business purpose, commercial goods/services, a business claimant and obligor, India creditor → U.S. business obligor. Any natural-person involvement, mixed/unknown purpose, guarantee requiring classification, Consumer/Private indicator or unresolved role goes to review; the harness conservatively blocks the whole proposed transfer. This conservatism is not the final action-specific policy engine. A qualified reviewed fact pattern is required before any broader exception is designed.
 
-## 5. Consistency and transaction boundaries
+`corridor_pack.release_profile` binds family/profile version, permitted service modes, executor pattern, actor IDs, legal-review state, conditions, release evidence and responsible owners. Existing `corridor_pack.status` retains the separate commercial status. `source_lifecycle[]` records source, publication/retrieval/effective dates, current/withdrawn/superseded status and reviewer. Case-specific `policy_snapshot` and `capability` remain separate current evaluations and assurance records.
 
-A graph-shaped domain does not require a graph database, a distributed service for every record, or an agent per object. A modular application can own these consistency boundaries.
+Activation requires the intersection of supported family/profile, exact directional corridor, service, actor, direct authority, policy, capability and release conditions. Commercial enablement does not establish current legal review. Current review does not establish commercial release. A frozen Passport cannot override a corrected assertion, withdrawn rule, active hold, expired grant or outdated provider requirement.
 
-| Boundary | Required atomic or conditional work |
-|---|---|
-| Case coordination | Check the expected version; apply a permitted transition; record the owner/reason; publish the corresponding event |
-| Service fulfillment | Verify contracted deliverables and remaining duties; complete only that request; do not close unrelated active work |
-| Obligation and cash | Deduplicate source transactions; reconcile; reserve/allocate without double recovery across linked cases; append corrections/reversals |
-| Action commitment | Recheck live facts and permissions; compare versions; reserve shared limits; record authorization/operation identity; insert the durable outbox item |
-| Provider engagement | Bind the accepted scope and cost; activate only after acceptance and conditions/eligibility checks |
-| Agreement | Preserve each exact offered term set and acceptance evidence; record performance and release effects separately |
+The reference represents only the countries and classification facts needed for this gate. Full origin/current/contact/processing/payment/forum/enforcement jurisdictions, regulatory role, channel/fee analysis, source hierarchy and change-impact review belong in the dependent corridor and release work. No real legal review or provider eligibility is asserted by a synthetic `COUNSEL_REVIEW_CURRENT` or `PILOT_ENABLED` value.
 
-Record snapshots are server-owned projections of accepted domain changes. A client cannot mark a case closed by uploading a new `case.state`, mark a payment reconciled by changing its status, or create authority by submitting an `authority_grant` record.
+## 4. Service modes and legacy compatibility
 
-Use transactional constraints for obligation allocations and competing commercial commitments. The reference harness serializes requests in memory to demonstrate expected results. It does not prove database isolation, distributed locking, crash recovery, or concurrent-worker correctness.
+Service mode, execution mode, case lifecycle and commercial edition are separate axes.
 
-## 6. State and transition contract
-
-The formal case fields are `state.lifecycle_stage`, `stage_state`, `readiness_state`, `authority_state`, `engagement_state`, `dispute_state`, `legal_state`, `payment_state`, `holds`, `closure_state`, and `completion`.
-
-The Operating Model's enum values are retained. JSON Schema rejects an invalid stage/substate combination, such as `ASSESSMENT + ENFORCEMENT_ACTIVE`. Independent dimensions remain independent.
-
-| Transition family | Preconditions and result |
-|---|---|
-| Placement → construction/assessment | Valid supported scope, parties, minimum authority, and sufficient current material; reviewed late entry can use a documented checkpoint |
-| Construction ↔ assessment | Evidence cure, contradictions, or reconciliation change action-specific readiness |
-| Assessment → decision | Recorded alternatives, limitations, economics, and applicable authority |
-| Decision → execution/escalation | Supported service/capability, authorized strategy, eligible executor, and required provider acceptance |
-| Execution/escalation ↔ assessment | Material dispute, evidence, rights, authority, policy, or economic change |
-| Execution/escalation → resolution | A supported resolution process has begun; this does not itself establish accepted terms or verified cash |
-| Resolution → closure → closed | Reconcile each required completion dimension; settle or explicitly assign remaining duties; no active service may be hidden |
-| Closed → assessment/placement | Explicit reason and authority; preserve history and determine what new or surviving service scope permits |
-
-Same-stage updates still need their expected version and applicable guards. A reviewed handover permits late entry into a justified stage; it never replays historical communications or treats imported claims of authority/payment as verified.
-
-`SERVICE_SCOPE_COMPLETE` can close operations with an unpaid claim after bounded work ends. It is not an observed zero recovery, waiver, or paid-in-full state. Monitoring does not continue indefinitely without contracted scope.
-
-The transition helper checks identity, next version, the allowed stage graph, reason, and the explicit authority requirement for selected boundaries. Production handlers must enforce the full preconditions in the Operating Model, including separation of duties and case-specific policy.
-
-## 7. Command admission and result semantics
-
-The package defines 23 operation names:
-
-| Group | Typed operations | Main admission boundary |
+| Legacy `service_request.kind` | New `service_request.service_mode` interpretation | Required treatment |
 |---|---|---|
-| Placement and service | `case.place`, `service.request`, `case.import_handover` | Proposed work/current-state handover; no automatic verification or execution authority |
-| Evidence and assessment | `evidence.attach`, `verification.record`, `assessment.request`, `strategy.propose` | Registered sources and scoped findings; reviewer/agent eligibility is checked independently |
-| Authority and approval | `authority.request`, `authority.revoke`, `approval.record` | Requests do not mint grants; recorded verification/approval requires the corresponding trusted actor and instrument |
-| Actions | `action.prepare`, `action.commit`, `action.cancel`, `action.reconcile` | Exact binding and live checks; cancellation/uncertain effects remain distinct |
-| Provider work | `work_order.offer`, `work_order.respond` | Actual accepted scope, conditions, cost, and executor |
-| Resolution | `agreement.propose`, `agreement.observe_acceptance` | An observation of acceptance requires exact-term and authority review; external legal effects cannot be overwritten by a UI status |
-| Financial | `payment.observe`, `payment.reconcile` | Reported transaction, authoritative evidence, allocation, and reconciliation are separate |
-| Completion and observations | `service.fulfill`, `case.propose_close`, `outcome.observe` | Fulfilled scope and supported observations; no direct declaration that every obligation ended |
+| `ASSESSMENT` | `ASSESS` | Preserve deliverable, uncertainty and service window; no subsequent contact authority. |
+| `HANDOFF` | `TRANSFER` | Preserve actual acceptance and outstanding duties; transmission alone is insufficient. |
+| `MONITOR` | `OBSERVE` or `CONTROL` | Review actual contracted acts and split scopes where needed; do not widen creditor-control rights. |
+| `OPERATE` | No automatic mapping | Reassess the original acts and executor; require explicit new scope. Never silently map to `RESOLVE`. |
 
-Command envelopes identify request/operation identity, intended tenant, actor, represented principal, referenced versions, and a closed typed payload. The service obtains trusted identity, policy, time, and live state independently. Caller assertions are inputs to validation.
+The retained `kind` also appears in legacy placement/service command payloads. Those payloads remain compatibility admissions; v0.2 provides no transport handler that automatically activates their requested work. New stored service records require `service_mode`. The Pilot gate supports `ASSESS`, `PREPARE`, `TRANSFER`, `CONTROL`, `OBSERVE`. Represented `PREVENT` and `RESOLVE` stay unavailable.
 
-The three `ActionCommand` operations additionally bind the target Action Intent and its digest. General commands use `expected_refs` plus typed payload references. Material handlers must require all relevant current versions; a caller cannot choose to omit a necessary consistency check.
+`action_intent.binding.execution_mode` remains exactly `OBSERVE`, `PREPARE`, `APPROVAL_REQUIRED`, `DELEGATED`. The same execution vocabulary is retained in `authority_grant.execution_modes`, `capability.allowed_modes` and authority requests. `PREPARE` is not dispatch permission; `APPROVAL_REQUIRED` still requires exact approval; `DELEGATED` is never inferred from a role, edition, service label or provider response. No general delegated executor is supplied by either reference.
 
-A `CommandResult` separates request acceptance, task status, domain status, result references, waiting requirements, reasons, and permitted next operations. Service completion and financial/business observations are read from their own referenced records. Completion of a job never implies that a debt was recovered.
+Legacy `case.state.*` dimensions and their stage/substate pairings remain intact. `EXECUTION` can describe an externally performed case stage; it does not designate GRE as collector. Existing `case.state.closure_state = TRANSFERRED` is preserved for historical disposition only and is not the new transfer-service completion field. `SERVICE_SCOPE_COMPLETE` may describe unpaid bounded closeout; it does not establish payment, discharge, waiver or successful collection.
 
-These are transport-independent contracts. Future HTTP endpoints, webhooks, and agent adapters must preserve them. An HTTP response or message acknowledgement describes transport/request handling, not the final commercial result. [HTTP semantics](https://www.rfc-editor.org/rfc/rfc9110.html)
+## 5. The six contracts compose canonical records
 
-## 8. Exact action, approval, and commit contract
+[Contract composition examples](../reference/v0.2/contract-compositions.json) resolve through six closed schema view definitions. They carry source references and create no additional authoritative records.
 
-An Action Intent contains an immutable `binding` with case/service/principal/executor, target party and verified destination, action class and execution mode, route/corridor/channel, exact terms reference and digest, evidence references, authority/policy/capability versions, material record versions, cost, and expiry.
-
-`binding_digest = SHA-256(JCS(binding))`. The digest is prefixed `sha256:`. Terms use the same convention on their closed `terms` object. The reference uses RFC 8785 canonical JSON so serialization order does not change the digest. A digest establishes internal content consistency; trusted provenance, signatures, storage integrity, and real authority require independent controls. [RFC 8785](https://www.rfc-editor.org/info/rfc8785/)
-
-An approval binds the exact Action Intent version and binding digest. Changing money, terms, recipient, executor, scope, or a material dependency invalidates the prior binding. Terms are not silently edited after offer/approval; a new proposal preserves supersession and the status of any earlier externally delivered offer.
-
-At commit:
-
-1. Authenticate the caller and represented principal; resolve current access.
-2. Resolve the request key and exact binding; return a prior result for a legitimate retry or reject conflicting reuse.
-3. Check current case/service scope, versioned material facts, holds, and action necessity.
-4. Revalidate grants, approvals, revocation, dates, recipient/destination, rights, policy, corridor, and capability assurance.
-5. Enforce amount, nonfinancial terms, disclosure, cadence, budget, and aggregate-obligation constraints.
-6. Atomically reserve shared limits and record an outbox item with the durable operation identity.
-7. Dispatch through the eligible adapter; retain attempts, acknowledgement, observation, and reconciliation separately.
-
-The included harness implements a single approved, single-payment settlement-offer profile. It deliberately rejects other actions, delegated execution, installment variations, and unsupported nonfinancial terms. That bounded reference is a contract demonstration, not a selected MVP.
-
-## 9. Retry, event, cancellation, and waiting contract
-
-Use a request key scoped to tenant, authenticated actor/service identity, represented principal, and operation. Reuse with a different semantic request is a conflict. Transport attempt IDs or timestamps may change without creating another business operation.
-
-An Action Intent also has stable operation identity. A fresh request key cannot force the same action to run again. Separate action IDs affecting the same obligation still encounter shared commitment and budget reservations.
-
-A dispatch timeout produces `RESULT_UNKNOWN` and accountable reconciliation. Query the existing external operation before deciding whether another attempt is safe. “Exactly once” is not a general guarantee across independent providers; adapter-specific idempotency and observed effects determine safe behavior.
-
-Cancellation before dispatch can suppress work and release eligible reservations transactionally. After dispatch, a cancellation request is a new control event; it does not prove that the recipient failed to receive an offer or that an external commitment disappeared. Uncertain reservations remain under reconciliation rather than expiring into a duplicate effect.
-
-Events retain source occurrence, server recording time, subject/version, known causal references, reason, material payload references, and integrity metadata. Correct facts with new records/events. Payload digests do not authenticate the producer; a production service needs authenticated admission, trusted integrity anchors, retention-aware audit storage, and adapter conformance.
-
-Waiting requirements distinguish transport delivery, acceptance of responsibility, partial response, completion, expiry, and reassignment. An expired internal timer cannot supply consent or release a protected hold. Date-only legal or contractual deadlines retain their source and applicability basis.
-
-## 10. Financial and acceptance contract
-
-Money is represented as an exact nonnegative integer string in minor units, with explicit currency and exponent. USD 78,000 is:
-
-```json
-{"currency":"USD","exponent":2,"units":"7800000"}
-```
-
-Do not use binary floating point for stored cash or obligation arithmetic. Reversal direction is an explicit record kind, not an unexplained negative value. The currency catalogue, permitted precision, FX conversion/rounding, tax, distributions, and jurisdiction-specific treatment need supported service configuration.
-
-For the supported single-currency position:
-
-`outstanding = principal + supported charges - valid credits - effective releases - reconciled debtor payments`
-
-This is a bookkeeping invariant over supported records. It does not determine legal validity. An accounting write-off, insurance receipt, sale price, and debtor payment remain separate facts.
-
-A reported payment does not reduce the reconciled position. Allocation requires the authoritative source and supported matching/review. Deduplicate by external transaction identity and enforce aggregate allocation limits across linked cases.
-
-Agreements preserve immutable exact terms and independent party acceptances. Fulfillment and `release_effective_at` are later observations outside the terms digest. The fixture's USD 8,000 release occurs only after the documented USD 70,000 payment condition is established.
-
-A later payment reversal appends a reversal allocation. It does not automatically reverse a prior legal release: whether an obligation revives needs the actual terms, evidence, and qualified determination. The reference tests a reversal that restores USD 70,000 outstanding while leaving the earlier USD 8,000 release effective. Other release/revival instruments require reviewed extensions and applicable controls.
-
-## 11. Evidence, private contexts, and learning
-
-Keep original artifacts, derived artifacts, party assertions, model inferences, and verification records separate. A content hash is not proof of performance or enforceability. Scope every verification and keep contradictory evidence visible.
-
-A decision's input references must have been recorded by its information cutoff. Later evidence cannot be inserted into the earlier knowledge state. Model execution records retain the actual relevant inputs/outputs under policy; a model rerun is a new execution and need not reproduce the same text.
-
-Data permissions distinguish delivering the service, tenant-private evaluation, pooled benchmarking, and model training. Tenant-private operation must remain viable. A shared proposal may reference only approved shared evidence; private negotiation strategy does not become shareable because it is linked to the same case.
-
-Outcome amounts distinguish `OBSERVED`, `PENDING`, `UNKNOWN`, `RIGHT_CENSORED`, and `NOT_APPLICABLE`. Only an observed monetary field contains a value; an observed zero needs a source and observation horizon. A case can have observed interim cash while time-to-resolution remains censored; report those as different observations.
-
-Decision Episodes retain eligibility, missing information, selection rules, and uncertainty. Do not invent selection probabilities for human or deterministic choices. Linked activity and outcomes provide traceability; they do not by themselves establish causal lift.
-
-## 12. Worked case
-
-All parties, artifacts, mandates, provider eligibility, rule packs, enabled statuses, and dates in the fixture are fictional. They express assumed prerequisites of a test scenario. No actual provider, regulatory rule, payment, or service availability is certified.
-
-| Checkpoint | Service and case meaning | Financial meaning |
+| Contract / schema view | Canonical source ownership | Added meaning and limit |
 |---|---|---|
-| Intake | Four USD 19,500 invoices; identity/evidence defects remain | USD 78,000 assertion; no recovery established |
-| Assessment delivered | Assessment request fulfilled; further operation has its own request and authority | USD 78,000 remains asserted; recovery observation is unknown |
-| Provider reports payment | Approved exact-term offer has been delivered and accepted; bank reconciliation is pending | A provider report does not reduce the last reconciled USD 78,000 position |
-| Closeout | USD 70,000 receipt reconciled; conditional release recorded; operating scope fulfilled | USD 70,000 debtor recovery + USD 8,000 effective release = USD 0 outstanding |
+| Claim Passport / `ClaimPassportView` | `claim_passport`, case classification, evidence/assertion/verification, obligation/financial/rights references | Existing source-linked snapshot plus profile and permitted disclosure context; no universal verified-debt flag. |
+| Provider Acceptance Profile / `ProviderAcceptanceProfileView` | New `provider_acceptance_profile`, provider party/verification, `capability`, per-case `work_order` | Standing provider-authored or explicitly provider-approved requirements; not a placement response, mandate or license. |
+| Authority Envelope / `AuthorityEnvelope` | `authority_grant`, `rights_interest`, `approval`, `policy_snapshot`, exact action binding | References actual principal, limits and authority provenance; the closed view cannot introduce an `allowed_actions` field or mint rights. |
+| Corridor Pack / `CorridorPackView` | `corridor_pack`, `policy_snapshot`, `capability` | Direction, rule lifecycle, current applicability and release remain separately sourced. |
+| Action Receipt / `ActionReceiptView` | `execution_receipt`, `action_intent`, `approval`, `event`, `model_execution` | Attempt/effect provenance and uncertainty; not a competing success ledger or provider conduct certificate. |
+| Resolution Quality Scorecard / `ResolutionQualityScorecard` | `outcome_observation`, financial/payment, decision, work-order and event records | Versioned source composition; dimensions preserve denominator, horizon, missingness and attribution limits. No causal lift or provider ranking is computed. |
 
-The final case can show partial recovery against the original assertion and full performance of the settlement simultaneously. Export-administrative and retention duties retain named owners after operational closure.
+The standing Provider Acceptance Profile records provider identity, declaration/fee evidence, supported families/corridors/claim classes, required evidence IDs, exclusions, capacity, credentials/review due date, accepted formats, returned event kinds, freshness obligation and owner. The fixture's IDs are synthetic requirements, not a production requirement language. GRE cannot silently rewrite the provider's declaration. A material change creates a new version, identifies affected placements and requires re-preflight/reacceptance as appropriate. Historical results are retained.
 
-The test suite also constructs an assessment-only exit with an unpaid claim, and a later payment-reversal branch. Neither branch silently creates another service or equates bookkeeping with legal effect.
+## 6. Review, acceptance, direct appointment and activation
 
-## 13. Validation and practical limits
+`work_order` remains the canonical placement aggregate. These are its new qualified paths:
 
-The first completed validation run passed **51 conformance checks**. The package validates the schema against its metaschema, checks all 89 records in the worked example, and exercises positive and negative domain cases. Date/time format validation is explicitly enabled; format annotations alone are insufficient. [JSON Schema 2020-12](https://json-schema.org/draft/2020-12) · [Python jsonschema validation](https://python-jsonschema.readthedocs.io/en/stable/validate/)
-
-| Tested area | Evidence from the reference checks |
+| Path | Values / meaning |
 |---|---|
-| Data contracts | Required/closed fields, typed references, tenant separation, exact money, dates, stage/substate pairs, and typed service requests |
-| Authority and content | Expired/revoked grants, stale approval, changed material state, exact action/terms binding, and bounded terms |
-| Controlled execution | Retry identity, fresh-key duplicate prevention, shared commitment reservation, caps, holds, policy, capability, and disclosure |
-| Financial meaning | Unreconciled reports, other proceeds, duplicate transactions, over-allocation, release conditions, and payment reversal |
-| Scope and observation | Assessment completion, unpaid scope closure, unknown versus zero, active work at closure, and retained duties |
-| Historical correctness | Later information excluded from earlier decisions, exact acceptance evidence, and absent invented propensities |
+| `provider_acceptance_profile_ref` | Exact standing profile version for this offer. |
+| `preflight_profile_ref`, `preflight_packet_digest`, `preflight_state` | Exact evaluated profile and packet; `NOT_RUN`, `READY`, `DELTA`, `STALE`. `READY` means ready for that review profile. |
+| `acceptance_state` | `PENDING`, `CONDITIONAL`, `REJECTED`, `ACCEPTED`, `EXPIRED`; provider commercial response. |
+| `validation_delta[]` | Requirement ID, reason, open/satisfied state and supporting sources. |
+| `accepted_packet_digest` | Exact reviewed disclosure digest associated with the response; changing the packet requires new acceptance. |
+| `direct_appointment_ref` | Creditor-to-provider `authority_grant`, independently verified for the actual scope. |
+| `execution_conditions[]`, `independent_validation_ref` | Separately sourced prerequisites and provider's scoped validation. |
+| `provider_work_state` | `NOT_STARTED`, `ACTIVE`, `PAUSED`, `CEASED`, `UNKNOWN`; separate from response and GRE service state. |
+| `activation_at`, `cutover_at` | Recorded activation/cutover, only after the guards. A timestamp cannot supply missing authority. |
+| `offer_expires_at`, `owner_id` | Expiry and accountable owner for response, rejection, silence or exception. |
 
-The tests do **not** prove production authentication, genuine signatures/authority, source authenticity, legal applicability, deployed tenant isolation, durable transactions/outboxes, true concurrent workers, provider delivery, PSP reconciliation, performance at scale, or recovery uplift.
+First disclose only the minimized, independently permitted inputs needed for conflicts, eligibility and review. `work_order.disclosure` binds purpose, recipient, included/withheld/redacted artifacts, data-policy basis, reviewer, expiry, access state, receiving mapping and JCS/SHA-256 packet digest. Review access is not an execution mandate. Privileged, restricted, legally held and trade-secret artifacts conservatively fail the reference disclosure check; a released product needs qualified rules for legitimate exceptions and approved derivative redactions.
 
-The broad command schemas define admission shapes. Most command handlers, the complete policy/corridor compiler, rich financial instruments, and full runtime transitions remain unimplemented. Passing this suite is not passing all 36 workflow acceptance scenarios. Capability release still needs its applicable workflow, integration, operating, and expert-review gates.
+The provider may return a delta or rejection without reconstructing the whole file. Conditional acceptance never enables execution. Commercial acceptance can be recorded while conditions remain open; legacy `work_order.status = ACCEPTED` retains its stronger resolved-condition meaning. The helper therefore keeps legacy `status = OFFERED` at early commercial acceptance, progressing to `ACTIVE` only after activation. Legacy response payload `ACCEPTED_WITH_CONDITIONS` maps to new `acceptance_state = CONDITIONAL`; `DECLINED` maps to `REJECTED`. An unverified old `ACCEPTED` value cannot be upgraded into current activation.
 
-## 14. Running and maintaining the package
+The creditor directly appoints the provider. Activation requires exact accepted packet/profile, current mandate, principal/provider/actor and act scope, budget, rights, independent validation, fulfilled conditions, non-conflicting mandates and current gates. The provider executes externally through its own identity and judgment. GRE transports permitted creditor decisions and supplies its contracted preparation, correction and continuity services; it does not select collection tactics or negotiate as collector.
 
-Extract the companion archive into a working folder with Python 3.10 or later. From that folder:
+At cutover, fence new effects under the ended GRE service and cancel queued work that remains cancelable. Sent/in-flight/unknown effects retain reconciliation and an owner. Then `service_request.status = TRANSFERRED` records completion of that bounded GRE transfer. It does not change the underlying obligation, agreement, payment, case closure or other services. Separate `CONTROL/OBSERVE` requests and preservation/complaint/support duties keep their own owner, scope and window.
 
-```bash
-python -m venv .venv
-```
+Recall distinguishes `disclosure.access_state = REVOKED`, `cessation_acknowledgment = REQUESTED/CONFIRMED/UNKNOWN`, external work state and `external_copy_state = RETAINED_OR_UNKNOWN`. GRE access revocation cannot remotely erase exported documents, undo an in-flight action or prove the provider ceased work. Replacement activation requires reviewed, non-conflicting authority; a complete second-provider switch transaction is still product/integration work.
 
-Activate the environment using the command for your operating system, then run:
+## 7. Exact effects, receipts and financial meaning
 
-```bash
-python -m pip install -r requirements.txt
-python validate_contracts.py
-python -m unittest -q test_contracts
-```
+An action binds exact case/service/principal/executor/target, content/terms, material versions, authority, policy, capability, money, expiry and execution mode. `binding_digest = SHA-256(JCS(binding))`; terms use their own exact digest. Changing material content requires a new proposal and approval, not mutation of an offered action. Actor strings, hashes and approvals in a supplied bundle do not authenticate anyone.
 
-The validator reads local files and produces no external effect. Its default input is `worked-case.json`; an alternate compatible bundle can be supplied as a path. The reference Python code is a conformance tool and does not select the application's implementation stack.
+Production prepare/commit must authenticate separately, resolve current versions and permissions, enforce holds and limits, bind exact content and destinations, deduplicate request/action identity, reserve shared commitments and atomically create a durable outbox record. Dispatch and reconciliation remain separate. The v0.2 helper's gate checks and list of queued/in-flight effects demonstrate only expected decisions; they implement no durable outbox, idempotent dispatcher or concurrency controls. The unchanged legacy 51 tests remain separate evidence for the earlier in-memory settlement example.
 
-Keep this specification and `recovery-contracts.zip` as the current pair. The archive contains the schema, fixture, validator, tests, and dependency file; it does not duplicate the business or operating documents.
+`execution_receipt.attribution` identifies proposer, principal, reviewer, approver, transmitter, performer and observer, plus source status. `RESULT_UNKNOWN` needs accountable reconciliation. Provider performance is attributed to that provider; GRE transmission is attributed to GRE's actor. Transport acknowledgement, provider acceptance and successful collection are different facts. An uncertain receipt never authorizes blind resend.
 
-Version schema and command contracts deliberately. With closed objects and enums, adding an optional property or enum value can still break an older consumer. Negotiate supported contract versions and test adapters; never reinterpret a stored version in place. Unsupported route-specific payloads fail explicitly until a compatible reviewed extension is introduced.
+Money remains exact nonnegative integer strings in minor units: `{"currency":"USD","exponent":2,"units":"7800000"}`. The supported equation is:
 
-**Next project step:** map capabilities and dependencies to these contracts, compare complete candidate MVP paths, and select one using customer value, development effort, operating responsibility, and validation evidence. Implementation architecture and the build plan follow that selection.
+`outstanding = asserted principal + supported charges − valid credits − effective releases − reconciled debtor payments`
+
+This is bookkeeping over supported records, not a legal validity finding. Credits, release, insurance proceeds, debt sale, accounting write-off, payment and reversal stay distinct. Allocation requires reconciled debtor payment and must prevent duplicate/over-allocation across linked cases. A reversal appends compensating allocation; revival of an earlier release needs its actual terms and qualified determination.
+
+`payment.observation_source = PROVIDER_REPORT` must remain `REPORTED`, with no reconciliation timestamp. `INDEPENDENT_FINANCIAL_SOURCE` is a source classification that still requires trusted evidence and matching in a real adapter. A provider's reported payment does not reduce the reconciled balance. `external_binding.funds_role` rejects `GRE_CUSTODY` and `GRE_SERVICE_BILLING` as destinations for repayment of the underlying obligation. GRE's own ordinary service billing is a separate Pilot service-billing workflow, with defined manual invoicing permitted, not a repayment ledger or custody workaround.
+
+Agreements retain exact immutable terms, independent party acceptances, performance, effective release and payment observations. A promise or accepted agreement cannot mark an obligation paid. The new Trade fixture intentionally stops short of an agreement/reconciled-payment execution path; the retained legacy suite separately exercises its bounded settlement, conditional release and reversal semantics.
+
+## 8. Correction, privacy, outcome and future representation
+
+`evidence_assertion.correction` references the superseded assertion, reason, accountable owner, intended work-order recipients and delivery state. The old assertion remains resolvable. The helper checks recipient access and refuses revoked routes; it does not transmit a correction or authorize every new source artifact. Actual correction content needs its own reviewed minimized disclosure, receipt/error handling and recipient retention treatment.
+
+Service processing, tenant evaluation, pooled benchmarking and model training are independent `data_policy` permissions. Permission for service delivery or returned outcomes does not imply training rights. Retention, deletion, legal hold, correction and recipient access are separate controls; immutable history does not mean indefinite retention of personal content. The reference checks selected metadata, not storage deletion or content-level privacy enforcement.
+
+The scorecard's optional `outcome_observation.quality_dimensions[]` preserves net economics, readiness/accuracy, time/effort, treatment/safety, agreement durability and continuity separately. Its parent provides the observation horizon and attribution basis. Unknown/pending/censored values remain null; observed zero requires evidence. Fixture dimensions are explicitly unknown and establish no performance measurement.
+
+Consumer and Private are inactive future examples. The Consumer fixture represents an institutional U.S.-origin/India-resident classification and fails the Trade operational gate. The Private fixture represents a requesting adult, responding adult, declined participation, no-further-contact and private/shared reference separation. `case.inactive_private_context` is deliberately a limited fixture shape; sponsor/payer status grants no participant data. It does not implement invitation admission, duplicate suppression, a shared room, agreement formation, safety support, consumer protections or a released service. Those needs and reopening gates remain in [Future development](07-future-development-and-business-deliverables.md).
+
+## 9. Validation evidence and remaining work
+
+Run the [reference commands](../reference/v0.2/README.md) in an isolated Python environment. The September 7 reconciliation run used Python 3.12.13 with `jsonschema[format]==4.26.0` and `rfc8785==0.1.4`. The immutable legacy validator passed **89 records / four checkpoints** and **51 tests**. The new suite passed **42 tests**, separately from the workflow document's product acceptance scenarios; details are in the reference README.
+
+The new suite exercises a complete synthetic Trade review → accepted placement → direct appointment → conditions → activation/cutover path, together with classification, release, source/policy/authority expiry, conditional/rejected/expired outcomes, changed requirements/packet, safe disclosure/export, exact money, report/custody denial, correction/access, uncertain receipts and inactive profile boundaries. Schema metaschema/format checking is enabled.
+
+This baseline does **not** establish production authentication, authorization, authentic mandates/sources, legal applicability, full rights waterfalls, complete command handlers, durable/idempotent/concurrent effects, provider integration, actual payment reconciliation, malware/prompt-injection defense, deployment isolation, privacy/retention enforcement, incident response, procurement readiness or recovery improvement. Its broad schema support must not be advertised as those controls. [Release assurance](13-pilot-release-and-assurance.md) and the prioritized backlog own the remaining product, operational and expert-review evidence before any activation.

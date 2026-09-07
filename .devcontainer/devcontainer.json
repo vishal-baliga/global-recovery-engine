@@ -1,0 +1,36 @@
+{
+  "name": "GRE Development",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".",
+    "args": {
+      "PYTHON_VERSION": "3.14.7",
+      "NODE_VERSION": "24.20.0",
+      "UV_VERSION": "0.12.10",
+      "PNPM_VERSION": "11.10.0"
+    }
+  },
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/global-recovery-engine,type=bind,consistency=cached",
+  "workspaceFolder": "/workspaces/global-recovery-engine",
+  "remoteUser": "vscode",
+  "containerUser": "vscode",
+  "updateRemoteUserUID": true,
+  "init": true,
+  "overrideCommand": true,
+  "shutdownAction": "stopContainer",
+  "postCreateCommand": ["python", ".devcontainer/check_environment.py"],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "openai.chatgpt",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "charliermarsh.ruff"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "python.defaultInterpreterPath": "/usr/local/bin/python"
+      }
+    }
+  }
+}

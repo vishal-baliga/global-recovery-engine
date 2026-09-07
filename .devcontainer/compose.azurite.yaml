@@ -1,0 +1,38 @@
+name: gre-azurite
+services:
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite:3.36.0@sha256:76b8127d608fab8287a14a4bfeb9a5502cdcffb4bf1e86f09f324ebb0e70edba
+    platform: linux/arm64
+    command:
+      - azurite-blob
+      - --blobHost
+      - 0.0.0.0
+      - --location
+      - /data
+      - --disableProductStyleUrl
+      - --disableTelemetry
+    env_file:
+      - ../local-data/azurite/.env
+    volumes:
+      - azurite_data:/data
+    networks:
+      blob:
+        aliases: [gre-azurite]
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "const s=require('net').connect(10000,'127.0.0.1',()=>s.end());s.on('error',()=>process.exit(1));s.setTimeout(2000,()=>{s.destroy();process.exit(1);});"
+      interval: 2s
+      timeout: 5s
+      retries: 30
+      start_period: 5s
+    stop_grace_period: 30s
+volumes:
+  azurite_data:
+    name: gre-azurite-blob-data
+networks:
+  blob:
+    name: gre-azurite
+    internal: true

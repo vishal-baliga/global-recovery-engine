@@ -1,0 +1,9 @@
+packages:
+  - fixtures/web
+  - packages/*
+strictPeerDependencies: true
+verifyDepsBeforeRun: false
+updateNotifier: false
+allowBuilds:
+  esbuild: true
+  sharp: true

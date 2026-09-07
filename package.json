@@ -1,0 +1,22 @@
+{
+  "name": "gre-dependency-baseline",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.10.0",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "generate:client": "openapi-ts",
+    "check:client": "tsx scripts/check-client.ts",
+    "typecheck": "pnpm --filter @gre/api-client typecheck && pnpm --filter @gre/web-fixture typecheck",
+    "build": "pnpm --filter @gre/web-fixture build"
+  },
+  "devDependencies": {
+    "@hey-api/openapi-ts": "0.99.0",
+    "@types/node": "24.13.3",
+    "tsx": "4.23.13",
+    "typescript": "6.0.3"
+  }
+}

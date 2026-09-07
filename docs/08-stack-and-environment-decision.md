@@ -1,133 +1,103 @@
-# Global Recovery Engine — Stack & Environment Decision
+# Architecture and stack decision
 
-**Date:** September 6, 2026  
-**Version/status:** 0.1 — recommended selection for review; not provisioned or dependency-tested  
-**Owner:** Vishal, sole developer with coding-agent assistance  
-**Scope:** The two-track pilot in `06-pilot-mvp-brief.md`; future scope remains in `07-future-development-and-business-deliverables.md`.
+**Status:** Selected direction, reconciled September 7, 2026. Local setup is verified; product implementation and production provisioning are pending.
 
-## 1. Recommendation and reasoning
+**Owner:** Vishal, with coding-agent implementation and review support.
 
-**Use TypeScript/Next.js for the web experience, Python/FastAPI for the domain application and AI work, PostgreSQL for authoritative business records, and Temporal for durable workflows. Deploy containerized application processes on Azure managed services. Develop in VS Code with Codex, a reproducible Dev Container, and a private GitHub monorepo.**
+**Owns:** Module boundaries, technology choices, source-of-truth rules, integration boundaries and architecture change decisions.
 
-This is a modular application with one shared backend domain codebase, deployed as an API process and background workers alongside the web application. Modules cover identity/authority, cases/services, evidence, assessment, communication, agreements, payments, partners, and outcomes. Module boundaries follow business responsibilities; deployment boundaries follow runtime needs.
+**Scope:** [Foundation + Trade Pilot](06-pilot-brief.md). Exact installed versions and observed checks belong to [10](10-dependency-baseline.md); host commands belong to [09](09-development-environment.md).
 
-The pilot requires reliable waiting, review, external effects, and reconciliation over weeks or months. Python also fits the project's document/AI workload and Vishal's data-engineering background. TypeScript fits the public acquisition and interactive case experiences. Generated API clients connect the languages without maintaining two independent definitions of the same API.
+## 1. Selected application structure
 
-No stack is permanently future-proof. The design targets upgradeability, clear contracts, portable data, replaceable providers, and measured reliability. Managed services reduce operational work; they still require configuration, cost control, and recovery procedures.
+Use one GitHub repository containing a modular Python domain application and a TypeScript web application. Run the backend as an API process and workers as needed. Family workflows compose shared operations. Deployment processes are not separate business ownership boundaries.
 
-## 2. Selected components
+The selected stack remains Next.js/React/TypeScript; FastAPI/Pydantic/Python; PostgreSQL with SQLAlchemy, Psycopg and Alembic; Temporal; and Azure Blob. The verified container, dependency locks and setup fixtures remain useful. Their presence does not establish a customer product or production readiness.
 
-| Layer | Recommended choice | GRE responsibility and rationale |
-| --- | --- | --- |
-| Web application | **Next.js App Router + React + TypeScript**, Tailwind CSS and shadcn/ui; TanStack Query for appropriate interactive server-state needs | Public service pages and role-specific creditor/operator/borrower views in one application. Sensitive case data uses explicit authentication and cache policy. Next.js supports container self-hosting, retaining a hosting exit path. [Next.js self-hosting](https://nextjs.org/docs/app/guides/self-hosting) |
-| Domain API | **Python + FastAPI + Pydantic**, REST/OpenAPI; generate the TypeScript client with Hey API | Own business operations and validate requests/results centrally. FastAPI documents the OpenAPI-to-TypeScript workflow. Generated types do not replace runtime or domain checks. [FastAPI client generation](https://fastapi.tiangolo.com/advanced/generate-clients/) |
-| Database and migrations | **PostgreSQL**, SQLAlchemy 2.x, Psycopg and Alembic | Authoritative case, authority, agreement, transaction/allocation, event, and outcome records; explicit migrations and database constraints. Host on Azure Database for PostgreSQL Flexible Server. [Azure PostgreSQL](https://learn.microsoft.com/en-us/azure/postgresql/overview) |
-| Search | **PostgreSQL full-text search; pgvector when semantic retrieval is implemented** | Search retained, permitted evidence. Embeddings are derived indexes, with source/version and access scope attached. Azure supports pgvector; validate the chosen extension version against the target server. [Azure pgvector](https://learn.microsoft.com/en-us/azure/postgresql/extensions/how-to-use-pgvector) |
-| Durable workflows | **Temporal Python SDK**; local development server, then **Temporal Cloud** for hosted environments | Wait for approvals/replies, schedule installments/reviews, coordinate tasks, recover from interruptions, and track retries. Keep business authorization and balances in the domain application. [Temporal Python SDK](https://docs.temporal.io/develop/python) |
-| Evidence storage | **Azure Blob Storage**, accessed through a storage adapter | Original files and derived artifacts, controlled downloads, hashes/provenance, versioning, and an explicit retention/disposition policy. Database rows hold metadata and authorized references. Configure storage protection and recovery to the pilot's actual retention needs. |
-| Authentication | **Clerk** for individual sign-in, sessions and organization onboarding | Use supported SDK/token validation. Map external subjects to GRE-owned users, principals and memberships. Organization roles aid onboarding; GRE owns case permissions and action mandates. [Clerk Organizations](https://clerk.com/docs/guides/organizations/overview) |
-| Runtime AI | **Official OpenAI Python SDK + Responses API + Structured Outputs**, behind GRE-owned task interfaces | Evidence extraction, issue classification, summaries, draft options and communications. Store model/prompt/schema versions and evaluate each task. Handle refusals, incomplete outputs, unsupported schemas and semantic errors explicitly. [Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs) |
-| Document processing | **Azure Document Intelligence** for supported OCR/layout/invoice tasks; reviewed model-assisted interpretation | Preserve page/field provenance and original documents. Extraction is input to assessment. It does not establish authenticity or legal validity. Choose supported stable model/API versions during integration. [Document Intelligence](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/overview?view=doc-intel-4.0.0) |
-| Hosting | **Azure Container Apps**, Azure Container Registry, managed PostgreSQL and Blob | Separate web, API and worker deployments, with managed ingress, revisions, health checks and scoped identities. Azure supports background processing and independently scaled containers. [Container Apps](https://learn.microsoft.com/en-us/azure/container-apps/overview) |
-| Infrastructure and delivery | **Terraform + GitHub Actions**; Azure Key Vault and managed identities; GitHub-to-Azure OIDC | Reviewable infrastructure, repeatable deployments, scoped secrets, migration/release records and rollback planning. OIDC avoids permanent Azure deployment credentials in GitHub secrets. [GitHub OIDC for Azure](https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-azure) |
-| Observability | **OpenTelemetry → Azure Monitor/Application Insights**, with retained application audit records separately | Correlate case/task/action IDs, failures, latency, queue age, reconciliation exceptions and service cost. Redact sensitive content. OpenTelemetry supplies portable instrumentation; Azure supplies the telemetry backend. [OpenTelemetry](https://opentelemetry.io/docs/what-is-opentelemetry/) |
-| Quality tooling | **pytest, Hypothesis, Ruff, Pyright; Vitest and Playwright** | Focus on financial/state invariants, contracts, migrations, tenant/authority isolation, workflow replay, provider failures, and critical user journeys. Review actual behavior, not just generated test counts. |
-| Developer environment | **VS Code + Codex**, Git, Docker/Dev Containers, **uv** for Python and **pnpm** for TypeScript | One documented local setup with locked dependencies and predictable commands usable by the developer and coding agent. [VS Code Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers), [Codex IDE](https://learn.chatgpt.com/docs/codex/ide) |
+This fits the founder's data/application background and the Pilot's document reconstruction, exact financial records, long waits and independently executed provider work. Upgradeability comes from explicit contracts, owned data and adapters, compatibility checks and disciplined migrations. Replacing a provider or workflow engine still has a cost.
 
-**Runtime baseline:** Node.js **24 LTS**, ordinary CPython **3.14**, Next.js **16**, and PostgreSQL **18** are the proposed major-version targets. Node 24 is an LTS line; Python 3.14 is in its supported bugfix period; Azure documents PostgreSQL 18 support. Select compatible React/SDK/library versions, resolve lockfiles and verify installation in the intended container during setup. If a required dependency fails on a target, record the compatibility decision before pinning a supported fallback. No integration test has been performed in this selection step. [Node releases](https://nodejs.org/en/about/previous-releases), [Python versions](https://devguide.python.org/versions/), [Azure PostgreSQL versions](https://learn.microsoft.com/en-us/azure/postgresql/configure-maintain/concepts-supported-versions)
+## 2. Component decisions and remaining integration work
 
-## 3. How the application fits together
+| Concern | Direction | Current boundary and next proof |
+|---|---|---|
+| Web | Next.js App Router, React, TypeScript; Tailwind/shadcn and TanStack Query when the first UI needs them | Creditor/reviewer and provider-review surfaces; a direct obligor collection portal is outside this Pilot. Explicit sensitive-data caching and browser checks. The existing web is a build fixture. |
+| API/domain | FastAPI/Pydantic, Python modules, REST/OpenAPI, generated Hey API TypeScript client | One authoritative operation implementation; web types do not replace server-side validation or authority. |
+| Records | PostgreSQL, SQLAlchemy, Psycopg, Alembic | Exact monetary values, constraints, transaction-scoped authorization and migrations. Runtime role must be non-owner/non-bypass with tested tenant isolation. |
+| Durable progress | Temporal Python SDK; local development server, hosted Temporal service when justified | Workflow/activity histories, retry and wait semantics; workers invoke current domain checks. GRE hosts the workers even when the service is managed. |
+| Evidence | Azure Blob adapter; Azurite locally | Quarantine, permitted disclosure, expiry/retention and restore behavior must be implemented. Emulator SharedKey/HTTP success does not validate Azure identity/TLS or production storage. |
+| Identity | Clerk remains selected integration direction | Validate SDK, token/session lifecycle and organizational roles; map identities to GRE-owned actors. Case and action authority remain GRE responsibilities. No live account integration is claimed. |
+| AI | Official OpenAI Python SDK and Responses/structured outputs behind bounded task interfaces | Add when implementing extraction/review assistance; evaluate missingness, contradictions, refusal, harmful errors, latency, human effort and cost. |
+| OCR/layout | Azure Document Intelligence where supported; permitted manual review fallback | Validate exact API/model, formats and page/source references. An extraction is not proof of authenticity, debt or enforceability. |
+| External providers | Secure assisted packet/reply first; CSV/SFTP/API adapters when a named provider needs them | Provider-owned requirements and acceptance; contractually defined event return and exception ownership. Integrate actual declared interfaces, not a speculative universal connector catalog. |
+| Payments | Verified creditor/provider instructions and source-reviewed observations; supported PSP adapter if needed | GRE service billing is separate. No repayment custody/pass-through; provider admission, destination verification and reversal handling are required before a live route. |
+| Hosting | Azure Container Apps, ACR, managed PostgreSQL and Blob | Cost, region, customer requirements, worker deployment, identity, network, backup/restore and incident readiness must be proved before live deployment. |
+| Delivery | Terraform, GitHub Actions, OIDC, Key Vault and managed identities | Scoped deployment authority and exact artifact versions; no paid resources are provisioned by this documentation change. |
+| Observability | OpenTelemetry with Azure Monitor/Application Insights as selected backend | Sensitive content is redacted. Operational telemetry is separate from attributable domain audit records. |
+| Quality | pytest/Hypothesis/Ruff/Pyright and suitable web lint/Vitest/Playwright | Install when the relevant product package is introduced; use risk-driven assertions, migrations, isolation, replay and end-to-end checks. |
+| Development | Existing ARM64 VS Code Dev Container, uv and pnpm | Preserve locked versions and documented TypeScript compatibility fallback. Use [10](10-dependency-baseline.md) for commands. |
 
-```mermaid
-flowchart TD
-    Web["Next.js web app"] --> API["FastAPI domain application"]
-    API --> DB[("PostgreSQL records and outbox")]
-    API --> Blob["Private evidence storage"]
-    DB --> Relay["Outbox delivery"]
-    Relay --> Temporal["Temporal workflow service"]
-    Temporal --> Worker["Python workers"]
-    Worker --> Core["Shared domain checks"]
-    Core --> DB
-    Worker --> Blob
-    Worker --> External["AI and approved service adapters"]
-    External -->|"Callbacks and observations"| API
-```
+These are architecture selections and integration tasks, not claims that every listed SDK or account is installed. Selected primary references: [FastAPI client generation](https://fastapi.tiangolo.com/advanced/generate-clients/), [PostgreSQL RLS](https://www.postgresql.org/docs/current/ddl-rowsecurity.html), [Temporal Python](https://docs.temporal.io/develop/python), [Azure Container Apps](https://learn.microsoft.com/en-us/azure/container-apps/overview), [GitHub Azure OIDC](https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-azure).
 
-This is a logical data/work flow. The outbox relay and shared domain checks can run inside the backend worker deployment; they do not require additional services. Temporal workers poll task queues; the diagram does not imply an inbound connection from Temporal into Azure. AI results can return to their calling worker; asynchronous provider callbacks use the API.
+## 3. Module ownership
 
-**PostgreSQL owns business truth.** Store exact money/currency and allocation records, immutable material versions and auditable corrections. A model output, payment report or workflow completion cannot independently establish a reconciled receipt, grant authority or release an obligation. Recovery Graph relationships can be represented in relational tables and selected JSONB fields.
+These are internal responsibilities. Start with only the packages needed by a complete slice; do not create a service or a generic framework for each row.
 
-**Temporal owns process progress.** Its workflows coordinate waits, retries, timers and signals. Activities call the shared domain functions and adapters. Record a database change and its outbox event together, then deliver the event using stable operation IDs. Retries and callback delivery require deduplication and current-state checks. This does not produce a universal exactly-once guarantee across external services.
+| Module | Owns | Must not independently own |
+|---|---|---|
+| Identity/access | External identity mapping, memberships, sessions and scoped case access | Rights to collect, settlement mandate or another party's private record |
+| Case/service | Continuing cases, bounded services, responsible owner, waits and surviving duties | Whether an obligation is paid or a provider accepted work |
+| Evidence/Passport | Source artifacts, assertions, verification records and versioned portable views | A competing financial balance or an automatic truth label |
+| Obligations/finance | Obligations, rights interests, exact currency amounts, reported/verified payments, allocation and reversal | New legal rights inferred from a transfer or model output |
+| Agreements | Exact externally agreed terms, acceptance evidence, schedules and conditional releases | A payment or provider status that automatically creates acceptance or discharge |
+| Authority/actions | Grants, approvals, exact action binding, current commit checks, outbox and receipts | A permission granted by a UI role or a stale workflow snapshot |
+| Classification/policy | Matter profile, corridor rules, evaluations and release conditions | An entitlement to act merely because a feature is purchased |
+| Provider exchange | Provider profiles, review requests, placement/deltas, direct appointment references and returns | Provider tactical supervision or a guarantee of external cessation |
+| Disclosure/corrections | Purpose-specific views, manifests, scoped export and correction delivery | Universal permission to disclose every Passport source |
+| Observations/quality | Attributed events, freshness, costs, outcome measurements and evaluation evidence | Payment, agreement, authority or legal truth from a provider report alone |
 
-For example, after an installment wait expires, the worker checks the current plan, reconciled payments, holds and authority before preparing a reminder. It does not send the balance that existed when the timer began. A crash after external submission creates a reconciliation problem, not permission to blindly repeat the action.
+Network & Control packages selected modules commercially; it is not another copy of them. A future family may add its own participation or account-history workflow while reusing shared operations. Private participant isolation and Consumer data roles require deliberate future designs, not a Trade workflow with renamed labels.
 
-**Worker deployment is a real responsibility.** Temporal Cloud hosts the workflow service; GRE hosts its workers. Use an appropriate nonzero minimum replica count for live polling workers, graceful shutdown and workflow-compatible releases. Temporal's history and deployment model need replay/upgrade checks. Keep payloads minimal, use opaque references, and assess encryption and retention for any sensitive workflow payload. [Temporal hosting/security boundary](https://docs.temporal.io/cloud/security), [Container Apps scaling](https://learn.microsoft.com/en-us/azure/container-apps/scale-app)
+## 4. Data and effect boundaries
 
-**Authorization has separate layers.** Authentication proves a session identity; application checks establish permission over a case/action. Use PostgreSQL row-level security as another isolation layer with a non-owner, non-bypass runtime role and transaction-scoped tenant context. Table owners and bypass roles can evade ordinary RLS, so realistic integration tests are essential. [PostgreSQL RLS](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
+PostgreSQL owns authoritative business state. Temporal owns durable process progress. Blob owns stored object bytes while database records define provenance and access. Derived read models, model outputs, incoming events and exported Passports reference canonical records without becoming independent editable truth.
 
-The borrower receives a narrowly scoped disclosed case view. Joining a creditor organization is not the route to borrower access. Shared evidence, private negotiation limits and internal review material have separate access rules.
+Write the domain state change and its outbox intent in one database transaction. A worker claims work with a stable operation/attempt identity and rechecks applicable authority, holds, amount, service scope, disclosure, provider eligibility and current release conditions before an external effect. Design callback delivery and retries for duplication and reconciliation. Exactly-once external execution is not assumed.
 
-## 4. Environment layout
+Example: a placement offer is prepared against a specific provider profile and disclosed packet. If the profile, mandate or material claim facts change before activation, the worker cannot treat the earlier response as unconditional authority. It records the delta and obtains the required current decision. A timeout after an external send remains uncertain until the relevant receipt or reconciliation resolves it.
 
-| Environment | Contents and intended use |
-| --- | --- |
-| **Local development** | VS Code Dev Container; web/API/workers; PostgreSQL, local Temporal, Azurite for Blob-compatible development, and local communication/provider fakes. Synthetic fixtures by default. No production credentials. |
-| **Automated CI / branch checks** | Disposable services, type/lint checks, build, migrations against fresh and previous schemas, focused tests and critical browser journeys. Paid model calls run only in a separately budgeted evaluation job. |
-| **Staging / integration** | Azure-hosted copies using separate databases/storage, identity configuration, Temporal namespace and vendor sandbox credentials. Validate real cloud identity, storage, callbacks, worker deployment and recovery behavior. |
-| **Pilot production** | Separate resources and scoped credentials, with actual enabled providers, reviewed data access, monitoring/alerts, backups and verified restore, service ownership and release controls. |
+An Action Receipt composes attempt-level evidence; an Authority Envelope composes grants and exact bindings; a Quality Scorecard derives measurements. [05](05-domain-data-contracts.md) owns the schema and [03](03-operating-model.md) owns business semantics. An external system identifier is provenance, not a credential or cross-tenant read right.
 
-Recommend a **U.S. primary deployment region**, finalized against service/SKU availability, customer requirements and costs before provisioning. Temporal Cloud and AI/auth providers can process data outside Azure; Azure hosting alone does not establish end-to-end data residency. Select the relevant provider regions and retention arrangements explicitly. Temporal recommends placing its namespace near the workers. [Temporal regions](https://docs.temporal.io/cloud/regions)
+Enforce authorization at every entry point: web, API, worker, import, callback, support operation and future protocol adapter. Use a non-owner database runtime role, transaction-local tenant/actor context and negative access tests. Credentialed provider review access can precede appointment when independently permitted, but cannot authorize collection. Retention, legal holds and corrections are not defeated by labeling an export immutable.
 
-Use a project-owned GitHub organization/repository and cloud accounts rather than an employer environment. The primary local workspace should run on Vishal's own development machine. The exact host OS and available resources determine installation steps; the Dev Container defines the shared Linux runtime. The environment in this conversation is not evidence that software is installed on Vishal's computer.
+## 5. Runtime and deployment
 
-Cloud staging is introduced when needed to verify real integrations. Selecting Azure does not require paying for an idle full production environment before development.
+The web calls the API. API and workers call shared domain operations. Workers poll Temporal task queues; no inbound connection from Temporal to a worker is implied. The outbox relay may run in a worker process. Models and transport adapters receive the minimum permitted inputs and return attributed results.
 
-## 5. Agent-assisted development agreement
+Keep sensitive Temporal payloads minimal, preferring opaque references. Address payload encryption, region, retention, graceful shutdown and replay-compatible upgrades before live use. A polling worker needs an appropriate availability/scaling configuration; managed workflow hosting does not run application workers for GRE.
 
-Use **Codex in VS Code** as the day-to-day coding interface, with CLI access for terminal-oriented work when useful. The strategic conversation and the coding workspace share durable context through Git: the pilot brief, decisions, backlog, acceptance criteria and working notes. Codex can use editor context and produce reviewable changes; its actual reach depends on the repository and execution environment connected to it. [Codex IDE](https://learn.chatgpt.com/docs/codex/ide)
+| Environment | Use | Required separation |
+|---|---|---|
+| Local | Synthetic product work and existing service probes | Git-ignored credentials and persistent developer volumes; no real evidence by default |
+| CI | Disposable build, reference, migration and behavioral checks | Independent databases/storage; no access to local records or paid models by default |
+| Staging | Real cloud identity/network and supported sandbox integration | Separate resources, credentials and permitted datasets |
+| Pilot production | Released Trade scope and named providers | Audited access, monitored operations, restore evidence, support and incident ownership |
 
-| Responsibility | Operating approach |
-| --- | --- |
-| Product and domain direction | Vishal sets intended behavior, validates domain assumptions and decides material tradeoffs. |
-| Implementation assistance | The coding agent can inspect the repo, implement scoped changes, prepare migrations, run available checks, diagnose failures, update relevant records and produce reviewable diffs. |
-| Persistent project instructions | Put module boundaries, setup/test commands, money/authority invariants and execution scope in `AGENTS.md`; keep detailed decisions and acceptance examples in referenced files. Codex reads repository guidance when starting work. [AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md) |
-| Task delivery | Work from a bounded story and acceptance examples on a branch. Run the relevant checks, review the diff, explain behavior and remaining limits, and checkpoint the result in Git. |
-| Concurrent work when chosen | Use separate branches/worktrees and explicit ownership of overlapping files. Worktrees separate checkouts; they are not a secrets or runtime isolation boundary. Avoid concurrent mutation of shared migrations, databases or ports. |
-| Live operations | Routine development uses development credentials. Production access or consequential actions use the authority granted for that specific work and the applicable release process. Existing authorization is reused without redundant confirmation. |
-| Validation | Agent-produced code receives executable checks and review appropriate to its consequences. Passing code tests does not establish the claim's facts or legal authority. |
+A U.S. primary region remains the working deployment hypothesis, subject to buyer requirements, lawful transfers, service availability and cost. Azure hosting alone does not establish end-to-end residency: identity, AI, telemetry, workflow and partner services need explicit data-flow review. Future India Consumer data restrictions may require different storage topology; they do not force a speculative replatform of this Trade Pilot.
 
-The coding agent and GRE's product AI are separate systems. A development agent works on source code; GRE runtime AI works through restricted application interfaces on permitted case data. GRE's authority checks and operational records remain mandatory even when an AI tool proposes the action.
+## 6. Incremental reuse and delivery practice
 
-## 6. AI and external-service boundaries
+Build the first complete Trade slice through authenticated intake, reviewed evidence/balance and a useful assessment or no-route result. Add named-provider preflight, an attributed response, reliable direct activation and provider continuity in subsequent dependent slices. Privacy, correction, service completion and operational controls needed for assessment are delivered with that service; later provider extensions reuse them. Shared controls used by a slice must be real; optional modules can remain absent. No slice can advertise a live service before its [release gate](13-pilot-release-and-assurance.md).
 
-Start with small, typed model-task interfaces and the official SDK. Pin model identifiers where available, retain actual task inputs/results under policy, and evaluate extraction quality, contradictions, reviewer effort, latency and cost. Candidate models are selected per task during the AI implementation work. An agent framework such as LangGraph or the OpenAI Agents SDK can be added when a concrete orchestration need justifies it; the durable business workflow remains explicit.
+Work on one bounded implementation item at a time, with independent business/provider discovery in parallel. Agents may work concurrently on separate owned files, but coordinate shared schema/migration boundaries and ports/data. Generated clients are regenerated from the canonical API, never manually maintained as another contract definition.
 
-Use `store=false` for supported Responses calls when server-side response storage is unnecessary, but do not describe that setting as zero retention. Abuse monitoring, files, caching and other features have separate documented behavior and controls. Select model/data settings before processing real evidence. [OpenAI data controls](https://developers.openai.com/api/docs/guides/your-data)
+An architecture change record must identify the failed requirement or measured problem, options, migration/operating cost, decision, owner and validation. Keep the selected stack unless this evidence justifies changing it. Redis, Kafka, Kubernetes, specialized graph/vector stores, public protocol adapters and richer agent frameworks are [future candidates](07-future-development-and-business-deliverables.md), not default Foundation requirements.
 
-**Payment, collection communication, e-signature and specialist connectors are required integration decisions with vendor selection still open.** Confirm support for the actual actor, service, country, transaction and message before choosing a live provider. Keep GRE service billing separate from money repaying a creditor. The pilot can use independently verified creditor payment instructions and source-reviewed receipts where suitable; a hosted checkout provider is not assumed to accept this activity.
+The existing dependency setup check includes retained historical workflow evidence; a completed workflow may eventually age out of Temporal retention. The first delivery item separates historical persistence proof from repeatable service health without masking genuine failures. Do not claim the issue is already fixed.
 
-Development uses provider fakes and later sandbox accounts. These do not satisfy live route availability. Vendor admission, live data arrangements and executable partner coverage remain pilot dependencies, mapped to the future register's retained pilot boundaries for F-P07, F-P10 and F-P11.
+## 7. Accountabilities
 
-## 7. Alternatives and deliberate tradeoffs
+Vishal owns product decisions, priorities and release accountability. Coding agents inspect actual repository state, implement authorized bounded changes, run available checks, preserve unrelated work, and report exact outcomes and limitations. They cannot claim a Mac check from a hosted run, legal approval from a source search, or product readiness from a fixture build.
 
-| Option | Judgment for GRE |
-| --- | --- |
-| **Recommended: TypeScript web + Python domain/AI** | Two language toolchains, offset by a strong fit for web UX and document/data/AI work. Generated clients and a shared Python domain package limit duplication. |
-| **TypeScript throughout** | A credible alternative if shared-language development becomes the dominant objective. Reconsider if actual Python-specific work is small; it is not inherently incapable of AI or durable workflows. |
-| **ASP.NET Core + TypeScript** | A credible strongly typed enterprise stack. Prefer it if future team expertise or customer infrastructure requirements favor .NET; current document/AI work makes Python a more direct fit for this project. |
-| **AWS managed infrastructure** | Technically suitable for the same application pattern. Azure is recommended because existing Microsoft-cloud experience should reduce operating friction. This is a project-fit judgment, not a claim of universal cloud superiority. |
-| **Self-hosted Temporal or another durable workflow service** | Reconsider for budget, region, support or operating requirements. Self-hosting transfers service operation to us; changing workflow engines requires engineering. Avoid describing either as a costless substitution. |
+GRE's runtime AI is separate from the development agent. Runtime AI may propose or extract through restricted application operations; it cannot bypass authority or current-state gates. Vendor data settings, permitted purpose, logging and retention must be decided before real evidence is sent to models. A no-training setting does not imply zero retention.
 
-The portability boundary is concrete: containers, PostgreSQL data, OpenAPI, OpenTelemetry and owned model/provider interfaces. Azure-specific infrastructure, authentication integration and workflow APIs still create migration work.
-
-Future infrastructure candidates remain linked to the existing register: Kubernetes, service decomposition, event streaming/Kafka and specialized search/graph stores → **F-P16/F-P04** when scale or queries justify them; richer agents and external MCP/API surfaces → **F-P13/F-P05**; advanced analytics/warehouse/learning → **F-P14/F-P12**. Redis or a dedicated vector database can be introduced for measured needs. They are not foundational pilot dependencies or promised upgrades.
-
-## 8. Cost and setup decisions
-
-Temporal Cloud's published **Essentials plan starts at USD 100/month**, with included usage and charges for additional usage/storage according to its pricing. Workers, application compute, database, storage, observability, identity, AI/OCR and external service fees are additional cost categories. The local Temporal development service avoids a Cloud subscription during local engineering. [Temporal pricing](https://temporal.io/pricing)
-
-Do not treat free tiers, credits or startup-program eligibility as permanent operating economics. Prepare the cloud estimate against the selected region, database size, worker/web/API replicas, staging schedule, retention and expected document/model volume before provisioning paid infrastructure. Development-agent access and GRE's runtime AI belong in separate budget lines.
-
-**Next environment setup work:** confirm the development machine and project-owned accounts; establish the private repository and reproducible toolchain; resolve/version-lock the proposed components; verify a clean setup can build, connect to local dependencies and run basic environment checks. Record the result before using this selection to finalize the prioritized backlog.
-
-The agreed larger sequence remains **pilot brief → stack/environment → prioritized backlog → project/delivery document updates → development**. This file records the stack decision and setup design; it does not create a product backlog, provision cloud resources or claim the application is built. The existing Python contract ZIP remains a reference to reconcile with the selected implementation.
+The current task completed documentation/reference design. Product development follows [11](11-prioritized-pilot-backlog.md); actual installed versions and setup commands remain in [10](10-dependency-baseline.md).

@@ -1,0 +1,19 @@
+{
+  "name": "@gre/web-fixture",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "typecheck": "next typegen && tsc --noEmit",
+    "build": "next build"
+  },
+  "dependencies": {
+    "@gre/api-client": "workspace:*",
+    "next": "16.3.4",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7"
+  }
+}
