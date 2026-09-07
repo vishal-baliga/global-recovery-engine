@@ -1,0 +1,3907 @@
+{
+  "contract_version": "0.2.0",
+  "synthetic": true,
+  "tenant_id": "tenant_demo",
+  "description": "Inactive future classification/access conformance fixture; inherited Foundation financial/source shapes are synthetic assertions only. Neither the hypothetical service statuses nor imported authority/receipt examples authorize any activity. Private and Consumer fail the operational gate.",
+  "records": [
+    {
+      "record_type": "party",
+      "record_id": "party_creditor",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "legal_name": "Synthetic requesting adult",
+      "party_kind": "PERSON",
+      "country": "US",
+      "identifiers": [],
+      "roles": [
+        "CREDITOR"
+      ],
+      "identity_status": "VERIFIED_FOR_SCOPE",
+      "verification_refs": [
+        {
+          "type": "verification_record",
+          "id": "verification_identity",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "record_type": "party",
+      "record_id": "party_debtor",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "legal_name": "Synthetic responding adult",
+      "party_kind": "PERSON",
+      "country": "US",
+      "identifiers": [],
+      "roles": [
+        "OBLIGOR"
+      ],
+      "identity_status": "VERIFIED_FOR_SCOPE",
+      "verification_refs": [
+        {
+          "type": "verification_record",
+          "id": "verification_identity",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "record_type": "party",
+      "record_id": "party_provider",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "legal_name": "Synthetic Authorized Recovery Provider",
+      "party_kind": "ORGANIZATION",
+      "country": "US",
+      "identifiers": [],
+      "roles": [
+        "RECOVERY_OPERATOR"
+      ],
+      "identity_status": "VERIFIED_FOR_SCOPE",
+      "verification_refs": [
+        {
+          "type": "verification_record",
+          "id": "verification_identity",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "record_type": "party",
+      "record_id": "party_gre",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "legal_name": "Synthetic GRE platform organization",
+      "party_kind": "ORGANIZATION",
+      "country": "US",
+      "identifiers": [],
+      "roles": [],
+      "identity_status": "VERIFIED_FOR_SCOPE",
+      "verification_refs": [
+        {
+          "type": "verification_record",
+          "id": "verification_identity",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "record_type": "data_policy",
+      "record_id": "policy_private",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "owner_party_ref": {
+        "type": "party",
+        "id": "party_creditor",
+        "version": 1
+      },
+      "service_processing": true,
+      "tenant_evaluation": true,
+      "pooled_benchmarking": false,
+      "model_training": false,
+      "disclosure_party_refs": [
+        {
+          "type": "party",
+          "id": "party_creditor",
+          "version": 1
+        },
+        {
+          "type": "party",
+          "id": "party_provider",
+          "version": 1
+        }
+      ],
+      "permitted_purposes": [
+        "CONTRACTED_SERVICE",
+        "TENANT_PRIVATE_EVALUATION"
+      ],
+      "retention_until": "2027-09-01T00:00:00Z",
+      "retention_basis": "Synthetic service retention term; not a recommended legal retention period.",
+      "legal_hold": false,
+      "disposition": "ACTIVE",
+      "rights_basis_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_mandate",
+          "version": 1
+        }
+      ],
+      "approved_by": "actor_creditor"
+    },
+    {
+      "record_type": "data_policy",
+      "record_id": "policy_shared",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "owner_party_ref": {
+        "type": "party",
+        "id": "party_creditor",
+        "version": 1
+      },
+      "service_processing": true,
+      "tenant_evaluation": true,
+      "pooled_benchmarking": false,
+      "model_training": false,
+      "disclosure_party_refs": [
+        {
+          "type": "party",
+          "id": "party_creditor",
+          "version": 1
+        },
+        {
+          "type": "party",
+          "id": "party_provider",
+          "version": 1
+        },
+        {
+          "type": "party",
+          "id": "party_debtor",
+          "version": 1
+        }
+      ],
+      "permitted_purposes": [
+        "CONTRACTED_SERVICE",
+        "TENANT_PRIVATE_EVALUATION",
+        "PROVIDER_REVIEW",
+        "TRANSFER",
+        "CORRECTION",
+        "EXPORT"
+      ],
+      "retention_until": "2027-09-01T00:00:00Z",
+      "retention_basis": "Synthetic service retention term; not a recommended legal retention period.",
+      "legal_hold": false,
+      "disposition": "ACTIVE",
+      "rights_basis_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_mandate",
+          "version": 1
+        }
+      ],
+      "approved_by": "actor_creditor"
+    },
+    {
+      "record_type": "evidence_item",
+      "record_id": "ev_contract",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_shared",
+        "version": 1
+      },
+      "artifact_kind": "ORIGINAL",
+      "source_system": "SYNTHETIC_FIXTURE",
+      "source_record_id": "ev_contract",
+      "observed_at": "2026-09-01T09:00:00Z",
+      "source_updated_at": "2026-09-01T09:00:00Z",
+      "content_hash": "sha256:6cf266b6cd0d54b4832516c18411d210981b5c78396a4e519475d3d20097d875",
+      "media_type": "text/plain",
+      "retrieval_key": "synthetic://artifact/ev_contract",
+      "derived_from": [],
+      "custody": [
+        "Synthetic reference only; original file bytes are not supplied."
+      ],
+      "authenticity_status": "NOT_ASSESSED",
+      "verification_refs": [],
+      "untrusted_content": true,
+      "disposition": "RETAINED"
+    },
+    {
+      "record_type": "evidence_item",
+      "record_id": "ev_invoices",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_shared",
+        "version": 1
+      },
+      "artifact_kind": "ORIGINAL",
+      "source_system": "SYNTHETIC_FIXTURE",
+      "source_record_id": "ev_invoices",
+      "observed_at": "2026-09-01T09:00:00Z",
+      "source_updated_at": "2026-09-01T09:00:00Z",
+      "content_hash": "sha256:5f4f78cf15123cd6080503246f45d8c9066a74a008eee86c62aaebf5594164f5",
+      "media_type": "text/plain",
+      "retrieval_key": "synthetic://artifact/ev_invoices",
+      "derived_from": [],
+      "custody": [
+        "Synthetic reference only; original file bytes are not supplied."
+      ],
+      "authenticity_status": "NOT_ASSESSED",
+      "verification_refs": [],
+      "untrusted_content": true,
+      "disposition": "RETAINED"
+    },
+    {
+      "record_type": "evidence_item",
+      "record_id": "ev_correspondence",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_shared",
+        "version": 1
+      },
+      "artifact_kind": "ORIGINAL",
+      "source_system": "SYNTHETIC_FIXTURE",
+      "source_record_id": "ev_correspondence",
+      "observed_at": "2026-09-01T09:00:00Z",
+      "source_updated_at": "2026-09-01T09:00:00Z",
+      "content_hash": "sha256:1e0b6ae8e7e31292b401c0277c7a22b5ac14c75f73ef6264488443088d4bb012",
+      "media_type": "text/plain",
+      "retrieval_key": "synthetic://artifact/ev_correspondence",
+      "derived_from": [],
+      "custody": [
+        "Synthetic reference only; original file bytes are not supplied."
+      ],
+      "authenticity_status": "NOT_ASSESSED",
+      "verification_refs": [],
+      "untrusted_content": true,
+      "disposition": "RETAINED"
+    },
+    {
+      "record_type": "evidence_item",
+      "record_id": "ev_mandate",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "artifact_kind": "ORIGINAL",
+      "source_system": "SYNTHETIC_FIXTURE",
+      "source_record_id": "ev_mandate",
+      "observed_at": "2026-09-01T09:00:00Z",
+      "source_updated_at": "2026-09-01T09:00:00Z",
+      "content_hash": "sha256:6fa0d9ec5ee5cc27c5c359062a204c1cf35fea8b50fee434f82ff3bc58e26a77",
+      "media_type": "text/plain",
+      "retrieval_key": "synthetic://artifact/ev_mandate",
+      "derived_from": [],
+      "custody": [
+        "Synthetic reference only; original file bytes are not supplied."
+      ],
+      "authenticity_status": "NOT_ASSESSED",
+      "verification_refs": [],
+      "untrusted_content": true,
+      "disposition": "RETAINED"
+    },
+    {
+      "record_type": "evidence_item",
+      "record_id": "ev_identity",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_shared",
+        "version": 1
+      },
+      "artifact_kind": "ORIGINAL",
+      "source_system": "SYNTHETIC_FIXTURE",
+      "source_record_id": "ev_identity",
+      "observed_at": "2026-09-01T09:00:00Z",
+      "source_updated_at": "2026-09-01T09:00:00Z",
+      "content_hash": "sha256:efd8524c6683378f7f16d9fe1de51b73d2bb356aebe9daa0075cf702f074a1a1",
+      "media_type": "text/plain",
+      "retrieval_key": "synthetic://artifact/ev_identity",
+      "derived_from": [],
+      "custody": [
+        "Synthetic reference only; original file bytes are not supplied."
+      ],
+      "authenticity_status": "NOT_ASSESSED",
+      "verification_refs": [],
+      "untrusted_content": true,
+      "disposition": "RETAINED"
+    },
+    {
+      "record_type": "evidence_item",
+      "record_id": "ev_provider_eligibility",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_shared",
+        "version": 1
+      },
+      "artifact_kind": "ORIGINAL",
+      "source_system": "SYNTHETIC_FIXTURE",
+      "source_record_id": "ev_provider_eligibility",
+      "observed_at": "2026-09-01T09:00:00Z",
+      "source_updated_at": "2026-09-01T09:00:00Z",
+      "content_hash": "sha256:f9f4d31b0b21069509bafbfb8ffaa6cf0783cbef60fb473622a31a08878c8fb3",
+      "media_type": "text/plain",
+      "retrieval_key": "synthetic://artifact/ev_provider_eligibility",
+      "derived_from": [],
+      "custody": [
+        "Synthetic reference only; original file bytes are not supplied."
+      ],
+      "authenticity_status": "NOT_ASSESSED",
+      "verification_refs": [],
+      "untrusted_content": true,
+      "disposition": "RETAINED"
+    },
+    {
+      "record_type": "evidence_item",
+      "record_id": "ev_rules",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_shared",
+        "version": 1
+      },
+      "artifact_kind": "ORIGINAL",
+      "source_system": "SYNTHETIC_FIXTURE",
+      "source_record_id": "ev_rules",
+      "observed_at": "2026-09-01T09:00:00Z",
+      "source_updated_at": "2026-09-01T09:00:00Z",
+      "content_hash": "sha256:492ee0c3c421379d352b99c91d0e483de7d471c03ab08d09ecf97b3e389b9ede",
+      "media_type": "text/plain",
+      "retrieval_key": "synthetic://artifact/ev_rules",
+      "derived_from": [],
+      "custody": [
+        "Synthetic reference only; original file bytes are not supplied."
+      ],
+      "authenticity_status": "NOT_ASSESSED",
+      "verification_refs": [],
+      "untrusted_content": true,
+      "disposition": "RETAINED"
+    },
+    {
+      "record_type": "evidence_item",
+      "record_id": "ev_cure",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-02T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_shared",
+        "version": 1
+      },
+      "artifact_kind": "ORIGINAL",
+      "source_system": "SYNTHETIC_FIXTURE",
+      "source_record_id": "ev_cure",
+      "observed_at": "2026-09-02T09:00:00Z",
+      "source_updated_at": "2026-09-02T09:00:00Z",
+      "content_hash": "sha256:768814802dde4d2619a61e73317afc0457995195f065cda8ee77ad714d67f81d",
+      "media_type": "text/plain",
+      "retrieval_key": "synthetic://artifact/ev_cure",
+      "derived_from": [],
+      "custody": [
+        "Synthetic reference only; original file bytes are not supplied."
+      ],
+      "authenticity_status": "NOT_ASSESSED",
+      "verification_refs": [],
+      "untrusted_content": true,
+      "disposition": "RETAINED"
+    },
+    {
+      "record_type": "evidence_item",
+      "record_id": "ev_assessment",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-02T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_shared",
+        "version": 1
+      },
+      "artifact_kind": "ORIGINAL",
+      "source_system": "SYNTHETIC_FIXTURE",
+      "source_record_id": "ev_assessment",
+      "observed_at": "2026-09-02T09:00:00Z",
+      "source_updated_at": "2026-09-02T09:00:00Z",
+      "content_hash": "sha256:859e828eccde20238dbfff90a1a37eed0c886f4f36f5b759a3211f7e8b032bd5",
+      "media_type": "text/plain",
+      "retrieval_key": "synthetic://artifact/ev_assessment",
+      "derived_from": [],
+      "custody": [
+        "Synthetic reference only; original file bytes are not supplied."
+      ],
+      "authenticity_status": "NOT_ASSESSED",
+      "verification_refs": [],
+      "untrusted_content": true,
+      "disposition": "RETAINED"
+    },
+    {
+      "record_type": "evidence_item",
+      "record_id": "ev_private_strategy",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "artifact_kind": "ORIGINAL",
+      "source_system": "SYNTHETIC_FIXTURE",
+      "source_record_id": "ev_private_strategy",
+      "observed_at": "2026-09-01T09:00:00Z",
+      "source_updated_at": "2026-09-01T09:00:00Z",
+      "content_hash": "sha256:140d0cd68d621b9f79f4e15baf95f1b5bac03382914884b699a338fc8a376ae1",
+      "media_type": "text/plain",
+      "retrieval_key": "synthetic://artifact/ev_private_strategy",
+      "derived_from": [],
+      "custody": [
+        "Synthetic reference only; original file bytes are not supplied."
+      ],
+      "authenticity_status": "NOT_ASSESSED",
+      "verification_refs": [],
+      "untrusted_content": true,
+      "disposition": "RETAINED",
+      "disclosure_labels": [
+        "CONFIDENTIAL",
+        "RESTRICTED"
+      ]
+    },
+    {
+      "record_type": "evidence_item",
+      "record_id": "ev_prompt",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "artifact_kind": "ORIGINAL",
+      "source_system": "SYNTHETIC_FIXTURE",
+      "source_record_id": "ev_prompt",
+      "observed_at": "2026-09-01T09:00:00Z",
+      "source_updated_at": "2026-09-01T09:00:00Z",
+      "content_hash": "sha256:405d47ed5d119c9b1de55f862efb7ac1ca14490fdbec671b22c20c18980e970e",
+      "media_type": "text/plain",
+      "retrieval_key": "synthetic://artifact/ev_prompt",
+      "derived_from": [],
+      "custody": [
+        "Synthetic reference only; original file bytes are not supplied."
+      ],
+      "authenticity_status": "NOT_ASSESSED",
+      "verification_refs": [],
+      "untrusted_content": true,
+      "disposition": "RETAINED"
+    },
+    {
+      "record_type": "evidence_item",
+      "record_id": "ev_model_output",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-02T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "artifact_kind": "AI_OUTPUT",
+      "source_system": "SYNTHETIC_FIXTURE",
+      "source_record_id": "ev_model_output",
+      "observed_at": "2026-09-02T09:00:00Z",
+      "source_updated_at": "2026-09-02T09:00:00Z",
+      "content_hash": "sha256:d4ccf73bc4d726a5e4d4c57c6ae4747a974f917e6e7c13f4dc7f0487455c7974",
+      "media_type": "text/plain",
+      "retrieval_key": "synthetic://artifact/ev_model_output",
+      "derived_from": [],
+      "custody": [
+        "Synthetic reference only; original file bytes are not supplied."
+      ],
+      "authenticity_status": "NOT_ASSESSED",
+      "verification_refs": [],
+      "untrusted_content": true,
+      "disposition": "RETAINED"
+    },
+    {
+      "record_type": "verification_record",
+      "record_id": "verification_identity",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "subject_refs": [
+        {
+          "type": "party",
+          "id": "party_creditor",
+          "version": 1
+        },
+        {
+          "type": "party",
+          "id": "party_debtor",
+          "version": 1
+        }
+      ],
+      "scope": [
+        "Party identity and intended recipient"
+      ],
+      "method": "Synthetic recorded qualified-review assumption for a design test.",
+      "reviewer_id": "actor_reviewer",
+      "reviewer_role": "SYNTHETIC_REVIEWER",
+      "result": "VERIFIED_FOR_SCOPE",
+      "basis_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_identity",
+          "version": 1
+        }
+      ],
+      "limitations": [
+        "No real person, authority, evidence, legal rule, or provider is verified by this fixture."
+      ],
+      "recheck_at": "2026-10-01T00:00:00Z"
+    },
+    {
+      "record_type": "verification_record",
+      "record_id": "verification_mandate",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "subject_refs": [
+        {
+          "type": "party",
+          "id": "party_creditor",
+          "version": 1
+        },
+        {
+          "type": "party",
+          "id": "party_debtor",
+          "version": 1
+        }
+      ],
+      "scope": [
+        "Corporate authority and exact delegation for the example"
+      ],
+      "method": "Synthetic recorded qualified-review assumption for a design test.",
+      "reviewer_id": "actor_reviewer",
+      "reviewer_role": "SYNTHETIC_REVIEWER",
+      "result": "VERIFIED_FOR_SCOPE",
+      "basis_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_mandate",
+          "version": 1
+        }
+      ],
+      "limitations": [
+        "No real person, authority, evidence, legal rule, or provider is verified by this fixture."
+      ],
+      "recheck_at": "2026-10-01T00:00:00Z"
+    },
+    {
+      "record_type": "verification_record",
+      "record_id": "verification_provider",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "subject_refs": [
+        {
+          "type": "party",
+          "id": "party_provider",
+          "version": 1
+        }
+      ],
+      "scope": [
+        "Provider scope, conflicts and eligibility for the fictional service"
+      ],
+      "method": "Synthetic recorded qualified-review assumption for a design test.",
+      "reviewer_id": "actor_reviewer",
+      "reviewer_role": "SYNTHETIC_REVIEWER",
+      "result": "VERIFIED_FOR_SCOPE",
+      "basis_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_provider_eligibility",
+          "version": 1
+        }
+      ],
+      "limitations": [
+        "No real person, authority, evidence, legal rule, or provider is verified by this fixture."
+      ],
+      "recheck_at": "2026-10-01T00:00:00Z"
+    },
+    {
+      "record_type": "verification_record",
+      "record_id": "verification_capability",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "subject_refs": [
+        {
+          "type": "capability",
+          "id": "capability_offer",
+          "version": 1
+        }
+      ],
+      "scope": [
+        "Synthetic approved-offer test profile"
+      ],
+      "method": "Synthetic recorded qualified-review assumption for a design test.",
+      "reviewer_id": "actor_reviewer",
+      "reviewer_role": "SYNTHETIC_REVIEWER",
+      "result": "VERIFIED_FOR_SCOPE",
+      "basis_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_rules",
+          "version": 1
+        }
+      ],
+      "limitations": [
+        "No real person, authority, evidence, legal rule, or provider is verified by this fixture."
+      ],
+      "recheck_at": "2026-10-01T00:00:00Z"
+    },
+    {
+      "record_type": "verification_record",
+      "record_id": "verification_evidence",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-02T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "subject_refs": [
+        {
+          "type": "evidence_assertion",
+          "id": "assertion_milestone_4",
+          "version": 2
+        }
+      ],
+      "scope": [
+        "Milestone evidence readiness for this action"
+      ],
+      "method": "Synthetic recorded qualified-review assumption for a design test.",
+      "reviewer_id": "actor_reviewer",
+      "reviewer_role": "SYNTHETIC_REVIEWER",
+      "result": "VERIFIED_FOR_SCOPE",
+      "basis_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_cure",
+          "version": 1
+        }
+      ],
+      "limitations": [
+        "No real person, authority, evidence, legal rule, or provider is verified by this fixture."
+      ],
+      "recheck_at": "2026-10-01T00:00:00Z"
+    },
+    {
+      "record_type": "evidence_assertion",
+      "record_id": "assertion_milestone_1",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "claim_id": "claim_demo",
+      "proposition": "Milestone 1 invoice asserts USD 19,500 due.",
+      "asserted_by": "actor_creditor",
+      "assertion_class": "PARTY_ASSERTION",
+      "status": "SUPPORTED",
+      "support_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_invoices",
+          "version": 1
+        },
+        {
+          "type": "evidence_item",
+          "id": "ev_contract",
+          "version": 1
+        }
+      ],
+      "contradiction_refs": [],
+      "verification_refs": [],
+      "scope": [
+        "COMMERCIAL_ASSERTION"
+      ],
+      "limitations": [
+        "An invoice alone is not proof of performance."
+      ]
+    },
+    {
+      "record_type": "evidence_assertion",
+      "record_id": "assertion_milestone_2",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "claim_id": "claim_demo",
+      "proposition": "Milestone 2 invoice asserts USD 19,500 due.",
+      "asserted_by": "actor_creditor",
+      "assertion_class": "PARTY_ASSERTION",
+      "status": "SUPPORTED",
+      "support_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_invoices",
+          "version": 1
+        },
+        {
+          "type": "evidence_item",
+          "id": "ev_contract",
+          "version": 1
+        }
+      ],
+      "contradiction_refs": [],
+      "verification_refs": [],
+      "scope": [
+        "COMMERCIAL_ASSERTION"
+      ],
+      "limitations": [
+        "An invoice alone is not proof of performance."
+      ]
+    },
+    {
+      "record_type": "evidence_assertion",
+      "record_id": "assertion_milestone_3",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "claim_id": "claim_demo",
+      "proposition": "Milestone 3 invoice asserts USD 19,500 due.",
+      "asserted_by": "actor_creditor",
+      "assertion_class": "PARTY_ASSERTION",
+      "status": "SUPPORTED",
+      "support_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_invoices",
+          "version": 1
+        },
+        {
+          "type": "evidence_item",
+          "id": "ev_contract",
+          "version": 1
+        }
+      ],
+      "contradiction_refs": [],
+      "verification_refs": [],
+      "scope": [
+        "COMMERCIAL_ASSERTION"
+      ],
+      "limitations": [
+        "An invoice alone is not proof of performance."
+      ]
+    },
+    {
+      "record_type": "evidence_assertion",
+      "record_id": "assertion_milestone_4",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "claim_id": "claim_demo",
+      "proposition": "Milestone 4 invoice asserts USD 19,500 due.",
+      "asserted_by": "actor_creditor",
+      "assertion_class": "PARTY_ASSERTION",
+      "status": "ASSERTED",
+      "support_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_invoices",
+          "version": 1
+        },
+        {
+          "type": "evidence_item",
+          "id": "ev_contract",
+          "version": 1
+        }
+      ],
+      "contradiction_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_correspondence",
+          "version": 1
+        }
+      ],
+      "verification_refs": [],
+      "scope": [
+        "COMMERCIAL_ASSERTION"
+      ],
+      "limitations": [
+        "An invoice alone is not proof of performance."
+      ]
+    },
+    {
+      "record_type": "evidence_assertion",
+      "record_id": "assertion_milestone_4",
+      "record_version": 2,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-02T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "claim_id": "claim_demo",
+      "proposition": "Milestone 4 invoice asserts USD 19,500 due.",
+      "asserted_by": "actor_creditor",
+      "assertion_class": "PARTY_ASSERTION",
+      "status": "SUPPORTED",
+      "support_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_invoices",
+          "version": 1
+        },
+        {
+          "type": "evidence_item",
+          "id": "ev_contract",
+          "version": 1
+        },
+        {
+          "type": "evidence_item",
+          "id": "ev_cure",
+          "version": 1
+        }
+      ],
+      "contradiction_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_correspondence",
+          "version": 1
+        }
+      ],
+      "verification_refs": [
+        {
+          "type": "verification_record",
+          "id": "verification_evidence",
+          "version": 1
+        }
+      ],
+      "scope": [
+        "COMMERCIAL_ASSERTION"
+      ],
+      "limitations": [
+        "Counterparty still contests the milestone; readiness is action-specific."
+      ]
+    },
+    {
+      "record_type": "obligation",
+      "record_id": "obligation_demo",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "creditor_ref": {
+        "type": "party",
+        "id": "party_creditor",
+        "version": 1
+      },
+      "obligor_refs": [
+        {
+          "type": "party",
+          "id": "party_debtor",
+          "version": 1
+        }
+      ],
+      "basis_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_contract",
+          "version": 1
+        }
+      ],
+      "currency": "USD",
+      "exponent": 2,
+      "lines": [
+        {
+          "line_id": "line_invoice_1",
+          "kind": "PRINCIPAL",
+          "amount": {
+            "currency": "USD",
+            "exponent": 2,
+            "units": "1950000"
+          },
+          "due": {
+            "kind": "INSTANT",
+            "at": "2026-07-01T17:00:00Z",
+            "origin_time_zone": "America/New_York",
+            "basis": "CONTRACTUAL",
+            "source_wording": "Synthetic case deadline for this example only.",
+            "basis_refs": [
+              {
+                "type": "evidence_item",
+                "id": "ev_contract",
+                "version": 1
+              }
+            ]
+          },
+          "basis_refs": [
+            {
+              "type": "evidence_item",
+              "id": "ev_invoices",
+              "version": 1
+            }
+          ],
+          "assertion_refs": [
+            {
+              "type": "evidence_assertion",
+              "id": "assertion_milestone_1",
+              "version": 1
+            }
+          ]
+        },
+        {
+          "line_id": "line_invoice_2",
+          "kind": "PRINCIPAL",
+          "amount": {
+            "currency": "USD",
+            "exponent": 2,
+            "units": "1950000"
+          },
+          "due": {
+            "kind": "INSTANT",
+            "at": "2026-07-01T17:00:00Z",
+            "origin_time_zone": "America/New_York",
+            "basis": "CONTRACTUAL",
+            "source_wording": "Synthetic case deadline for this example only.",
+            "basis_refs": [
+              {
+                "type": "evidence_item",
+                "id": "ev_contract",
+                "version": 1
+              }
+            ]
+          },
+          "basis_refs": [
+            {
+              "type": "evidence_item",
+              "id": "ev_invoices",
+              "version": 1
+            }
+          ],
+          "assertion_refs": [
+            {
+              "type": "evidence_assertion",
+              "id": "assertion_milestone_2",
+              "version": 1
+            }
+          ]
+        },
+        {
+          "line_id": "line_invoice_3",
+          "kind": "PRINCIPAL",
+          "amount": {
+            "currency": "USD",
+            "exponent": 2,
+            "units": "1950000"
+          },
+          "due": {
+            "kind": "INSTANT",
+            "at": "2026-07-01T17:00:00Z",
+            "origin_time_zone": "America/New_York",
+            "basis": "CONTRACTUAL",
+            "source_wording": "Synthetic case deadline for this example only.",
+            "basis_refs": [
+              {
+                "type": "evidence_item",
+                "id": "ev_contract",
+                "version": 1
+              }
+            ]
+          },
+          "basis_refs": [
+            {
+              "type": "evidence_item",
+              "id": "ev_invoices",
+              "version": 1
+            }
+          ],
+          "assertion_refs": [
+            {
+              "type": "evidence_assertion",
+              "id": "assertion_milestone_3",
+              "version": 1
+            }
+          ]
+        },
+        {
+          "line_id": "line_invoice_4",
+          "kind": "PRINCIPAL",
+          "amount": {
+            "currency": "USD",
+            "exponent": 2,
+            "units": "1950000"
+          },
+          "due": {
+            "kind": "INSTANT",
+            "at": "2026-07-01T17:00:00Z",
+            "origin_time_zone": "America/New_York",
+            "basis": "CONTRACTUAL",
+            "source_wording": "Synthetic case deadline for this example only.",
+            "basis_refs": [
+              {
+                "type": "evidence_item",
+                "id": "ev_contract",
+                "version": 1
+              }
+            ]
+          },
+          "basis_refs": [
+            {
+              "type": "evidence_item",
+              "id": "ev_invoices",
+              "version": 1
+            }
+          ],
+          "assertion_refs": [
+            {
+              "type": "evidence_assertion",
+              "id": "assertion_milestone_4",
+              "version": 1
+            }
+          ]
+        }
+      ],
+      "linked_case_ids": [
+        "case_demo"
+      ],
+      "economic_identity_basis": "Inactive fixture with four synthetic asserted advances/charges. No released service, enforceability or admission follows from representability."
+    },
+    {
+      "record_type": "rights_interest",
+      "record_id": "rights_owner",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "obligation_ref": {
+        "type": "obligation",
+        "id": "obligation_demo",
+        "version": 1
+      },
+      "holder_ref": {
+        "type": "party",
+        "id": "party_creditor",
+        "version": 1
+      },
+      "interest_kind": "OWNERSHIP",
+      "status": "VERIFIED_FOR_SCOPE",
+      "amount_limit": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "7800000"
+      },
+      "basis_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_contract",
+          "version": 1
+        }
+      ],
+      "verification_ref": {
+        "type": "verification_record",
+        "id": "verification_mandate",
+        "version": 1
+      },
+      "restrictions": [
+        "No assignment, insurance or additional interest in this fixture."
+      ],
+      "predecessor_ref": null
+    },
+    {
+      "record_type": "authority_grant",
+      "record_id": "grant_operator",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "principal_ref": {
+        "type": "party",
+        "id": "party_creditor",
+        "version": 1
+      },
+      "grantor_ref": {
+        "type": "party",
+        "id": "party_creditor",
+        "version": 1
+      },
+      "grantee_actor_id": "actor_operator",
+      "grantee_organization_ref": {
+        "type": "party",
+        "id": "party_gre",
+        "version": 1
+      },
+      "status": "ACTIVE",
+      "case_ids": [
+        "case_demo"
+      ],
+      "obligation_refs": [
+        {
+          "type": "obligation",
+          "id": "obligation_demo",
+          "version": 1
+        }
+      ],
+      "allowed_actions": [
+        "settlement.offer",
+        "settlement.accept",
+        "provider.place",
+        "assessment.deliver",
+        "evidence.request",
+        "case.close"
+      ],
+      "prohibited_actions": [
+        "professional.execute",
+        "funds.instruct",
+        "rights.transfer"
+      ],
+      "authority_classes": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "execution_modes": [
+        "PREPARE",
+        "APPROVAL_REQUIRED"
+      ],
+      "routes": [
+        "AMICABLE_THIRD_PARTY",
+        "NEGOTIATED_SETTLEMENT",
+        "EVIDENCE_CURE",
+        "CLOSE_OPERATIONS"
+      ],
+      "corridor_ids": [
+        "corridor_in_us"
+      ],
+      "channels": [
+        "EMAIL",
+        "PORTAL",
+        "INTERNAL"
+      ],
+      "recipient_refs": [
+        {
+          "type": "party",
+          "id": "party_debtor",
+          "version": 1
+        },
+        {
+          "type": "party",
+          "id": "party_provider",
+          "version": 1
+        }
+      ],
+      "budget_cap": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "200000"
+      },
+      "settlement_floor": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "7000000"
+      },
+      "settlement_ceiling": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "7800000"
+      },
+      "allowed_release_kinds": [
+        "NONE",
+        "CONDITIONAL_REMAINDER_RELEASE"
+      ],
+      "nonfinancial_constraints": [
+        "Single approved payment; no admission or confidentiality variation; qualified review remains required."
+      ],
+      "subdelegation_allowed": false,
+      "verification_ref": {
+        "type": "verification_record",
+        "id": "verification_mandate",
+        "version": 1
+      },
+      "instrument_ref": {
+        "type": "evidence_item",
+        "id": "ev_mandate",
+        "version": 1
+      },
+      "verified_at": "2026-09-01T09:00:00Z",
+      "recheck_at": "2026-10-01T00:00:00Z",
+      "revoked_at": null,
+      "revocation_reason": null
+    },
+    {
+      "record_type": "authority_grant",
+      "record_id": "grant_creditor",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "principal_ref": {
+        "type": "party",
+        "id": "party_creditor",
+        "version": 1
+      },
+      "grantor_ref": {
+        "type": "party",
+        "id": "party_creditor",
+        "version": 1
+      },
+      "grantee_actor_id": "actor_creditor",
+      "grantee_organization_ref": {
+        "type": "party",
+        "id": "party_creditor",
+        "version": 1
+      },
+      "status": "ACTIVE",
+      "case_ids": [
+        "case_demo"
+      ],
+      "obligation_refs": [
+        {
+          "type": "obligation",
+          "id": "obligation_demo",
+          "version": 1
+        }
+      ],
+      "allowed_actions": [
+        "settlement.offer",
+        "settlement.accept",
+        "case.close"
+      ],
+      "prohibited_actions": [
+        "professional.execute",
+        "funds.instruct",
+        "rights.transfer"
+      ],
+      "authority_classes": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "execution_modes": [
+        "PREPARE",
+        "APPROVAL_REQUIRED"
+      ],
+      "routes": [
+        "AMICABLE_THIRD_PARTY",
+        "NEGOTIATED_SETTLEMENT",
+        "EVIDENCE_CURE",
+        "CLOSE_OPERATIONS"
+      ],
+      "corridor_ids": [
+        "corridor_in_us"
+      ],
+      "channels": [
+        "EMAIL",
+        "PORTAL",
+        "INTERNAL"
+      ],
+      "recipient_refs": [
+        {
+          "type": "party",
+          "id": "party_debtor",
+          "version": 1
+        }
+      ],
+      "budget_cap": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "200000"
+      },
+      "settlement_floor": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "7000000"
+      },
+      "settlement_ceiling": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "7800000"
+      },
+      "allowed_release_kinds": [
+        "NONE",
+        "CONDITIONAL_REMAINDER_RELEASE"
+      ],
+      "nonfinancial_constraints": [
+        "Single approved payment; no admission or confidentiality variation; qualified review remains required."
+      ],
+      "subdelegation_allowed": false,
+      "verification_ref": {
+        "type": "verification_record",
+        "id": "verification_mandate",
+        "version": 1
+      },
+      "instrument_ref": {
+        "type": "evidence_item",
+        "id": "ev_mandate",
+        "version": 1
+      },
+      "verified_at": "2026-09-01T09:00:00Z",
+      "recheck_at": "2026-10-01T00:00:00Z",
+      "revoked_at": null,
+      "revocation_reason": null
+    },
+    {
+      "record_type": "authority_grant",
+      "record_id": "grant_counterparty",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "principal_ref": {
+        "type": "party",
+        "id": "party_debtor",
+        "version": 1
+      },
+      "grantor_ref": {
+        "type": "party",
+        "id": "party_debtor",
+        "version": 1
+      },
+      "grantee_actor_id": "actor_counterparty",
+      "grantee_organization_ref": {
+        "type": "party",
+        "id": "party_debtor",
+        "version": 1
+      },
+      "status": "ACTIVE",
+      "case_ids": [
+        "case_demo"
+      ],
+      "obligation_refs": [
+        {
+          "type": "obligation",
+          "id": "obligation_demo",
+          "version": 1
+        }
+      ],
+      "allowed_actions": [
+        "settlement.accept"
+      ],
+      "prohibited_actions": [
+        "professional.execute",
+        "funds.instruct",
+        "rights.transfer"
+      ],
+      "authority_classes": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "execution_modes": [
+        "PREPARE",
+        "APPROVAL_REQUIRED"
+      ],
+      "routes": [
+        "AMICABLE_THIRD_PARTY",
+        "NEGOTIATED_SETTLEMENT",
+        "EVIDENCE_CURE",
+        "CLOSE_OPERATIONS"
+      ],
+      "corridor_ids": [
+        "corridor_in_us"
+      ],
+      "channels": [
+        "EMAIL",
+        "PORTAL",
+        "INTERNAL"
+      ],
+      "recipient_refs": [
+        {
+          "type": "party",
+          "id": "party_creditor",
+          "version": 1
+        }
+      ],
+      "budget_cap": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "200000"
+      },
+      "settlement_floor": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "7000000"
+      },
+      "settlement_ceiling": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "7800000"
+      },
+      "allowed_release_kinds": [
+        "NONE",
+        "CONDITIONAL_REMAINDER_RELEASE"
+      ],
+      "nonfinancial_constraints": [
+        "Single approved payment; no admission or confidentiality variation; qualified review remains required."
+      ],
+      "subdelegation_allowed": false,
+      "verification_ref": {
+        "type": "verification_record",
+        "id": "verification_mandate",
+        "version": 1
+      },
+      "instrument_ref": {
+        "type": "evidence_item",
+        "id": "ev_mandate",
+        "version": 1
+      },
+      "verified_at": "2026-09-01T09:00:00Z",
+      "recheck_at": "2026-10-01T00:00:00Z",
+      "revoked_at": null,
+      "revocation_reason": null
+    },
+    {
+      "record_type": "external_binding",
+      "record_id": "binding_debtor",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "party_ref": {
+        "type": "party",
+        "id": "party_debtor",
+        "version": 1
+      },
+      "binding_kind": "RECIPIENT",
+      "system": "SYNTHETIC_EMAIL",
+      "destination_token": "recipient_demo_verified",
+      "verified_by": "actor_reviewer",
+      "verification_ref": {
+        "type": "verification_record",
+        "id": "verification_identity",
+        "version": 1
+      },
+      "verified_at": "2026-09-01T09:00:00Z",
+      "recheck_at": "2026-10-01T00:00:00Z",
+      "status": "ACTIVE",
+      "display_identity": "Synthetic business recipient; no address or sendable destination.",
+      "funds_role": "NOT_PAYMENT"
+    },
+    {
+      "record_type": "external_binding",
+      "record_id": "binding_bank",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "party_ref": {
+        "type": "party",
+        "id": "party_creditor",
+        "version": 1
+      },
+      "binding_kind": "PAYMENT_DESTINATION",
+      "system": "SYNTHETIC_BANK",
+      "destination_token": "bank_destination_demo",
+      "verified_by": "actor_reviewer",
+      "verification_ref": {
+        "type": "verification_record",
+        "id": "verification_identity",
+        "version": 1
+      },
+      "verified_at": "2026-09-01T09:00:00Z",
+      "recheck_at": "2026-10-01T00:00:00Z",
+      "status": "ACTIVE",
+      "display_identity": "Synthetic creditor account; no bank credentials.",
+      "funds_role": "CREDITOR_DIRECT"
+    },
+    {
+      "record_type": "corridor_pack",
+      "record_id": "corridor_pack_demo",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "corridor_id": "corridor_in_us",
+      "origin_country": "US",
+      "destination_country": "US",
+      "status": "DESIGNED",
+      "claim_purposes": [
+        "PRIVATE_ORIGINATED"
+      ],
+      "source_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_rules",
+          "version": 1
+        }
+      ],
+      "reviewer_id": "actor_reviewer",
+      "reviewed_at": "2026-09-01T09:00:00Z",
+      "review_due_at": "2026-10-01T00:00:00Z",
+      "rules_version": "synthetic_only_001",
+      "unresolved_applicability": [],
+      "supported_routes": [
+        "AMICABLE_THIRD_PARTY",
+        "NEGOTIATED_SETTLEMENT"
+      ],
+      "test_evidence_refs": [
+        {
+          "type": "verification_record",
+          "id": "verification_capability",
+          "version": 1
+        }
+      ],
+      "release_profile": {
+        "matter_family": "PRIVATE_RESOLUTION",
+        "profile_id": "private_future",
+        "profile_version": 1,
+        "service_modes": [
+          "ASSESS",
+          "PREPARE",
+          "TRANSFER",
+          "CONTROL",
+          "OBSERVE"
+        ],
+        "executor_pattern": "DESIGN_ONLY",
+        "legal_review": "UNREVIEWED",
+        "conditions": [],
+        "review_owner_id": "actor_reviewer",
+        "release_owner_id": "actor_release",
+        "release_evidence_refs": [],
+        "actor_ids": []
+      },
+      "source_lifecycle": [
+        {
+          "source_ref": {
+            "type": "evidence_item",
+            "id": "ev_rules",
+            "version": 1
+          },
+          "published_at": "2026-09-01T09:00:00Z",
+          "retrieved_at": "2026-09-01T09:00:00Z",
+          "effective_from": "2026-09-01T09:00:00Z",
+          "effective_until": "2026-10-01T00:00:00Z",
+          "status": "CURRENT",
+          "reviewer_id": "actor_reviewer"
+        }
+      ]
+    },
+    {
+      "record_type": "capability",
+      "record_id": "capability_offer",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "capability_name": "Synthetic GRE provider transfer",
+      "status": "PILOT_ENABLED",
+      "corridor_ids": [
+        "corridor_in_us"
+      ],
+      "allowed_actions": [
+        "provider.place"
+      ],
+      "allowed_modes": [
+        "APPROVAL_REQUIRED"
+      ],
+      "routes": [
+        "AMICABLE_THIRD_PARTY",
+        "NEGOTIATED_SETTLEMENT"
+      ],
+      "responsible_party_ref": {
+        "type": "party",
+        "id": "party_gre",
+        "version": 1
+      },
+      "assurance_refs": [
+        {
+          "type": "verification_record",
+          "id": "verification_capability",
+          "version": 1
+        }
+      ],
+      "dependencies": [
+        "Simulated identity, mandate, eligibility, and policy decisions"
+      ],
+      "limits": [
+        "Not a live capability; no external effects"
+      ],
+      "incident_owner_id": "actor_operator",
+      "reassess_at": "2026-10-01T00:00:00Z"
+    },
+    {
+      "record_type": "claim_passport",
+      "record_id": "passport_demo",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "case_id": "case_demo",
+      "claim_id": "claim_demo",
+      "obligation_refs": [
+        {
+          "type": "obligation",
+          "id": "obligation_demo",
+          "version": 1
+        }
+      ],
+      "claimant_ref": {
+        "type": "party",
+        "id": "party_creditor",
+        "version": 1
+      },
+      "obligor_refs": [
+        {
+          "type": "party",
+          "id": "party_debtor",
+          "version": 1
+        }
+      ],
+      "rights_refs": [
+        {
+          "type": "rights_interest",
+          "id": "rights_owner",
+          "version": 1
+        }
+      ],
+      "assertion_refs": [
+        {
+          "type": "evidence_assertion",
+          "id": "assertion_milestone_1",
+          "version": 1
+        },
+        {
+          "type": "evidence_assertion",
+          "id": "assertion_milestone_2",
+          "version": 1
+        },
+        {
+          "type": "evidence_assertion",
+          "id": "assertion_milestone_3",
+          "version": 1
+        },
+        {
+          "type": "evidence_assertion",
+          "id": "assertion_milestone_4",
+          "version": 1
+        }
+      ],
+      "evidence_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_contract",
+          "version": 1
+        },
+        {
+          "type": "evidence_item",
+          "id": "ev_invoices",
+          "version": 1
+        },
+        {
+          "type": "evidence_item",
+          "id": "ev_correspondence",
+          "version": 1
+        }
+      ],
+      "verification_refs": [],
+      "readiness": "INSUFFICIENT",
+      "readiness_scope": [
+        "INTAKE_AND_ASSESSMENT"
+      ],
+      "asserted_amount": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "7800000"
+      },
+      "admitted_amount": {
+        "status": "UNKNOWN",
+        "value": null,
+        "basis_refs": [],
+        "reason": "Outside the observed scope.",
+        "followup_owner_id": null
+      },
+      "disputed_amount": {
+        "status": "OBSERVED",
+        "value": {
+          "currency": "USD",
+          "exponent": 2,
+          "units": "1950000"
+        },
+        "basis_refs": [
+          {
+            "type": "evidence_item",
+            "id": "ev_correspondence",
+            "version": 1
+          }
+        ],
+        "reason": "Reported counterparty dispute, not an adjudication.",
+        "followup_owner_id": null
+      },
+      "financial_position_ref": {
+        "type": "financial_position",
+        "id": "position_demo",
+        "version": 1
+      },
+      "source_as_of": "2026-09-01T09:00:00Z",
+      "known_gaps": [
+        "Legal entity naming mismatch to review.",
+        "Acceptance evidence for milestone four."
+      ],
+      "model_execution_refs": []
+    },
+    {
+      "record_type": "claim_passport",
+      "record_id": "passport_demo",
+      "record_version": 2,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-02T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "case_id": "case_demo",
+      "claim_id": "claim_demo",
+      "obligation_refs": [
+        {
+          "type": "obligation",
+          "id": "obligation_demo",
+          "version": 1
+        }
+      ],
+      "claimant_ref": {
+        "type": "party",
+        "id": "party_creditor",
+        "version": 1
+      },
+      "obligor_refs": [
+        {
+          "type": "party",
+          "id": "party_debtor",
+          "version": 1
+        }
+      ],
+      "rights_refs": [
+        {
+          "type": "rights_interest",
+          "id": "rights_owner",
+          "version": 1
+        }
+      ],
+      "assertion_refs": [
+        {
+          "type": "evidence_assertion",
+          "id": "assertion_milestone_1",
+          "version": 1
+        },
+        {
+          "type": "evidence_assertion",
+          "id": "assertion_milestone_2",
+          "version": 1
+        },
+        {
+          "type": "evidence_assertion",
+          "id": "assertion_milestone_3",
+          "version": 1
+        },
+        {
+          "type": "evidence_assertion",
+          "id": "assertion_milestone_4",
+          "version": 2
+        }
+      ],
+      "evidence_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_contract",
+          "version": 1
+        },
+        {
+          "type": "evidence_item",
+          "id": "ev_invoices",
+          "version": 1
+        },
+        {
+          "type": "evidence_item",
+          "id": "ev_correspondence",
+          "version": 1
+        },
+        {
+          "type": "evidence_item",
+          "id": "ev_cure",
+          "version": 1
+        }
+      ],
+      "verification_refs": [
+        {
+          "type": "verification_record",
+          "id": "verification_evidence",
+          "version": 1
+        }
+      ],
+      "readiness": "VERIFIED_FOR_SCOPE",
+      "readiness_scope": [
+        "ASSESSMENT",
+        "QUALIFIED_REVIEWED_OFFER"
+      ],
+      "asserted_amount": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "7800000"
+      },
+      "admitted_amount": {
+        "status": "UNKNOWN",
+        "value": null,
+        "basis_refs": [],
+        "reason": "Outside the observed scope.",
+        "followup_owner_id": null
+      },
+      "disputed_amount": {
+        "status": "OBSERVED",
+        "value": {
+          "currency": "USD",
+          "exponent": 2,
+          "units": "1950000"
+        },
+        "basis_refs": [
+          {
+            "type": "evidence_item",
+            "id": "ev_correspondence",
+            "version": 1
+          }
+        ],
+        "reason": "Reported counterparty dispute, not an adjudication.",
+        "followup_owner_id": null
+      },
+      "financial_position_ref": {
+        "type": "financial_position",
+        "id": "position_demo",
+        "version": 1
+      },
+      "source_as_of": "2026-09-02T09:00:00Z",
+      "known_gaps": [
+        "Dispute remains despite the supplied acceptance evidence."
+      ],
+      "model_execution_refs": []
+    },
+    {
+      "record_type": "service_request",
+      "record_id": "service_assess",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "case_id": "case_demo",
+      "kind": "ASSESSMENT",
+      "contracting_party_ref": {
+        "type": "party",
+        "id": "party_provider",
+        "version": 1
+      },
+      "principal_ref": {
+        "type": "party",
+        "id": "party_creditor",
+        "version": 1
+      },
+      "status": "ACTIVE",
+      "allowed_actions": [
+        "assessment.deliver",
+        "evidence.request"
+      ],
+      "authority_ref": {
+        "type": "authority_grant",
+        "id": "grant_operator",
+        "version": 1
+      },
+      "scope_description": "Prepare and deliver a claim/evidence/route assessment; contact and continuing monitoring require another scope.",
+      "window": {
+        "starts_at": "2026-09-01T09:00:00Z",
+        "ends_at": "2026-10-01T00:00:00Z",
+        "completion_conditions": [
+          "Reviewed assessment delivered with limitations."
+        ],
+        "renewal_required": false
+      },
+      "cost_cap": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "30000"
+      },
+      "owner_id": "actor_operator",
+      "deliverable_refs": [],
+      "fulfilled_conditions": [],
+      "remaining_duties": [],
+      "transfer_acceptance_ref": null,
+      "service_mode": "ASSESS"
+    },
+    {
+      "record_type": "service_request",
+      "record_id": "service_assess",
+      "record_version": 2,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-02T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "case_id": "case_demo",
+      "kind": "ASSESSMENT",
+      "contracting_party_ref": {
+        "type": "party",
+        "id": "party_provider",
+        "version": 1
+      },
+      "principal_ref": {
+        "type": "party",
+        "id": "party_creditor",
+        "version": 1
+      },
+      "status": "FULFILLED",
+      "allowed_actions": [
+        "assessment.deliver",
+        "evidence.request"
+      ],
+      "authority_ref": {
+        "type": "authority_grant",
+        "id": "grant_operator",
+        "version": 1
+      },
+      "scope_description": "Prepare and deliver a claim/evidence/route assessment; contact and continuing monitoring require another scope.",
+      "window": {
+        "starts_at": "2026-09-01T09:00:00Z",
+        "ends_at": "2026-10-01T00:00:00Z",
+        "completion_conditions": [
+          "Reviewed assessment delivered with limitations."
+        ],
+        "renewal_required": false
+      },
+      "cost_cap": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "30000"
+      },
+      "owner_id": "actor_operator",
+      "deliverable_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_assessment",
+          "version": 1
+        }
+      ],
+      "fulfilled_conditions": [
+        "Reviewed assessment delivered with limitations."
+      ],
+      "remaining_duties": [],
+      "transfer_acceptance_ref": null,
+      "service_mode": "ASSESS"
+    },
+    {
+      "record_type": "service_request",
+      "record_id": "service_operate",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-02T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "case_id": "case_demo",
+      "kind": "HANDOFF",
+      "contracting_party_ref": {
+        "type": "party",
+        "id": "party_provider",
+        "version": 1
+      },
+      "principal_ref": {
+        "type": "party",
+        "id": "party_creditor",
+        "version": 1
+      },
+      "status": "ACTIVE",
+      "allowed_actions": [
+        "provider.place"
+      ],
+      "authority_ref": {
+        "type": "authority_grant",
+        "id": "grant_operator",
+        "version": 1
+      },
+      "scope_description": "GRE permitted preparation and transfer; independent provider executes under direct appointment.",
+      "window": {
+        "starts_at": "2026-09-02T09:00:00Z",
+        "ends_at": "2026-10-01T00:00:00Z",
+        "completion_conditions": [
+          "Defined recovery operation and reconciliation returned."
+        ],
+        "renewal_required": false
+      },
+      "cost_cap": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "200000"
+      },
+      "owner_id": "actor_operator",
+      "deliverable_refs": [],
+      "fulfilled_conditions": [],
+      "remaining_duties": [],
+      "transfer_acceptance_ref": null,
+      "service_mode": "TRANSFER"
+    },
+    {
+      "record_type": "case",
+      "record_id": "case_demo",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "creditor_ref": {
+        "type": "party",
+        "id": "party_creditor",
+        "version": 1
+      },
+      "debtor_ref": {
+        "type": "party",
+        "id": "party_debtor",
+        "version": 1
+      },
+      "obligation_refs": [
+        {
+          "type": "obligation",
+          "id": "obligation_demo",
+          "version": 1
+        }
+      ],
+      "passport_ref": {
+        "type": "claim_passport",
+        "id": "passport_demo",
+        "version": 1
+      },
+      "service_request_refs": [
+        {
+          "type": "service_request",
+          "id": "service_assess",
+          "version": 1
+        }
+      ],
+      "coordination_owner_id": "actor_operator",
+      "next_review_at": "2026-09-02T09:00:00Z",
+      "state": {
+        "lifecycle_stage": "ASSESSMENT",
+        "stage_state": "IN_REVIEW",
+        "readiness_state": "INSUFFICIENT",
+        "authority_state": "LIMITED",
+        "engagement_state": "NOT_STARTED",
+        "dispute_state": "ASSERTED",
+        "legal_state": "NOT_REFERRED",
+        "payment_state": "NONE",
+        "closure_state": "OPEN",
+        "holds": [],
+        "completion": {
+          "financial": {
+            "status": "PENDING",
+            "basis_refs": [],
+            "owner_id": "actor_operator",
+            "reason": "Synthetic completion disposition; remaining duties retain an owner."
+          },
+          "commercial": {
+            "status": "PENDING",
+            "basis_refs": [],
+            "owner_id": "actor_operator",
+            "reason": "Synthetic completion disposition; remaining duties retain an owner."
+          },
+          "legal": {
+            "status": "NOT_APPLICABLE",
+            "basis_refs": [],
+            "owner_id": null,
+            "reason": "Synthetic completion disposition; remaining duties retain an owner."
+          },
+          "export_administrative": {
+            "status": "PENDING",
+            "basis_refs": [],
+            "owner_id": "actor_creditor",
+            "reason": "Synthetic completion disposition; remaining duties retain an owner."
+          },
+          "operational": {
+            "status": "PENDING",
+            "basis_refs": [],
+            "owner_id": "actor_operator",
+            "reason": "Synthetic completion disposition; remaining duties retain an owner."
+          },
+          "retention": {
+            "status": "PENDING",
+            "basis_refs": [],
+            "owner_id": "actor_records",
+            "reason": "Synthetic completion disposition; remaining duties retain an owner."
+          }
+        }
+      },
+      "aggregation_basis": "Four compatible USD invoices, same legal parties and contract.",
+      "closure_basis_refs": [],
+      "remaining_duties": [],
+      "classification": {
+        "matter_family": "PRIVATE_RESOLUTION",
+        "profile_id": "private_future",
+        "profile_version": 1,
+        "status": "REVIEW_REQUIRED",
+        "purpose": "PERSONAL_FAMILY_HOUSEHOLD",
+        "claim_type": "PRIVATE_ORIGINATED",
+        "claimant_type": "PRIVATE_INDIVIDUAL",
+        "obligated_party_type": "NATURAL_PERSON",
+        "natural_person_involved": true,
+        "creditor_country": "US",
+        "obligor_country": "US",
+        "source_refs": [
+          {
+            "type": "evidence_item",
+            "id": "ev_contract",
+            "version": 1
+          }
+        ],
+        "review_owner_id": "actor_reviewer"
+      },
+      "commercial_entitlements": [
+        "TRADE_PILOT",
+        "NETWORK_CONTROL"
+      ],
+      "inactive_private_context": {
+        "requester_id": "actor_requester",
+        "respondent_id": "actor_respondent",
+        "sponsor_id": "actor_sponsor",
+        "participation": "DECLINED",
+        "shared_refs": [],
+        "requester_private_refs": [
+          {
+            "type": "evidence_item",
+            "id": "ev_private_strategy",
+            "version": 1
+          }
+        ],
+        "respondent_private_refs": [],
+        "no_further_contact": true
+      }
+    },
+    {
+      "record_type": "case",
+      "record_id": "case_demo",
+      "record_version": 2,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-02T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "creditor_ref": {
+        "type": "party",
+        "id": "party_creditor",
+        "version": 1
+      },
+      "debtor_ref": {
+        "type": "party",
+        "id": "party_debtor",
+        "version": 1
+      },
+      "obligation_refs": [
+        {
+          "type": "obligation",
+          "id": "obligation_demo",
+          "version": 1
+        }
+      ],
+      "passport_ref": {
+        "type": "claim_passport",
+        "id": "passport_demo",
+        "version": 2
+      },
+      "service_request_refs": [
+        {
+          "type": "service_request",
+          "id": "service_assess",
+          "version": 2
+        },
+        {
+          "type": "service_request",
+          "id": "service_operate",
+          "version": 1
+        }
+      ],
+      "coordination_owner_id": "actor_operator",
+      "next_review_at": "2026-09-03T09:00:00Z",
+      "state": {
+        "lifecycle_stage": "DECISION",
+        "stage_state": "AUTHORIZED",
+        "readiness_state": "VERIFIED_FOR_SCOPE",
+        "authority_state": "ACTIVE",
+        "engagement_state": "NOT_STARTED",
+        "dispute_state": "ASSERTED",
+        "legal_state": "NOT_REFERRED",
+        "payment_state": "NONE",
+        "closure_state": "OPEN",
+        "holds": [],
+        "completion": {
+          "financial": {
+            "status": "PENDING",
+            "basis_refs": [],
+            "owner_id": "actor_operator",
+            "reason": "Synthetic completion disposition; remaining duties retain an owner."
+          },
+          "commercial": {
+            "status": "PENDING",
+            "basis_refs": [],
+            "owner_id": "actor_operator",
+            "reason": "Synthetic completion disposition; remaining duties retain an owner."
+          },
+          "legal": {
+            "status": "NOT_APPLICABLE",
+            "basis_refs": [],
+            "owner_id": null,
+            "reason": "Synthetic completion disposition; remaining duties retain an owner."
+          },
+          "export_administrative": {
+            "status": "PENDING",
+            "basis_refs": [],
+            "owner_id": "actor_creditor",
+            "reason": "Synthetic completion disposition; remaining duties retain an owner."
+          },
+          "operational": {
+            "status": "PENDING",
+            "basis_refs": [],
+            "owner_id": "actor_operator",
+            "reason": "Synthetic completion disposition; remaining duties retain an owner."
+          },
+          "retention": {
+            "status": "PENDING",
+            "basis_refs": [],
+            "owner_id": "actor_records",
+            "reason": "Synthetic completion disposition; remaining duties retain an owner."
+          }
+        }
+      },
+      "aggregation_basis": "Four compatible USD invoices, same legal parties and contract.",
+      "closure_basis_refs": [],
+      "remaining_duties": [],
+      "classification": {
+        "matter_family": "PRIVATE_RESOLUTION",
+        "profile_id": "private_future",
+        "profile_version": 1,
+        "status": "REVIEW_REQUIRED",
+        "purpose": "PERSONAL_FAMILY_HOUSEHOLD",
+        "claim_type": "PRIVATE_ORIGINATED",
+        "claimant_type": "PRIVATE_INDIVIDUAL",
+        "obligated_party_type": "NATURAL_PERSON",
+        "natural_person_involved": true,
+        "creditor_country": "US",
+        "obligor_country": "US",
+        "source_refs": [
+          {
+            "type": "evidence_item",
+            "id": "ev_contract",
+            "version": 1
+          }
+        ],
+        "review_owner_id": "actor_reviewer"
+      },
+      "commercial_entitlements": [
+        "TRADE_PILOT",
+        "NETWORK_CONTROL"
+      ],
+      "inactive_private_context": {
+        "requester_id": "actor_requester",
+        "respondent_id": "actor_respondent",
+        "sponsor_id": "actor_sponsor",
+        "participation": "DECLINED",
+        "shared_refs": [],
+        "requester_private_refs": [
+          {
+            "type": "evidence_item",
+            "id": "ev_private_strategy",
+            "version": 1
+          }
+        ],
+        "respondent_private_refs": [],
+        "no_further_contact": true
+      }
+    },
+    {
+      "record_type": "financial_position",
+      "record_id": "position_demo",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "case_id": "case_demo",
+      "obligation_ref": {
+        "type": "obligation",
+        "id": "obligation_demo",
+        "version": 1
+      },
+      "as_of": "2026-09-01T09:00:00Z",
+      "asserted_principal": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "7800000"
+      },
+      "supported_charges": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "0"
+      },
+      "valid_credits": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "0"
+      },
+      "effective_releases": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "0"
+      },
+      "reconciled_debtor_payments": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "0"
+      },
+      "asserted_outstanding": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "7800000"
+      },
+      "accounting_carrying_amount": {
+        "status": "UNKNOWN",
+        "value": null,
+        "basis_refs": [],
+        "reason": "Outside the observed scope.",
+        "followup_owner_id": null
+      },
+      "other_proceeds": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "basis_refs": [],
+        "reason": "Outside the observed scope.",
+        "followup_owner_id": null
+      },
+      "allocation_refs": [],
+      "release_agreement_refs": [],
+      "basis_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_invoices",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "record_type": "decision_episode",
+      "record_id": "decision_demo",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-02T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "case_ref": {
+        "type": "case",
+        "id": "case_demo",
+        "version": 2
+      },
+      "passport_ref": {
+        "type": "claim_passport",
+        "id": "passport_demo",
+        "version": 2
+      },
+      "information_cutoff": "2026-09-02T09:00:00Z",
+      "available_fact_refs": [
+        {
+          "type": "claim_passport",
+          "id": "passport_demo",
+          "version": 2
+        },
+        {
+          "type": "evidence_item",
+          "id": "ev_cure",
+          "version": 1
+        }
+      ],
+      "missing_information": [
+        "Counterparty willingness to pay; actual provider outcome."
+      ],
+      "alternatives": [
+        {
+          "alternative_id": "alternative_amicable",
+          "route": "AMICABLE_THIRD_PARTY",
+          "eligible": true,
+          "prerequisites": [
+            "Provider acceptance and approved exact terms."
+          ],
+          "gross_proceeds_range": [
+            {
+              "currency": "USD",
+              "exponent": 2,
+              "units": "0"
+            },
+            {
+              "currency": "USD",
+              "exponent": 2,
+              "units": "7800000"
+            }
+          ],
+          "incremental_cost_range": [
+            {
+              "currency": "USD",
+              "exponent": 2,
+              "units": "10000"
+            },
+            {
+              "currency": "USD",
+              "exponent": 2,
+              "units": "200000"
+            }
+          ],
+          "probability_status": "ABSTAINED",
+          "probability": null,
+          "limitations": [
+            "Synthetic scenario, no calibrated prediction."
+          ]
+        },
+        {
+          "alternative_id": "alternative_litigation",
+          "route": "LITIGATION",
+          "eligible": false,
+          "prerequisites": [
+            "Qualified legal and economic review, supported route."
+          ],
+          "gross_proceeds_range": [
+            {
+              "currency": "USD",
+              "exponent": 2,
+              "units": "0"
+            },
+            {
+              "currency": "USD",
+              "exponent": 2,
+              "units": "7800000"
+            }
+          ],
+          "incremental_cost_range": [
+            {
+              "currency": "USD",
+              "exponent": 2,
+              "units": "500000"
+            },
+            {
+              "currency": "USD",
+              "exponent": 2,
+              "units": "1500000"
+            }
+          ],
+          "probability_status": "ABSTAINED",
+          "probability": null,
+          "limitations": [
+            "No live legal route or estimate is validated here."
+          ]
+        }
+      ],
+      "selected_alternative_id": "alternative_amicable",
+      "selection_rule": "HUMAN_JUDGMENT",
+      "selection_probability": null,
+      "reviewer_id": "actor_creditor",
+      "reason_codes": [
+        "SUPPORTED_ROUTE_SELECTED"
+      ],
+      "observation_due_at": "2026-09-09T09:00:00Z",
+      "outcome_refs": []
+    },
+    {
+      "record_type": "strategy_plan",
+      "record_id": "strategy_demo",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-02T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "case_ref": {
+        "type": "case",
+        "id": "case_demo",
+        "version": 2
+      },
+      "passport_ref": {
+        "type": "claim_passport",
+        "id": "passport_demo",
+        "version": 2
+      },
+      "primary_route": "AMICABLE_THIRD_PARTY",
+      "fallback_routes": [
+        "EVIDENCE_CURE"
+      ],
+      "parallel_routes": [],
+      "prerequisites": [
+        "Accepted provider work order."
+      ],
+      "exit_triggers": [
+        "New material evidence or mandate change requires reassessment."
+      ],
+      "authority_ref": {
+        "type": "authority_grant",
+        "id": "grant_operator",
+        "version": 1
+      },
+      "decision_ref": {
+        "type": "decision_episode",
+        "id": "decision_demo",
+        "version": 1
+      },
+      "status": "AUTHORIZED",
+      "cost_cap": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "200000"
+      },
+      "review_at": "2026-09-09T09:00:00Z"
+    },
+    {
+      "record_type": "work_order",
+      "record_id": "work_demo",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-02T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "case_ref": {
+        "type": "case",
+        "id": "case_demo",
+        "version": 2
+      },
+      "service_request_ref": {
+        "type": "service_request",
+        "id": "service_operate",
+        "version": 1
+      },
+      "passport_ref": {
+        "type": "claim_passport",
+        "id": "passport_demo",
+        "version": 2
+      },
+      "provider_ref": {
+        "type": "party",
+        "id": "party_provider",
+        "version": 1
+      },
+      "route": "AMICABLE_THIRD_PARTY",
+      "scope": [
+        "Approved amicable recovery and return of observations."
+      ],
+      "permitted_actions": [
+        "settlement.offer",
+        "settlement.accept"
+      ],
+      "authority_ref": {
+        "type": "authority_grant",
+        "id": "grant_operator",
+        "version": 1
+      },
+      "budget_cap": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "200000"
+      },
+      "status": "OFFERED",
+      "response_ref": null,
+      "eligibility_ref": {
+        "type": "verification_record",
+        "id": "verification_provider",
+        "version": 1
+      },
+      "conditions_resolved": false,
+      "owner_id": "actor_operator",
+      "return_contract": [
+        "Report events, evidence, costs, unknown results and closeout."
+      ],
+      "first_action_due": {
+        "kind": "INSTANT",
+        "at": "2026-09-03T17:00:00Z",
+        "origin_time_zone": "America/New_York",
+        "basis": "OPERATIONAL_TARGET",
+        "source_wording": "Synthetic case deadline for this example only.",
+        "basis_refs": []
+      },
+      "data_access_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_contract",
+          "version": 1
+        },
+        {
+          "type": "evidence_item",
+          "id": "ev_invoices",
+          "version": 1
+        }
+      ],
+      "observations_due": [
+        {
+          "kind": "INSTANT",
+          "at": "2026-09-09T09:00:00Z",
+          "origin_time_zone": "America/New_York",
+          "basis": "OPERATIONAL_TARGET",
+          "source_wording": "Synthetic case deadline for this example only.",
+          "basis_refs": []
+        }
+      ],
+      "provider_acceptance_profile_ref": {
+        "type": "provider_acceptance_profile",
+        "id": "provider_profile_demo",
+        "version": 1
+      },
+      "preflight_profile_ref": null,
+      "preflight_state": "NOT_RUN",
+      "acceptance_state": "PENDING",
+      "validation_delta": [],
+      "execution_conditions": [
+        {
+          "condition_id": "signed_direct_appointment",
+          "status": "OPEN",
+          "evidence_refs": []
+        }
+      ],
+      "direct_appointment_ref": null,
+      "independent_validation_ref": null,
+      "provider_work_state": "NOT_STARTED",
+      "activation_at": null,
+      "cutover_at": null,
+      "offer_expires_at": "2026-09-10T00:00:00Z",
+      "cessation_acknowledgment": "NOT_REQUESTED",
+      "external_copy_state": "NOT_EXPORTED",
+      "conflicting_mandate_refs": [],
+      "disclosure": {
+        "purpose": "PROVIDER_REVIEW",
+        "recipient_ref": {
+          "type": "party",
+          "id": "party_provider",
+          "version": 1
+        },
+        "included_refs": [
+          {
+            "type": "evidence_item",
+            "id": "ev_contract",
+            "version": 1
+          },
+          {
+            "type": "evidence_item",
+            "id": "ev_invoices",
+            "version": 1
+          }
+        ],
+        "withheld_refs": [
+          {
+            "type": "evidence_item",
+            "id": "ev_private_strategy",
+            "version": 1
+          }
+        ],
+        "redacted_refs": [],
+        "permission_basis_ref": {
+          "type": "data_policy",
+          "id": "policy_shared",
+          "version": 1
+        },
+        "approved_by": "actor_reviewer",
+        "expires_at": "2026-09-10T00:00:00Z",
+        "access_state": "ACTIVE",
+        "receiver_namespace": "synthetic_provider_case_001",
+        "recipient_mappings": [
+          {
+            "source_ref": {
+              "type": "evidence_item",
+              "id": "ev_contract",
+              "version": 1
+            },
+            "receiving_id": "provider_ev_contract"
+          },
+          {
+            "source_ref": {
+              "type": "evidence_item",
+              "id": "ev_invoices",
+              "version": 1
+            },
+            "receiving_id": "provider_ev_invoices"
+          }
+        ],
+        "packet_digest": "sha256:157e78b773bbe1597fa848ebc2ff89a3670ad02ccb6c803e48a3549d525eb36c"
+      },
+      "accepted_packet_digest": null,
+      "preflight_packet_digest": null
+    },
+    {
+      "record_type": "outcome_observation",
+      "record_id": "outcome_assessment",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-02T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "case_id": "case_demo",
+      "service_request_ref": {
+        "type": "service_request",
+        "id": "service_assess",
+        "version": 2
+      },
+      "obligation_refs": [
+        {
+          "type": "obligation",
+          "id": "obligation_demo",
+          "version": 1
+        }
+      ],
+      "route": "EVIDENCE_CURE",
+      "provider_ref": {
+        "type": "party",
+        "id": "party_provider",
+        "version": 1
+      },
+      "work_order_ref": null,
+      "decision_refs": [
+        {
+          "type": "decision_episode",
+          "id": "decision_demo",
+          "version": 1
+        }
+      ],
+      "window_start": "2026-09-01T09:00:00Z",
+      "window_end": "2026-09-02T09:00:00Z",
+      "service_result": "FULFILLED",
+      "resolution_kind": "ASSESSMENT_DELIVERED",
+      "debtor_recovery": {
+        "status": "UNKNOWN",
+        "value": null,
+        "basis_refs": [],
+        "reason": "Assessment delivery does not observe debt recovery.",
+        "followup_owner_id": null
+      },
+      "other_proceeds": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "basis_refs": [],
+        "reason": "Outside the observed scope.",
+        "followup_owner_id": null
+      },
+      "creditor_cash_received": {
+        "status": "UNKNOWN",
+        "value": null,
+        "basis_refs": [],
+        "reason": "Outside the observed scope.",
+        "followup_owner_id": null
+      },
+      "recovery_cost": {
+        "status": "UNKNOWN",
+        "value": null,
+        "basis_refs": [],
+        "reason": "Outside the observed scope.",
+        "followup_owner_id": null
+      },
+      "remaining_obligation": {
+        "status": "OBSERVED",
+        "value": {
+          "currency": "USD",
+          "exponent": 2,
+          "units": "7800000"
+        },
+        "basis_refs": [
+          {
+            "type": "evidence_item",
+            "id": "ev_invoices",
+            "version": 1
+          }
+        ],
+        "reason": "Asserted snapshot, not a final enforceability determination.",
+        "followup_owner_id": null
+      },
+      "financial_position_ref": null,
+      "completion": {
+        "financial": {
+          "status": "PENDING",
+          "basis_refs": [],
+          "owner_id": "actor_operator",
+          "reason": "Synthetic completion disposition; remaining duties retain an owner."
+        },
+        "commercial": {
+          "status": "PENDING",
+          "basis_refs": [],
+          "owner_id": "actor_operator",
+          "reason": "Synthetic completion disposition; remaining duties retain an owner."
+        },
+        "legal": {
+          "status": "NOT_APPLICABLE",
+          "basis_refs": [],
+          "owner_id": null,
+          "reason": "Synthetic completion disposition; remaining duties retain an owner."
+        },
+        "export_administrative": {
+          "status": "PENDING",
+          "basis_refs": [],
+          "owner_id": "actor_creditor",
+          "reason": "Synthetic completion disposition; remaining duties retain an owner."
+        },
+        "operational": {
+          "status": "PENDING",
+          "basis_refs": [],
+          "owner_id": "actor_operator",
+          "reason": "Synthetic completion disposition; remaining duties retain an owner."
+        },
+        "retention": {
+          "status": "PENDING",
+          "basis_refs": [],
+          "owner_id": "actor_records",
+          "reason": "Synthetic completion disposition; remaining duties retain an owner."
+        }
+      },
+      "attribution": "DESCRIPTIVE_ONLY",
+      "attribution_basis": "No recovery or causal lift is established.",
+      "source_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_assessment",
+          "version": 1
+        }
+      ],
+      "reconciliation_status": "NOT_APPLICABLE",
+      "quality_dimensions": [
+        {
+          "dimension": "NET_ECONOMICS",
+          "status": "UNKNOWN",
+          "value": null,
+          "denominator": 1,
+          "source_refs": [],
+          "limitations": "Synthetic schema demonstration; no measured pilot result or causal claim."
+        },
+        {
+          "dimension": "READINESS_ACCURACY",
+          "status": "UNKNOWN",
+          "value": null,
+          "denominator": 1,
+          "source_refs": [],
+          "limitations": "Synthetic schema demonstration; no measured pilot result or causal claim."
+        },
+        {
+          "dimension": "TIME_EFFORT",
+          "status": "UNKNOWN",
+          "value": null,
+          "denominator": 1,
+          "source_refs": [],
+          "limitations": "Synthetic schema demonstration; no measured pilot result or causal claim."
+        },
+        {
+          "dimension": "TREATMENT_SAFETY",
+          "status": "UNKNOWN",
+          "value": null,
+          "denominator": 1,
+          "source_refs": [],
+          "limitations": "Synthetic schema demonstration; no measured pilot result or causal claim."
+        },
+        {
+          "dimension": "AGREEMENT_DURABILITY",
+          "status": "UNKNOWN",
+          "value": null,
+          "denominator": 1,
+          "source_refs": [],
+          "limitations": "Synthetic schema demonstration; no measured pilot result or causal claim."
+        },
+        {
+          "dimension": "CONTINUITY",
+          "status": "UNKNOWN",
+          "value": null,
+          "denominator": 1,
+          "source_refs": [],
+          "limitations": "Synthetic schema demonstration; no measured pilot result or causal claim."
+        }
+      ]
+    },
+    {
+      "record_type": "model_execution",
+      "record_id": "model_demo",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-02T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "case_id": "case_demo",
+      "model_provider": "SYNTHETIC_MODEL_PROVIDER",
+      "model_id": "replaceable_example_model",
+      "reported_model_version": null,
+      "workflow_version": "assessment_workflow_001",
+      "prompt_ref": {
+        "type": "evidence_item",
+        "id": "ev_prompt",
+        "version": 1
+      },
+      "input_refs": [
+        {
+          "type": "claim_passport",
+          "id": "passport_demo",
+          "version": 1
+        },
+        {
+          "type": "evidence_item",
+          "id": "ev_contract",
+          "version": 1
+        }
+      ],
+      "output_ref": {
+        "type": "evidence_item",
+        "id": "ev_model_output",
+        "version": 1
+      },
+      "policy_refs": [],
+      "service_identity_id": "service_assessment_agent",
+      "started_at": "2026-09-01T09:00:00Z",
+      "completed_at": "2026-09-02T09:00:00Z",
+      "cost": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "125"
+      },
+      "human_disposition": "EDITED",
+      "limitations": [
+        "Synthetic trace, no actual inference or quality claim; raw model output is a separate artifact."
+      ]
+    },
+    {
+      "record_type": "event",
+      "record_id": "event_case_1",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-02T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "event_type": "case.state_changed",
+      "subject_ref": {
+        "type": "case",
+        "id": "case_demo",
+        "version": 2
+      },
+      "case_id": "case_demo",
+      "occurred_at": "2026-09-02T09:00:00Z",
+      "actor_id": "actor_operator",
+      "principal_ref": {
+        "type": "party",
+        "id": "party_creditor",
+        "version": 1
+      },
+      "source_system": "SYNTHETIC_FIXTURE",
+      "source_record_id": "case_transition_1",
+      "authority_ref": {
+        "type": "authority_grant",
+        "id": "grant_operator",
+        "version": 1
+      },
+      "policy_ref": null,
+      "decision_ref": {
+        "type": "decision_episode",
+        "id": "decision_demo",
+        "version": 1
+      },
+      "execution_ref": null,
+      "causation_ref": null,
+      "correlation_id": "correlation_demo",
+      "idempotency_key": "case_transition_demo_1",
+      "state_before_ref": {
+        "type": "case",
+        "id": "case_demo",
+        "version": 1
+      },
+      "state_after_ref": {
+        "type": "case",
+        "id": "case_demo",
+        "version": 2
+      },
+      "reason_codes": [
+        "ASSESSMENT_COMPLETE"
+      ],
+      "payload_refs": [
+        {
+          "type": "case",
+          "id": "case_demo",
+          "version": 2
+        }
+      ],
+      "payload_schema": "urn:gre:event:record-references:0.2.0",
+      "payload_digest": "sha256:10de6eeba5f0fc7a84c978d391c4a5140cbb4b7626ad596811f835ade053f5ac",
+      "retention_disposition": "RETAINED"
+    },
+    {
+      "record_type": "provider_acceptance_profile",
+      "record_id": "provider_profile_demo",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "provider_ref": {
+        "type": "party",
+        "id": "party_provider",
+        "version": 1
+      },
+      "authorship": "PROVIDER_AUTHORED",
+      "declaration_ref": {
+        "type": "evidence_item",
+        "id": "ev_provider_eligibility",
+        "version": 1
+      },
+      "supported_families": [
+        "PRIVATE_RESOLUTION"
+      ],
+      "corridor_ids": [
+        "corridor_in_us"
+      ],
+      "claim_types": [
+        "PRIVATE_ORIGINATED"
+      ],
+      "required_evidence_ids": [
+        "ev_contract",
+        "ev_invoices"
+      ],
+      "exclusions": [
+        "Natural-person, mixed-purpose or unknown purpose",
+        "Consumer and Private inactive"
+      ],
+      "fee_terms_ref": {
+        "type": "evidence_item",
+        "id": "ev_contract",
+        "version": 1
+      },
+      "capacity_state": "UNAVAILABLE",
+      "credential_refs": [
+        {
+          "type": "verification_record",
+          "id": "verification_provider",
+          "version": 1
+        }
+      ],
+      "review_due_at": "2026-10-01T00:00:00Z",
+      "input_formats": [
+        "JSON",
+        "CSV",
+        "SECURE_PORTAL"
+      ],
+      "return_events": [
+        "acceptance",
+        "exception",
+        "cost",
+        "payment_report",
+        "correction",
+        "cessation"
+      ],
+      "return_due_hours": 48,
+      "owner_id": "actor_provider"
+    },
+    {
+      "record_type": "evidence_item",
+      "record_id": "ev_provider_payment",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-07T12:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_shared",
+        "version": 1
+      },
+      "artifact_kind": "ORIGINAL",
+      "source_system": "SYNTHETIC_FIXTURE",
+      "source_record_id": "ev_provider_payment",
+      "observed_at": "2026-09-07T12:00:00Z",
+      "source_updated_at": "2026-09-07T12:00:00Z",
+      "content_hash": "sha256:14705b594b5925a82dd87f158084899c940dcf05cac40125359f799fca3906d8",
+      "media_type": "text/plain",
+      "retrieval_key": "synthetic://artifact/ev_provider_payment",
+      "derived_from": [],
+      "custody": [
+        "Synthetic reference only; original file bytes are not supplied."
+      ],
+      "authenticity_status": "NOT_ASSESSED",
+      "verification_refs": [],
+      "untrusted_content": true,
+      "disposition": "RETAINED"
+    },
+    {
+      "record_type": "payment",
+      "record_id": "payment_demo",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-07T12:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "case_id": "case_demo",
+      "source_kind": "DEBTOR_PAYMENT",
+      "payer_ref": {
+        "type": "party",
+        "id": "party_debtor",
+        "version": 1
+      },
+      "recipient_ref": {
+        "type": "party",
+        "id": "party_creditor",
+        "version": 1
+      },
+      "amount": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "7000000"
+      },
+      "status": "REPORTED",
+      "reported_at": "2026-09-07T12:00:00Z",
+      "reconciled_at": null,
+      "source_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_provider_payment",
+          "version": 1
+        }
+      ],
+      "external_transaction_id": "synthetic_bank_tx_001",
+      "reversal_of_ref": null,
+      "destination_binding_ref": {
+        "type": "external_binding",
+        "id": "binding_bank",
+        "version": 1
+      },
+      "observation_source": "PROVIDER_REPORT"
+    },
+    {
+      "record_type": "external_binding",
+      "record_id": "binding_provider",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-01T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "party_ref": {
+        "type": "party",
+        "id": "party_provider",
+        "version": 1
+      },
+      "binding_kind": "RECIPIENT",
+      "system": "SYNTHETIC_EMAIL",
+      "destination_token": "recipient_demo_verified",
+      "verified_by": "actor_reviewer",
+      "verification_ref": {
+        "type": "verification_record",
+        "id": "verification_identity",
+        "version": 1
+      },
+      "verified_at": "2026-09-01T09:00:00Z",
+      "recheck_at": "2026-10-01T00:00:00Z",
+      "status": "ACTIVE",
+      "display_identity": "Synthetic business recipient; no address or sendable destination.",
+      "funds_role": "NOT_PAYMENT"
+    },
+    {
+      "record_type": "evidence_item",
+      "record_id": "ev_approval",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-03T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_shared",
+        "version": 1
+      },
+      "artifact_kind": "ORIGINAL",
+      "source_system": "SYNTHETIC_FIXTURE",
+      "source_record_id": "ev_approval",
+      "observed_at": "2026-09-03T09:00:00Z",
+      "source_updated_at": "2026-09-03T09:00:00Z",
+      "content_hash": "sha256:2c63f5b95092f409f6358514c1554896481f29784fba84905f954212d868af04",
+      "media_type": "text/plain",
+      "retrieval_key": "synthetic://artifact/ev_approval",
+      "derived_from": [],
+      "custody": [
+        "Synthetic reference only; original file bytes are not supplied."
+      ],
+      "authenticity_status": "NOT_ASSESSED",
+      "verification_refs": [],
+      "untrusted_content": true,
+      "disposition": "RETAINED"
+    },
+    {
+      "record_type": "policy_snapshot",
+      "record_id": "policy_offer",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-03T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "corridor_ref": {
+        "type": "corridor_pack",
+        "id": "corridor_pack_demo",
+        "version": 1
+      },
+      "case_id": "case_demo",
+      "action_type": "provider.place",
+      "decision": "ALLOW",
+      "evaluated_at": "2026-09-03T09:00:00Z",
+      "expires_at": "2026-09-03T23:00:00Z",
+      "source_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_rules",
+          "version": 1
+        }
+      ],
+      "material_refs": [
+        {
+          "type": "case",
+          "id": "case_demo",
+          "version": 2
+        },
+        {
+          "type": "claim_passport",
+          "id": "passport_demo",
+          "version": 2
+        }
+      ],
+      "conditions": [],
+      "unresolved_issues": [],
+      "evaluated_by": "actor_reviewer",
+      "rules_version": "synthetic_only_001"
+    },
+    {
+      "record_type": "action_intent",
+      "record_id": "action_offer",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-03T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "status": "AUTHORIZED",
+      "binding": {
+        "case_ref": {
+          "type": "case",
+          "id": "case_demo",
+          "version": 2
+        },
+        "service_request_ref": {
+          "type": "service_request",
+          "id": "service_operate",
+          "version": 1
+        },
+        "principal_ref": {
+          "type": "party",
+          "id": "party_creditor",
+          "version": 1
+        },
+        "executor_id": "actor_operator",
+        "target_party_ref": {
+          "type": "party",
+          "id": "party_provider",
+          "version": 1
+        },
+        "target_binding_ref": {
+          "type": "external_binding",
+          "id": "binding_provider",
+          "version": 1
+        },
+        "action_type": "provider.place",
+        "authority_class": "A2",
+        "execution_mode": "APPROVAL_REQUIRED",
+        "route": "AMICABLE_THIRD_PARTY",
+        "corridor_id": "corridor_in_us",
+        "channel": "EMAIL",
+        "terms_ref": null,
+        "terms_digest": null,
+        "content_refs": [
+          {
+            "type": "evidence_item",
+            "id": "ev_contract",
+            "version": 1
+          },
+          {
+            "type": "evidence_item",
+            "id": "ev_invoices",
+            "version": 1
+          }
+        ],
+        "authority_ref": {
+          "type": "authority_grant",
+          "id": "grant_operator",
+          "version": 1
+        },
+        "policy_ref": {
+          "type": "policy_snapshot",
+          "id": "policy_offer",
+          "version": 1
+        },
+        "capability_ref": {
+          "type": "capability",
+          "id": "capability_offer",
+          "version": 1
+        },
+        "material_refs": [
+          {
+            "type": "claim_passport",
+            "id": "passport_demo",
+            "version": 2
+          },
+          {
+            "type": "rights_interest",
+            "id": "rights_owner",
+            "version": 1
+          },
+          {
+            "type": "financial_position",
+            "id": "position_demo",
+            "version": 1
+          },
+          {
+            "type": "work_order",
+            "id": "work_demo",
+            "version": 1
+          }
+        ],
+        "proposed_cost": {
+          "currency": "USD",
+          "exponent": 2,
+          "units": "10000"
+        },
+        "expires_at": "2026-09-03T23:00:00Z"
+      },
+      "binding_digest": "sha256:cc2b5671e37dba520e6cf9d0be0ae8e6d842cc7219b57c4cd5eced30c69d073e",
+      "approval_refs": [
+        {
+          "type": "approval",
+          "id": "approval_offer",
+          "version": 1
+        }
+      ],
+      "supersedes_ref": null,
+      "idempotency_key": "offer_demo_001"
+    },
+    {
+      "record_type": "approval",
+      "record_id": "approval_offer",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-03T09:00:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "action_ref": {
+        "type": "action_intent",
+        "id": "action_offer",
+        "version": 1
+      },
+      "binding_digest": "sha256:cc2b5671e37dba520e6cf9d0be0ae8e6d842cc7219b57c4cd5eced30c69d073e",
+      "approver_id": "actor_creditor",
+      "principal_ref": {
+        "type": "party",
+        "id": "party_creditor",
+        "version": 1
+      },
+      "authority_ref": {
+        "type": "authority_grant",
+        "id": "grant_creditor",
+        "version": 1
+      },
+      "decision": "APPROVED",
+      "approved_at": "2026-09-03T09:00:00Z",
+      "expires_at": "2026-09-03T23:00:00Z",
+      "basis_refs": [
+        {
+          "type": "evidence_item",
+          "id": "ev_approval",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "record_type": "execution_receipt",
+      "record_id": "receipt_offer",
+      "record_version": 1,
+      "schema_version": "0.2.0",
+      "tenant_id": "tenant_demo",
+      "created_at": "2026-09-01T09:00:00Z",
+      "recorded_at": "2026-09-03T10:01:00Z",
+      "valid_from": "2026-09-01T09:00:00Z",
+      "valid_until": "2026-10-01T00:00:00Z",
+      "data_policy_ref": {
+        "type": "data_policy",
+        "id": "policy_private",
+        "version": 1
+      },
+      "action_ref": {
+        "type": "action_intent",
+        "id": "action_offer",
+        "version": 1
+      },
+      "binding_digest": "sha256:cc2b5671e37dba520e6cf9d0be0ae8e6d842cc7219b57c4cd5eced30c69d073e",
+      "attempt_id": "attempt_offer_001",
+      "attempt_number": 1,
+      "dispatched_at": "2026-09-03T10:01:00Z",
+      "acknowledged_at": null,
+      "observed_at": null,
+      "result": "RESULT_UNKNOWN",
+      "external_operation_key": "external_offer_demo_001",
+      "provider_reference": null,
+      "reconciliation_required": true,
+      "source_refs": [],
+      "prior_attempt_ref": null,
+      "remediation_owner_id": "actor_operator",
+      "attribution": {
+        "proposer_id": "actor_operator",
+        "principal_ref": {
+          "type": "party",
+          "id": "party_creditor",
+          "version": 1
+        },
+        "reviewer_id": "actor_reviewer",
+        "approver_id": "actor_creditor",
+        "transmitter_id": "actor_operator",
+        "performer_id": "actor_operator",
+        "observer_id": "actor_operator",
+        "source_status": "UNKNOWN"
+      }
+    }
+  ],
+  "commands": [],
+  "checkpoints": [
+    {
+      "checkpoint_id": "checkpoint_intake",
+      "at": "2026-09-01T09:00:00Z",
+      "case_ref": {
+        "type": "case",
+        "id": "case_demo",
+        "version": 1
+      },
+      "service_request_ref": {
+        "type": "service_request",
+        "id": "service_assess",
+        "version": 1
+      },
+      "description": "Initial assertion and missing evidence.",
+      "expected_outstanding": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "7800000"
+      },
+      "expected_service_result": "ACTIVE",
+      "financial_position_ref": {
+        "type": "financial_position",
+        "id": "position_demo",
+        "version": 1
+      }
+    },
+    {
+      "checkpoint_id": "checkpoint_assessment",
+      "at": "2026-09-02T09:00:00Z",
+      "case_ref": {
+        "type": "case",
+        "id": "case_demo",
+        "version": 2
+      },
+      "service_request_ref": {
+        "type": "service_request",
+        "id": "service_assess",
+        "version": 2
+      },
+      "description": "Assessment is delivered; recovery remains unobserved and new execution is separately contracted.",
+      "expected_outstanding": {
+        "currency": "USD",
+        "exponent": 2,
+        "units": "7800000"
+      },
+      "expected_service_result": "FULFILLED",
+      "financial_position_ref": {
+        "type": "financial_position",
+        "id": "position_demo",
+        "version": 1
+      }
+    }
+  ]
+}

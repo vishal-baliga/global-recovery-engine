@@ -1,8 +1,10 @@
-# Contract reference package
+# Contract references
 
-[recovery-contracts.zip](recovery-contracts.zip) preserves the earlier domain/data-contract reference package unchanged.
+The current source-readable [v0.2 baseline](v0.2/README.md) implements bounded offline reference semantics for Foundation plus Trade Pilot. It includes the schema, synthetic fixtures, six contract compositions, complete 29-record/23-operation migration crosswalk, validator and 42 conformance tests. It is not the application or proof of a released service.
 
-It contains:
+[Domain and data contracts](../docs/05-domain-data-contracts.md) owns the current contract meanings; [Current decisions](../docs/00-start-here.md) owns project scope.
+
+[recovery-contracts.zip](recovery-contracts.zip) preserves the immutable historical 0.1.0 package:
 
 - `recovery-contracts.schema.json`
 - `worked-case.json`
@@ -10,8 +12,6 @@ It contains:
 - `test_contracts.py`
 - `requirements.txt`
 
-The package illustrates the earlier contract baseline and synthetic validation. It is not a running GRE application, and its validation results do not establish either pilot journey's readiness. Its dependency file does not select the application dependencies.
+Its 89-record/four-checkpoint fixture and 51 tests remain runnable separately. Its old settlement-offer commit harness is historical and does not authorize GRE collection in the current Pilot. Extract each reference into a separate environment/import path and follow its commands. Reference dependencies do not select application dependencies.
 
-Read [Domain and data contracts](../docs/05-domain-data-contracts.md) for the original package description and [Current decisions](../docs/00-start-here.md) for current scope. Extract and run the reference only when relevant to an active task, using an isolated environment. Reconcile or replace its contracts when the selected implementation requires it.
-
-Archive SHA-256: `14d24f856ade2c0b508a208d32a98c14a37723f4708b43c82f58213396bfaf72`.
+Original archive SHA-256: `14d24f856ade2c0b508a208d32a98c14a37723f4708b43c82f58213396bfaf72`.

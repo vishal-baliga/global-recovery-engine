@@ -1,0 +1,175 @@
+{
+  "contract_version": "0.2.0",
+  "synthetic": true,
+  "views": [
+    {
+      "contract_type": "ClaimPassportView",
+      "passport_ref": {
+        "type": "claim_passport",
+        "id": "passport_demo",
+        "version": 2
+      },
+      "case_ref": {
+        "type": "case",
+        "id": "case_demo",
+        "version": 2
+      },
+      "disclosure_work_order_ref": {
+        "type": "work_order",
+        "id": "work_demo",
+        "version": 1
+      }
+    },
+    {
+      "contract_type": "ProviderAcceptanceProfileView",
+      "profile_ref": {
+        "type": "provider_acceptance_profile",
+        "id": "provider_profile_demo",
+        "version": 1
+      },
+      "provider_ref": {
+        "type": "party",
+        "id": "party_provider",
+        "version": 1
+      },
+      "credential_refs": [
+        {
+          "type": "verification_record",
+          "id": "verification_provider",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "contract_type": "AuthorityEnvelope",
+      "principal_ref": {
+        "type": "party",
+        "id": "party_creditor",
+        "version": 1
+      },
+      "rights_refs": [
+        {
+          "type": "rights_interest",
+          "id": "rights_owner",
+          "version": 1
+        }
+      ],
+      "grant_refs": [
+        {
+          "type": "authority_grant",
+          "id": "grant_operator",
+          "version": 1
+        }
+      ],
+      "approval_refs": [
+        {
+          "type": "approval",
+          "id": "approval_offer",
+          "version": 1
+        }
+      ],
+      "policy_ref": {
+        "type": "policy_snapshot",
+        "id": "policy_offer",
+        "version": 1
+      },
+      "action_ref": {
+        "type": "action_intent",
+        "id": "action_offer",
+        "version": 1
+      }
+    },
+    {
+      "contract_type": "CorridorPackView",
+      "corridor_ref": {
+        "type": "corridor_pack",
+        "id": "corridor_pack_demo",
+        "version": 1
+      },
+      "policy_refs": [
+        {
+          "type": "policy_snapshot",
+          "id": "policy_offer",
+          "version": 1
+        }
+      ],
+      "capability_refs": [
+        {
+          "type": "capability",
+          "id": "capability_offer",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "contract_type": "ActionReceiptView",
+      "action_ref": {
+        "type": "action_intent",
+        "id": "action_offer",
+        "version": 1
+      },
+      "receipt_refs": [
+        {
+          "type": "execution_receipt",
+          "id": "receipt_offer",
+          "version": 1
+        }
+      ],
+      "approval_refs": [
+        {
+          "type": "approval",
+          "id": "approval_offer",
+          "version": 1
+        }
+      ],
+      "event_refs": [
+        {
+          "type": "event",
+          "id": "event_case_1",
+          "version": 1
+        }
+      ],
+      "model_execution_refs": [
+        {
+          "type": "model_execution",
+          "id": "model_demo",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "contract_type": "ResolutionQualityScorecard",
+      "observation_refs": [
+        {
+          "type": "outcome_observation",
+          "id": "outcome_assessment",
+          "version": 1
+        }
+      ],
+      "financial_position_ref": {
+        "type": "financial_position",
+        "id": "position_demo",
+        "version": 1
+      },
+      "decision_refs": [
+        {
+          "type": "decision_episode",
+          "id": "decision_demo",
+          "version": 1
+        }
+      ],
+      "work_order_ref": {
+        "type": "work_order",
+        "id": "work_demo",
+        "version": 1
+      },
+      "source_event_refs": [
+        {
+          "type": "event",
+          "id": "event_case_1",
+          "version": 1
+        }
+      ]
+    }
+  ]
+}
