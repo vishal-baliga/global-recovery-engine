@@ -1,10 +1,10 @@
 # Start here — current GRE baseline
 
-**Updated:** September 7, 2026. **Owner/developer:** Vishal.
+**Updated:** September 8, 2026. **Owner/developer:** Vishal.
 
 **Current scope:** One market-facing **Pilot: GRE Foundation + Trade & Receivables**, with the Network & Control capabilities needed by Trade.
 
-**Stage:** Project documentation and reference contracts reconciled; product implementation follows the current backlog.
+**Stage:** Project documentation/reference baseline reconciled; P-001 implementation plan and tasks prepared. Mac checkout/environment confirmation is next, followed by the planned implementation.
 
 ## Current decision and next work
 
@@ -12,7 +12,7 @@ Build a source-linked commercial claim readiness, named-provider preflight, dire
 
 Private Resolution, institutional Consumer Credit and standalone Network commercialization are [future development](07-future-development-and-business-deliverables.md). There is no concurrent personal-loan Pilot commitment. GRE does not perform the provider's collection tactics or custody recovered funds. Its own disclosure, support and agreed continuity responsibilities survive handoff.
 
-The next implementation item is **P-001 in [11](11-prioritized-pilot-backlog.md)**: introduce the minimal product package/quality structure on the verified setup. Business discovery/provider work can proceed alongside permitted synthetic development. Read the item's actual dependencies and prepare its bounded design before editing product code.
+The next local action is **G0 checkout/environment confirmation** in the [P-001 implementation plan](implementation/P-001-development-foundation.md), after fetching the published planning baseline. The plan and seven ordered child tasks are already prepared here with Vishal; local Codex follows them rather than creating a competing plan. Record actual results in the [verification record](implementation/P-001-verification-record.md). P-001 remains unimplemented. After confirmation and the instruction to begin, start P-001.01 service health, then follow the dependency order. P-002/P-003 business discovery can proceed alongside permitted synthetic development.
 
 ## Read by purpose
 

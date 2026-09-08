@@ -152,6 +152,10 @@ production-ready GRE application. No service restart test was repeated in this
 increment, and the earlier completed verification records remain authoritative
 for those observed restarts.
 
+## P-001 planning update — September 8, 2026
+
+The [published P-001 plan](implementation/P-001-development-foundation.md) now specifies package conversion, product/setup client separation, check tooling, fresh-install changes and CI. They remain unimplemented. The versions, paths, commands and observed results above describe the inspected setup baseline; do not treat target commands in the plan as already available. Update this guide with actual compatibility and command changes in the implementing tasks while preserving dated historical evidence.
+
 ## Required later work
 
 These are retained integration/validation areas from the selected stack. The current

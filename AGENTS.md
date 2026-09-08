@@ -13,7 +13,7 @@ The user's current instructions and established authorization govern. Historical
 
 One Pilot: **Foundation + Trade & Receivables**, initially India-creditor → U.S.-business-obligor commercial claims. Include the Trade-required Network & Control capabilities. Private Resolution, Consumer Credit and standalone Network product expansion are future work. Use Pilot consistently; do not invent a separate MVP tier.
 
-Current project documents and versioned reference contracts are reconciled. The next implementation item is P-001. Product features, migrations, product CI and live integrations remain pending. A reference validator is not an application or a requirement to implement every record as a separate component.
+Current project documents and versioned reference contracts are reconciled. P-001 has a [canonical implementation plan](docs/implementation/P-001-development-foundation.md) and [verification record](docs/implementation/P-001-verification-record.md). Planning is complete; local checkout/environment confirmation and implementation are pending. Product features, migrations, product CI and live integrations remain pending. A reference validator is not an application or a requirement to implement every record as a separate component.
 
 ## Architecture and invariants
 
@@ -40,6 +40,12 @@ uv run --locked python -m scripts.check_environment
 ```
 
 The setup fixture build and read-only service checks do not prove product behavior. See [reference/README.md](reference/README.md) for current reference/legacy validation commands. Inspect actual files before claiming any command exists or passed. Record relevant tested versions, behavior, failures and limitations. Preserve the TypeScript 6.0.3 codegen fallback and pending retention-aware health-check correction.
+
+## Planning and local execution ownership
+
+Vishal develops implementation plans and task decomposition in this ChatGPT project conversation. The repository's published plan and linked issues are the handoff to local Codex. Read them before the selected task; do not generate a replacement plan or competing backlog locally. Routine implementation choices within that plan are allowed. Report material conflicts with evidence and a proposed correction for the owning plan.
+
+For P-001, follow its requested sequence: planning here, G0 Mac/checkout/environment confirmation, then Vishal's instruction to begin the selected implementation task. Publishing the plan does not mark G0 or any child task complete. Record actual execution in the verification record and linked issues.
 
 ## Delivery conduct
 
