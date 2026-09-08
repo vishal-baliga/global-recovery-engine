@@ -119,3 +119,9 @@ Reconciliation checks executed September 7, 2026 in the hosted review workspace:
 - Publication preserves the existing runtime source, setup configuration, dependency manifests/locks and original ZIP from the inspected descendant. New code is limited to the versioned reference package. Sequential commits preserve the replaced planning material in Git history; the incoming directive is separately archived with its superseded scope identified.
 
 The PR/commit history records the exact published revision and review result. The developer's Mac toolchain and services were not rerun during reconciliation. Product migrations, runtime isolation, durable worker delivery, real integrations, backup recovery and commercial/legal readiness remain implementation/release evidence in [11](11-prioritized-pilot-backlog.md) and [13](13-pilot-release-and-assurance.md).
+
+## 8. P-001 planning ownership — September 8, 2026
+
+Vishal directed that implementation planning and task decomposition happen here, with the results published to GitHub before Mac checkout/environment confirmation and development. The [P-001 plan](implementation/P-001-development-foundation.md) owns its concrete design and seven child tasks. Local Codex follows the selected task, records actual evidence and raises material conflicts; it does not replace the plan or generate a separate backlog.
+
+This elaborates the existing P-001 scope and selected architecture, without adding another Pilot family or changing P-002–P-030 priorities. The new [verification record](implementation/P-001-verification-record.md) starts pending. Runtime files, locks, images and reference artifacts are unchanged by the planning update. Local verification and all seven implementation tasks remain outstanding.

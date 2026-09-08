@@ -94,6 +94,10 @@ An architecture change record must identify the failed requirement or measured p
 
 The existing dependency setup check includes retained historical workflow evidence; a completed workflow may eventually age out of Temporal retention. The first delivery item separates historical persistence proof from repeatable service health without masking genuine failures. Do not claim the issue is already fixed.
 
+### P-001 package and CI decisions
+
+The [P-001 implementation plan](implementation/P-001-development-foundation.md), dated September 8, fixes the initial source layout and delivery choices: one installable `gre-platform` Python distribution under `src/gre`; `apps/web` for the product shell; separate generated product/setup clients; repeatable health independent of historical workflow retention; and a native ARM64 disposable CI gate using the existing toolchain. These are planned implementation decisions, not claims that the packages or CI already exist. Exact task boundaries and compatibility evidence belong to that plan and its verification record.
+
 ## 7. Accountabilities
 
 Vishal owns product decisions, priorities and release accountability. Coding agents inspect actual repository state, implement authorized bounded changes, run available checks, preserve unrelated work, and report exact outcomes and limitations. They cannot claim a Mac check from a hosted run, legal approval from a source search, or product readiness from a fixture build.
