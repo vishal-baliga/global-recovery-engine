@@ -1,6 +1,6 @@
 # Prioritized Pilot backlog — Foundation and Trade
 
-**Updated:** September 8, 2026. **Version:** 0.2.1, P-001 decomposition added; parent delivery scope unchanged. **Owner:** Vishal.
+**Updated:** September 8, 2026. **Version:** 0.2.2, P-001 sprint readiness reviewed; parent delivery scope unchanged. **Owner:** Vishal.
 
 **Scope:** [Foundation + Trade Pilot](06-pilot-brief.md), governed by [scope decisions](12-scope-decisions-and-reconciliation.md), [operating/workflow](03-operating-model.md) and [versioned reference](05-domain-data-contracts.md).
 
@@ -16,7 +16,7 @@ Each row is a bounded delivery outcome with minimum acceptance evidence. Split l
 
 Vishal is accountable for delivery. ENG/QA items use coding-agent implementation and review; BUS/OPS items need actual buyer/provider/qualified-owner input. A named role in a document is not a filled role. No outreach, real-data processing, paid provisioning or live action is authorized merely by appearing here.
 
-P-001 is the next implementation item. Its [implementation plan and seven child tasks](implementation/P-001-development-foundation.md) define the design, sequence, files and acceptance; its [verification record](implementation/P-001-verification-record.md) records G0 and actual completion. Planning is owned here with Vishal; local Codex implements that plan after checkout/environment confirmation. P-002/P-003 begin commercial discovery alongside it. Source-readable contract conformance is already part of this planning baseline; detailed production schemas/migrations and runtime controls are implemented by the affected stories. See document 13 for real-data/live conditions and document 14 for market proof.
+P-001 is the next implementation item. Its [implementation plan and seven child tasks](implementation/P-001-development-foundation.md) define the design, sequence, files and acceptance; its [verification record](implementation/P-001-verification-record.md) records G0 and actual completion. Planning is owned here with Vishal; local Codex implements that plan after checkout/environment confirmation. Revision 1.1 adds executable task checklists, early Actions/capacity discovery, compatibility repairs in their first affected PR and exact post-merge evidence; all seven task outcomes remain required. P-002/P-003 begin commercial discovery alongside it. Source-readable contract conformance is already part of this planning baseline; detailed production schemas/migrations and runtime controls are implemented by the affected stories. See document 13 for real-data/live conditions and document 14 for market proof.
 
 ## 2. Ordered delivery
 

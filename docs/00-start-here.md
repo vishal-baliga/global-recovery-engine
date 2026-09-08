@@ -12,7 +12,7 @@ Build a source-linked commercial claim readiness, named-provider preflight, dire
 
 Private Resolution, institutional Consumer Credit and standalone Network commercialization are [future development](07-future-development-and-business-deliverables.md). There is no concurrent personal-loan Pilot commitment. GRE does not perform the provider's collection tactics or custody recovered funds. Its own disclosure, support and agreed continuity responsibilities survive handoff.
 
-The next local action is **G0 checkout/environment confirmation** in the [P-001 implementation plan](implementation/P-001-development-foundation.md), after fetching the published planning baseline. The plan and seven ordered child tasks are already prepared here with Vishal; local Codex follows them rather than creating a competing plan. Record actual results in the [verification record](implementation/P-001-verification-record.md). P-001 remains unimplemented. After confirmation and the instruction to begin, start P-001.01 service health, then follow the dependency order. P-002/P-003 business discovery can proceed alongside permitted synthetic development.
+The next local action is **G0 checkout/environment confirmation** in the [P-001 implementation plan](implementation/P-001-development-foundation.md), after fetching the published planning baseline. The plan and seven ordered child tasks have been rechecked here with Vishal, including compatibility sequencing, early Actions/capacity prerequisites and post-merge evidence; local Codex follows them rather than creating a competing plan. Record actual results in the [verification record](implementation/P-001-verification-record.md). P-001 remains unimplemented. After confirmation and the instruction to begin, start P-001.01 service health, then follow the dependency order. P-002/P-003 business discovery can proceed alongside permitted synthetic development.
 
 ## Read by purpose
 
@@ -56,7 +56,9 @@ Mac checkout: `/Users/diztort/GRE Development/global-recovery-engine`.
 Editor container: `/workspaces/global-recovery-engine`.
 This hosted ChatGPT workspace is neither of those environments.
 
-From the editor repository root, with the three local services running and attached:
+For G0, follow the plan's read-only readiness sequence: the current combined setup check below still regenerates tracked artifacts. Do not run it or installation commands in the working checkout solely for that confirmation.
+
+For a separately authorized setup/installation check, from the editor repository root with the three local services running and attached:
 
 ```sh
 uv sync --locked

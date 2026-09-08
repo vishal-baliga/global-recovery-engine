@@ -45,7 +45,7 @@ The setup fixture build and read-only service checks do not prove product behavi
 
 Vishal develops implementation plans and task decomposition in this ChatGPT project conversation. The repository's published plan and linked issues are the handoff to local Codex. Read them before the selected task; do not generate a replacement plan or competing backlog locally. Routine implementation choices within that plan are allowed. Report material conflicts with evidence and a proposed correction for the owning plan.
 
-For P-001, follow its requested sequence: planning here, G0 Mac/checkout/environment confirmation, then Vishal's instruction to begin the selected implementation task. Publishing the plan does not mark G0 or any child task complete. Record actual execution in the verification record and linked issues.
+For P-001, follow its requested sequence: planning here, G0 Mac/checkout/environment confirmation, then Vishal's instruction to begin the selected implementation task. Publishing the plan does not mark G0 or any child task complete. Follow its read-only G0 path; the existing combined setup check regenerates tracked artifacts. Preserve working predecessor commands in each task PR, introduce prerequisites before their first acceptance check and record final post-merge evidence in issue #11 as specified. Record actual execution in the verification record and linked issues.
 
 ## Delivery conduct
 
