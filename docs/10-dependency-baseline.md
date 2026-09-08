@@ -181,3 +181,20 @@ and [future register](07-future-development-and-business-deliverables.md) for
 current outcomes and scope boundaries. Documents and reference contracts are now
 reconciled; implementation follows [11](11-prioritized-pilot-backlog.md).
 This historical dependency verification implements no customer-facing feature.
+
+
+## P-001.01 service-check behavior
+
+P-001.01 changes only the shared service/aggregate check behavior and its focused standard-library tests. No dependency, runtime pin, application/probe lock, isolated persistence probe or reference artifact changes. TypeScript 6.0.3 remains the established code-generation fallback.
+
+The normal service gate now verifies current Temporal gRPC health and access to the configured namespace without describing retained history. Add `--inspect-historical-temporal` to explicitly inspect the original receipt: typed historical `NOT_FOUND` is reported as unavailable evidence, while malformed/mismatched/denied/other failures remain nonzero. Existing receipt bytes are checked before and after every outcome, including timeout. The previously failing retained local lookup is not hidden by replacing its receipt.
+
+The standalone and combined commands share a real subprocess deadline. `--timeout` defaults to 30 seconds for the service phase plus at most 5 seconds cleanup/audit; existing setup phases have their own bounds. Both commands also forward a strict `--config PATH` selecting all three services with secret-file paths, documented in [09](09-development-environment.md#p-00101--repeatable-service-health). Existing default local DNS/account/file behavior is retained. Logs do not include credential values or raw SDK exceptions.
+
+Run focused .01 tests without installing a test framework:
+
+```sh
+.venv/bin/python -B -m unittest discover -s tests -p test_check_services.py -v
+```
+
+The shared setup aggregate still regenerates setup artifacts until the later non-mutating codegen task. Its .01 compatibility evidence uses an owned temporary copy with the current installed dependencies, not a fresh locked install. A first temporary layout with external dependency symlinks failed Turbopack’s filesystem-root rule; copying the existing JS dependencies inside that copy corrects the test layout without changing pins. The [verification record](implementation/P-001-verification-record.md) owns actual command exits, review and preserved-data evidence; CI/build prerequisites remain with their later tasks.

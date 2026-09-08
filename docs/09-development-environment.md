@@ -592,3 +592,47 @@ Hey API 0.99.0 failed with TypeScript 7.0.2's compiler API; TypeScript 6.0.3 pas
 The new baseline document records full versions, fresh-install reproduction,
 fixture limits, and required later integration/quality/cloud work. The Next build
 is a setup fixture, not product or deployment readiness.
+
+
+## P-001.01 — Repeatable service health
+
+The shared service check now tests current PostgreSQL, Azurite and Temporal namespace access independently of retained workflow history. From an already-installed editor environment:
+
+```sh
+.venv/bin/python -B -m scripts.check_services
+.venv/bin/python -B -m scripts.check_services --inspect-historical-temporal
+.venv/bin/python -B -m unittest discover -s tests -p test_check_services.py -v
+```
+
+The existing `uv run --locked python -m scripts.check_services` entry point is retained. The normal check uses the existing local DNS/accounts and secret files and performs no service writes. PostgreSQL runs a read-only transaction, checks 18.6 and the configured database, and reads Alembic revision state; Azurite uses authenticated properties/listing with API 2025-11-05. Temporal checks current gRPC health and explicitly describes the configured namespace, requiring its expected name and registered state. It does not describe a historical workflow unless requested.
+
+`--inspect-historical-temporal` reports the original receipt separately: absence means no comparison; an exact completed run is a historical match; typed `NOT_FOUND` means historical evidence is unavailable, potentially retention/deletion with cause unverified. Malformed receipts, mismatched runs/status, denial, timeout and other RPC failures fail the requested diagnostic. A current service or namespace failure always fails. Neither mode seeds a workflow, rewrites receipts or restarts services.
+
+`--timeout SECONDS` sets a positive finite service-phase wall-clock deadline (default 30 seconds), with at most 5 additional seconds for process cleanup and the final receipt audit. `scripts/_process.py` starts owned process groups, terminates/kills and reaps their direct children, and bounds each wait; this terminates a stuck synchronous SDK thread by terminating its process. Receipt hashes/file sets are compared on success, failure, timeout and handled termination. An unavailable preservation comparison is a failure, not a PASS. The commands return nonzero for failed health/configuration/diagnostics or unverified preservation; invalid arguments exit 2. Child exception details and supplied secret/configuration values are withheld from failures.
+
+Both `scripts.check_services` and `scripts.check_environment` accept `--config PATH`, `--timeout` and `--inspect-historical-temporal`. An explicit configuration is a complete strict JSON object, with no partial fallback to local defaults:
+
+```json
+{
+  "postgres": {
+    "host": "postgres",
+    "port": 5432,
+    "database": "gre_ci",
+    "user": "gre_ci",
+    "password_file": "secrets/postgres-password"
+  },
+  "azurite": {
+    "endpoint": "http://azurite:10000/gredev",
+    "account_name": "gredev",
+    "account_key_file": "secrets/azurite-account-key"
+  },
+  "temporal": {
+    "address": "temporal:7233",
+    "namespace": "default"
+  }
+}
+```
+
+Relative secret paths resolve against the configuration file. Explicit `account_key_file` contains the raw base64 emulator key; only the unchanged local-default path reads the helper’s `AZURITE_ACCOUNTS=gredev:...` format. Do not put secret values in JSON or command arguments. Missing, unknown, duplicate, empty or malformed fields and missing/unreadable secret files fail. Identifiers, hosts and ports are validated; Blob URLs must be HTTP(S), contain the configured account path, and have no credentials/query/fragment. All file reads are limited to regular files of at most 1 MiB.
+
+The aggregate uses the same bounded service caller and independently bounds its API/export/client/type/build phases. Its existing setup OpenAPI/client generation still writes generated files; non-mutating generation remains .03/.04 scope. For compatibility acceptance in .01 it was exercised in an owned temporary source copy using already-installed dependencies and read-only local services. Turbopack requires copied JS dependency directories inside that temporary root; external `node_modules` symlinks are rejected. This is affected-command verification, not a fresh install or new image build. Exact results and limitations are in the [P-001 verification record](implementation/P-001-verification-record.md).

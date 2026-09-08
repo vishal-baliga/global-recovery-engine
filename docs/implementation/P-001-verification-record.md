@@ -1,14 +1,16 @@
 # P-001 verification and execution record
 
-**Created:** September 8, 2026. **Updated:** September 8, 2026, local readiness reconciled for P-001.01. **Owner:** Vishal.
+**Created:** September 8, 2026. **Updated:** September 8, 2026, P-001.01 local acceptance recorded. **Owner:** Vishal.
 
 **Plan:** [P-001 implementation plan](P-001-development-foundation.md). **Tracking:** [Parent issue #4](https://github.com/vishal-baliga/global-recovery-engine/issues/4).
 
 ## Current state
 
-Planning is published; **local prerequisites for P-001.01 are satisfied and the owner has authorized its implementation after this readiness change is published**. Implementation has not started in this readiness revision. The confirmed repository-local identity and previously supplied Mac host resource evidence below complete the bounded local handoff. Current PostgreSQL/Azurite checks and independent Temporal health/default-namespace access passed; historical workflow `NOT_FOUND` is carried into .01 under plan section 6.5.
+The readiness-document change was reviewed and merged in [PR #14](https://github.com/vishal-baliga/global-recovery-engine/pull/14), merge revision `e8b616c4e6e6c3dc65a87d024a8b5bba3ace0805`. **P-001.01 is implemented on `p001/01-service-health` with local A01/A02 evidence passing and implementation review/merge pending.** The implementation PR and exact tested commit are recorded in [issue #5](https://github.com/vishal-baliga/global-recovery-engine/issues/5). P-001.02 and all later tasks remain unstarted.
 
-Full-sprint readiness is not claimed. Actions minutes/spending limits and actual runner execution remain open for .06; actual artifact downloads are checked at the first dependent build/install. The private-repository enforcement limitation has the plan’s documented manual-check alternative. Implementation/review availability remains unset. Earlier observations below are dated history; this reconciliation supersedes their identity/host-resource/start-instruction blockers without rerunning successful checks merely to refresh timestamps. No product readiness or historical persistence reverification is claimed.
+Normal health now checks current services independently of retained Temporal history. The optional historical diagnostic reports the original local `NOT_FOUND` as unavailable evidence with unverified cause; it no longer fails an otherwise healthy normal gate. No historical receipt was replaced and no historical persistence PASS is claimed. Readiness and task evidence below retain the earlier failures and their disposition.
+
+Full-sprint readiness is not claimed. Actions minutes/spending limits and actual runner execution remain open for .06; actual artifact downloads are checked at the first dependent build/install. The recorded private-repository enforcement limitation has the plan’s manual-check alternative. Implementation/review availability remains unset.
 
 ## G0 local confirmation
 
@@ -216,7 +218,7 @@ Issue state tracks progress. Add one entry per task with its PR and tested revis
 
 | Task | Implementation PR / commit | Acceptance evidence | Remaining limits |
 |---|---|---|---|
-| [P-001.01](https://github.com/vishal-baliga/global-recovery-engine/issues/5) | Not started | A01–A02 pending | Historical Temporal `NOT_FOUND` carried forward under section 6.5; independent current health/default-namespace access passed at G0. |
+| [P-001.01](https://github.com/vishal-baliga/global-recovery-engine/issues/5) | Implemented on `p001/01-service-health`; exact PR/commit in issue #5; review/merge pending | A01–A02 local PASS: 26 unit tests, existing live services/historical diagnostic, and affected combined setup command | Historical evidence unavailable; no persistence reverification. No CI yet; generation remains mutating until later codegen work. |
 | [P-001.02](https://github.com/vishal-baliga/global-recovery-engine/issues/6) | Not started | A03–A04 pending | — |
 | [P-001.03](https://github.com/vishal-baliga/global-recovery-engine/issues/7) | Not started | A05–A06 pending | — |
 | [P-001.04](https://github.com/vishal-baliga/global-recovery-engine/issues/8) | Not started | A06–A08 pending | — |
@@ -225,6 +227,27 @@ Issue state tracks progress. Add one entry per task with its PR and tested revis
 | [P-001.07](https://github.com/vishal-baliga/global-recovery-engine/issues/11) | Not started | A08, A10–A12 and parent closeout pending | — |
 
 For each executed check record: exact command, date, code/lock revision, environment/architecture, exit code, observed behavior, redacted log/run link and whether it used live local or disposable services. For CI also record event, PR head/base, tested checkout SHA, actual check name and elapsed time. Include failed/stuck-check and handled-cancellation evidence where required. Keep known regressions/blockers visible and update evidence with each task PR. A repeated focused check is supporting evidence, not an extra suite count. Report a cached fresh install accurately.
+
+### P-001.01 acceptance — September 8, 2026
+
+**Owner/implementer:** Vishal / local Codex. **Base:** merged readiness revision `e8b616c4e6e6c3dc65a87d024a8b5bba3ace0805`. **Environment:** existing non-root `vscode` ARM64 editor `9b0a594f1f29`, Python 3.14.7, installed Temporal SDK 1.32.0; runtime pins and locks unchanged. Tests ran on the proposed implementation tree; the exact published commit/PR is linked in issue #5, with preserved source hashes at `/tmp/gre-p001-01/tested-source.json`. A documentation commit does not establish its own acceptance SHA.
+
+Implemented section 3.3 without changing product scope: strict complete JSON configuration and secret-file loading; current service/namespace health separate from optional historical inspection; exact typed historical `NOT_FOUND` classification; common process-group supervision in `scripts/_process.py` for standalone and aggregate callers; receipt comparison even after failures, timeout and handled termination. The aggregate forwards the same options, preserves its setup coverage and bounds its remaining phases. Its existing generation still writes artifacts, so compatibility validation used an owned temporary copy.
+
+| Command / evidence | Exit / observed result |
+|---|---|
+| `timeout --signal=TERM --kill-after=5s 90s .venv/bin/python -B -m unittest discover -s tests -p test_check_services.py -v` | **0**; final 26 tests passed in 12.378 seconds. Standard-library tests with synthetic temporary files/fake SDK responses/owned subprocesses; no live service writes. |
+| `timeout --signal=TERM --kill-after=5s 45s .venv/bin/python -B -m scripts.check_services --inspect-historical-temporal --timeout 30` | **0**; actual PostgreSQL 18.6 authenticated read-only/Alembic revision read, Azurite API 2025-11-05 authenticated properties/listing, and current Temporal service/configured-namespace health passed. Original historical describe returned typed `NOT_FOUND`, reported separately as unavailable evidence with cause unverified. Receipt comparison passed. |
+| `timeout --signal=TERM --kill-after=5s 600s .venv/bin/python -B -m scripts.check_environment --config service-config.json --timeout 30` from `/tmp/gre-p001-01-setup-u4tpsptl` | **0** after correcting the temporary dependency layout. Complete explicit-config service check, FastAPI valid/invalid request checks, OpenAPI export, Hey API 0.99.0 generation, both workspace type checks, real generated-client HTTP 200/422 and Next 16.3.4 production fixture build passed. Source matched the working implementation; installed dependencies were reused, not reinstalled. |
+| First run of that temporary aggregate | **1** at Next build: Turbopack rejected `fixtures/web/node_modules` pointing outside its root. Earlier phases passed. Copied the existing installed root/fixture dependency directories inside the owned copy, preserving relative package links; no runtime/pin change. A temporary copy helper also initially expected an absent client-package `node_modules` directory; it was corrected to copy only existing installed directories. The complete aggregate was then rerun successfully. |
+| Post-run preservation/generated-byte audit | **0**; temporary generated schema/client bytes equal the working baseline. All five locks, isolated probes, reference artifacts and five developer local-data files unchanged; original three receipt hashes still match G0. Removed only the temporary raw-key copy created for the explicit-config check. |
+| `git diff --check`, changed-document link/table checks and manual diff review | PASS before publication; final exact-head review evidence is in the implementation PR/issue #5. No unrelated source, secret or reference changes. |
+
+A01 tests cover strict default/explicit configuration, missing/unknown/duplicate/malformed fields, relative/absolute/unreadable secret files, secret-free CLI/SDK error output, actual configured namespace access and true health failures. Stuck subprocesses deliberately ignore TERM; the shared boundary kills/reaps them within the deadline plus the cleanup allowance, preserves an unrelated process, and runs the receipt comparison on failure/timeout. Aggregate tests prove option forwarding, the same real service boundary, no continuation after service failure, and propagation of a failed setup subprocess. Handled TERM also cleans its worker, compares receipts and exits 143.
+
+A02 tests cover absent, valid completed, typed not-found, malformed, denied, timeout/other-RPC and mismatched-status/run historical outcomes; message text containing `NOT_FOUND` is not accepted as typed not-found. Normal health does not parse/describe the historical receipt. Synthetic receipt-change failures are detected in owned test directories; no synthetic historical receipt was substituted into developer data. The live original receipt remained byte-for-byte unchanged.
+
+**Limitations and remaining work:** These are local service/setup foundation checks, not product behavior, historical durability, a new image/fresh install or CI execution. The setup aggregate still regenerates artifacts; its non-mutating generation change remains in .03/.04. No dependencies or tools were installed. Actual artifact-download proof remains with the first dependent build/install. Actions capacity/runner proof and the recorded enforcement limitation remain for .06. P-001.01 remains open pending implementation PR review/merge; P-001.02 has not started. Final full-P-001 Mac/CI proof and parent closeout remain .07/issue #11 work.
 
 ## Final P-001 closeout
 
